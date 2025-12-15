@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { dashboard } from '@/routes';
+import admin from '@/routes/admin';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
-
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
-        href: dashboard().url,
+        href: admin.edit().url,
     },
 ];
 </script>
 
 <template>
 
-    <Head title="Dashboard" />
+    <Head title="Admin Edit" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <h1 class="text-center">Dashboard</h1>
+        <h1 class="text-center">Admin Edit Page</h1>
     </AppLayout>
 </template>

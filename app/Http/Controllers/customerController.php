@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-use function Laravel\Prompts\form;
-
-class AdminController extends Controller
+class customerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('Admin/Index', ['']);
+        //
     }
 
     /**
@@ -22,7 +19,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Create', ['']);
+        //
     }
 
     /**

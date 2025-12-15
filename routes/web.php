@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\customerController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,7 +16,9 @@ Route::get('/', function () {
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::middleware(['auth'])->group(function () {
+    Route::resource('user', customerController::class);
+});
 Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::resource('admin', AdminController::class);
 });
