@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    //
+    protected $fillable = ['stripe_payment_intent_id', 'amount_paid', 'status'];
+    public function orders()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }
