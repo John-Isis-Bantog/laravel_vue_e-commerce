@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -30,7 +31,14 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|unique:users,email|max:255',
+            'password' => 'required|min:8|max:255',
+        ]);
+
+        $validated = User::create($validated);
+        return redirect()->route('admin.index')->with('success', 'Admin Added sucessfully');
     }
 
     /**
