@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { Chart, PieController, ArcElement } from 'chart.js';
 import { ref, onMounted } from 'vue';
 import {
@@ -14,6 +14,7 @@ import {
     TableRow,
 } from '@/components/ui/table/'
 import Button from '@/components/ui/button/Button.vue';
+import admin from '@/routes/admin';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
@@ -78,7 +79,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         <div class="">
             <div class="flex justify-between max-w-3/4 mx-auto">
                 <h1>Admin List</h1>
-                <Button>Add admin</Button>
+                <Link :href="admin.create()"><Button>Add admin</Button></Link>
             </div>
             <div class="w-3/4 mx-auto">
                 <Table>

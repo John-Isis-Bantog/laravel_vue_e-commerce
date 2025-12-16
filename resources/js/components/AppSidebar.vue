@@ -29,11 +29,11 @@ const mainNavItems: NavItem[] = [
         href: admin.index(),
         icon: LayoutGrid,
     },
-    {
-        title: 'Admin Create',
-        href: admin.create(),
-        icon: LayoutGrid,
-    },
+    // {
+    //     title: 'Admin Create',
+    //     href: admin.create(),
+    //     icon: LayoutGrid,
+    // },
     // {
     //     title: 'Admin Create',
     //     href: admin.edit(),
