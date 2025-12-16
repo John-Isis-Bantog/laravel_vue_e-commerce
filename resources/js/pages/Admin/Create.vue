@@ -20,7 +20,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <h1 class="text-center">Admin Create Page</h1>
-        <Form class="w-1/2 mx-auto space-y-2">
+        <Form class="w-1/2 mx-auto space-y-2" @submit.prevent>
             <Label for="adminEmail">Email</Label>
             <Input type="email" name="adminEmail" placeholder="Enter Admin Email"></Input>
 
@@ -28,7 +28,9 @@ const breadcrumbs: BreadcrumbItem[] = [
             <Input type="password" name="password" placeholder="Enter Password"></Input>
 
             <Label for=""></Label>
-            <div class="flex justify-center"><Button type="submit">Submit</Button></div>
+            <div class="flex justify-center">
+                <Button type="submit">Submit</Button>
+            </div>
 
         </Form>
     </AppLayout>

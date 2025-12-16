@@ -95,7 +95,10 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <TableRow>
                             <TableCell>Admin brad</TableCell>
                             <TableCell>123@gmail.com</TableCell>
-                            <TableCell><Button>Edit</Button><Button>Delete</Button></TableCell>
+                            <TableCell>
+                                <Link> <Button>Edit</Button></Link>
+                                <Link><Button>Delete</Button></Link>
+                            </TableCell>
 
                         </TableRow>
                     </TableBody>
