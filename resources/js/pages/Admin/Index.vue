@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { Chart, PieController, ArcElement } from 'chart.js';
 import { ref, onMounted } from 'vue';
 import {
@@ -54,6 +54,12 @@ interface Admin {
 defineProps<{
     admins: Admin[];
 }>();
+
+function removeAdmin(id: number) {
+    if (!confirm('Are you sure you want to delete this user?')) return;
+
+    router.delete(adminRoute.destroy(id))
+}
 </script>
 
 <template>
@@ -106,7 +112,7 @@ defineProps<{
                             <TableCell>{{ admin.email }}</TableCell>
                             <TableCell>
                                 <Link :href="adminRoute.edit(admin.id)"> <Button>Edit</Button></Link>
-                                <Link><Button>Delete</Button></Link>
+                                <Button @click="removeAdmin(admin.id)">Delete</Button>
                             </TableCell>
 
                         </TableRow>

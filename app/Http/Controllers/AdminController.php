@@ -79,6 +79,8 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $admin = User::where('role', 'admin')->findOrFail($id);
+        $admin->delete();
+        return redirect()->route('admin.index')->with('success', 'admin has been deleted successfully!');
     }
 }
