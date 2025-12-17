@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Validation\Rules\Password;
 
-use function Laravel\Prompts\form;
 
 class AdminController extends Controller
 {
@@ -15,7 +15,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Index', ['']);
+        $admins = User::where('role', 'admin')->get();
+        return Inertia::render('Admin/Index', ['admins' => $admins]);
     }
 
     /**
@@ -34,9 +35,16 @@ class AdminController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|unique:users,email|max:255',
-            'password' => 'required|min:8|max:255',
-        ]);
+            'password' => [
+                'required',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols(),
+            ],
 
+        ]);
+        $validated['role'] = 'admin';
         $validated = User::create($validated);
         return redirect()->route('admin.index')->with('success', 'Admin Added sucessfully');
     }

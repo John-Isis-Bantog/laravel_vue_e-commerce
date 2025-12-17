@@ -46,7 +46,14 @@ const breadcrumbs: BreadcrumbItem[] = [
 //     });
 // })
 
-
+interface Admin {
+    id: number;
+    name: string;
+    email: string
+}
+defineProps<{
+    admins: Admin[];
+}>();
 </script>
 
 <template>
@@ -85,6 +92,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <Table>
                     <TableHeader>
                         <TableRow>
+                            <TableHead>ID</TableHead>
                             <TableHead>Name</TableHead>
                             <TableHead>Email</TableHead>
                             <TableHead>Actions</TableHead>
@@ -92,9 +100,10 @@ const breadcrumbs: BreadcrumbItem[] = [
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        <TableRow>
-                            <TableCell>Admin brad</TableCell>
-                            <TableCell>123@gmail.com</TableCell>
+                        <TableRow v-for="admin in admins" :key="admin.id">
+                            <TableCell>{{ admin.id }}</TableCell>
+                            <TableCell>{{ admin.name }}</TableCell>
+                            <TableCell>{{ admin.email }}</TableCell>
                             <TableCell>
                                 <Link> <Button>Edit</Button></Link>
                                 <Link><Button>Delete</Button></Link>
