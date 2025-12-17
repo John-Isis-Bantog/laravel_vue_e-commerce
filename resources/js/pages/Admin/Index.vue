@@ -111,8 +111,9 @@ function removeAdmin(id: number) {
                             <TableCell>{{ admin.name }}</TableCell>
                             <TableCell>{{ admin.email }}</TableCell>
                             <TableCell>
-                                <Link :href="adminRoute.edit(admin.id)"> <Button>Edit</Button></Link>
-                                <Button @click="removeAdmin(admin.id)">Delete</Button>
+                                <Link :href="adminRoute.edit(admin.id)"> <Button variant="primary">Edit</Button>
+                                </Link>
+                                <Button variant="destructive" @click="removeAdmin(admin.id)">Delete</Button>
                             </TableCell>
 
                         </TableRow>
