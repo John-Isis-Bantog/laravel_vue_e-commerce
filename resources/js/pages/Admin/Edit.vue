@@ -3,14 +3,14 @@ import Button from '@/components/ui/button/Button.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import admin from '@/routes/admin';
+import adminRoute from '@/routes/admin';
 import { type BreadcrumbItem } from '@/types';
 import { Form, Head, useForm } from '@inertiajs/vue3';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
-        href: admin.create().url,
+        href: adminRoute.create().url,
     },
 ];
 interface Admin {
