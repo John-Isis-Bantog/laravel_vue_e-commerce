@@ -62,7 +62,8 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $admin = User::where('role', 'admin')->findOrFail($id);
+        return Inertia::render('Admin/Edit', ['admin' => $admin]);
     }
 
     /**

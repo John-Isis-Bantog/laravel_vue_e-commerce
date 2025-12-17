@@ -14,7 +14,7 @@ import {
     TableRow,
 } from '@/components/ui/table/'
 import Button from '@/components/ui/button/Button.vue';
-import admin from '@/routes/admin';
+import adminRoute from '@/routes/admin';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
@@ -86,7 +86,7 @@ defineProps<{
         <div class="">
             <div class="flex justify-between max-w-3/4 mx-auto">
                 <h1>Admin List</h1>
-                <Link :href="admin.create()"><Button>Add admin</Button></Link>
+                <Link :href="adminRoute.create()"><Button>Add admin</Button></Link>
             </div>
             <div class="w-3/4 mx-auto">
                 <Table>
@@ -105,7 +105,7 @@ defineProps<{
                             <TableCell>{{ admin.name }}</TableCell>
                             <TableCell>{{ admin.email }}</TableCell>
                             <TableCell>
-                                <Link> <Button>Edit</Button></Link>
+                                <Link :href="adminRoute.edit(admin.id)"> <Button>Edit</Button></Link>
                                 <Link><Button>Delete</Button></Link>
                             </TableCell>
 
