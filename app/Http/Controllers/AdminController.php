@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function index()
     {
         $admins = User::where('role', 'admin')->get();
-        return Inertia::render('Admin/Index', ['admins' => $admins]);
+        return Inertia::render('Admin/Admins/Index', ['admins' => $admins]);
     }
 
     /**
@@ -24,7 +24,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Create', ['']);
+        return Inertia::render('Admin/Admins/Create', ['']);
     }
 
     /**
@@ -63,7 +63,7 @@ class AdminController extends Controller
     public function edit(string $id)
     {
         $admin = User::where('role', 'admin')->findOrFail($id);
-        return Inertia::render('Admin/Edit', ['admin' => $admin]);
+        return Inertia::render('Admin/Admins/Edit', ['admin' => $admin]);
     }
 
     /**
