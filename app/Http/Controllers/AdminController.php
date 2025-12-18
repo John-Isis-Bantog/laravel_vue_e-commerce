@@ -69,9 +69,16 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $admin)
     {
-        //
+        $validated =  $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required',
+        ]);
+
+        $admin->update($validated);
+
+        return redirect()->route('admin.index')->with('success', 'Admin updated successfully');
     }
 
     /**
