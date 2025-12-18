@@ -71,14 +71,12 @@ class AdminController extends Controller
      */
     public function update(Request $request, User $admin)
     {
-        $validated =  $request->validate([
+        $validateAdmin = $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required',
+            'email' => 'email:rfc,dns|unique:users,email'
         ]);
-
-        $admin->update($validated);
-
-        return redirect()->route('admin.index')->with('success', 'Admin updated successfully');
+        $admin->update($validateAdmin);
+        return redirect()->route('admin.index')->with('success', 'Admin Updated Successfully');
     }
 
     /**
