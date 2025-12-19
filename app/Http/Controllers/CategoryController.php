@@ -13,7 +13,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Category/Index');
+        $categories = Category::all();
+        return Inertia::render('Admin/Category/Index', ['category' => $categories]);
     }
 
     /**
@@ -29,7 +30,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $validatedData = $request->validate([
             'title' => 'unique:categories,title|max:255|required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
