@@ -29,7 +29,9 @@ const breadcrumbs: BreadcrumbItem[] = [
         <h1 class="text-center">Admin Category Page</h1>
         <div class="flex justify-between">
             <div class="">title</div>
-            <div class=""><Button>Add Product</Button></div>
+            <div class="">
+                <Link :href="categoryRoute.create()"><Button>Add Product</Button></Link>
+            </div>
         </div>
         <Table>
             <TableHeader>
