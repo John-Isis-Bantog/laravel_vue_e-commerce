@@ -17,6 +17,7 @@ import { Link } from '@inertiajs/vue3';
 import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 import admin from '@/routes/admin';
+import category from '@/routes/category';
 
 const mainNavItems: NavItem[] = [
     {
@@ -27,6 +28,11 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Admin Dashboard',
         href: admin.index(),
+        icon: LayoutGrid,
+    },
+    {
+        title: 'Category Index',
+        href: category.index(),
         icon: LayoutGrid,
     },
     // {
