@@ -29,15 +29,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $validatedData = $request->validate([
-            'title' => ['unique:categories,title|max:255|required'],
-            'image' => ['nullable|image|mimes:jpeg,png,jpg|max:2048'],
-            'is_featured' => ['nullable|boolean:strict'],
-            'is_active' => ['nullable|boolean:strict'],
+            'title' => 'unique:categories,title|max:255|required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'is_featured' => 'nullable|boolean:strict',
+            'is_active' => 'nullable|boolean:strict',
         ]);
 
         $validatedData['is_featured'] = $request->boolean('is_featured');
         $validatedData['is_active'] = $request->boolean('is_active');
+
         Category::create($validatedData);
         return redirect()->route('category.index')->with('success', 'Category Has Been Added Successfully!');
     }
