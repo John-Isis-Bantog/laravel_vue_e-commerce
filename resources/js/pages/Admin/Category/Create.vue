@@ -18,21 +18,21 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 interface Category {
     title: string,
-    // image: File | null,
+    image: File | null,
     is_featured: boolean,
     is_active: boolean
 }
 
 const form = useForm<Category>({
     title: '',
-    // image: null,
+    image: null,
     is_featured: false,
     is_active: false,
 });
-// function handleFileChange(event: Event) {
-//     const target = event.target as HTMLInputElement;
-//     form.image = target.files ? target.files[0] : null;
-// }
+function handleFileChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    form.image = target.files ? target.files[0] : null;
+}
 function submitForm() {
     console.log(form.title, form.is_featured, form.is_active)
     form.post(category.store().url)
@@ -52,9 +52,9 @@ function submitForm() {
             <Label for="">Title</Label>
             <Input type="text" name="title" v-model="form.title" placeholder="Enter Title"></Input>
             <div class="" v-if="form.errors.title">{{ form.errors.title }}</div>
-            <!-- <Label for="">Image</Label> -->
-            <!-- <input type="file" name="image" @change="handleFileChange" placeholder="Slect a file"></input> -->
-            <!-- <div class="" v-if="form.errors.image">{{ form.errors.image }}</div> -->
+            <Label for="">Image</Label>
+            <Input type="file" name="image" v-on:change="handleFileChange" placeholder="Select a file"></Input>
+            <div class="" v-if="form.errors.image">{{ form.errors.image }}</div>
             <div class="flex">
 
                 <Label for="">Featured</Label>

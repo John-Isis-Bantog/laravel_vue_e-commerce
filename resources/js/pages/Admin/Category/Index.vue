@@ -19,6 +19,19 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: categoryRoute.index().url,
     },
 ];
+
+interface Category {
+    id: number,
+    title: string,
+    image: File | null,
+    is_active: boolean,
+    is_featured: boolean
+}
+
+const props = defineProps<{
+    category: Category[]
+}>()
+
 </script>
 
 
@@ -46,12 +59,12 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow>
-                    <TableCell>{{ }}</TableCell>
-                    <TableCell>{{ }}</TableCell>
-                    <TableCell>{{ }}</TableCell>
-                    <TableCell>{{ }}</TableCell>
-                    <TableCell>{{ }}</TableCell>
+                <TableRow v-for="category in props.category" :key="category.id">
+                    <TableCell>{{ category.id }}</TableCell>
+                    <TableCell>{{ category.title }}</TableCell>
+                    <TableCell>{{ category.image ?? 'N/A' }}</TableCell>
+                    <TableCell>{{ category.is_featured }}</TableCell>
+                    <TableCell>{{ category.is_active }}</TableCell>
                     <TableCell>
                         <Link> <Button variant="primary">Edit</Button></Link>
                         <Button variant="destructive" @click="">Delete</Button>
