@@ -36,4 +36,32 @@ class SupabaseStorage
             . config('services.supabase.bucket')
             . '/' . $path;
     }
+    public static function deleteByUrl(?string $publicUrl): void
+    {
+        if (!$publicUrl) {
+            // Nothing to delete
+            return;
+        }
+
+        // Extract path inside the bucket
+        $bucket = config('services.supabase.bucket');
+        $pattern = '/\/storage\/v1\/object\/public\/' . preg_quote($bucket, '/') . '\/(.+)$/';
+        if (!preg_match($pattern, $publicUrl, $matches)) {
+            // Could not extract path, skip deletion to be safe
+            return;
+        }
+
+        $path = $matches[1];
+
+        // Send DELETE request to Supabase
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . config('services.supabase.key'),
+            'apikey' => config('services.supabase.key'),
+        ])->delete(config('services.supabase.url') . '/storage/v1/object/' . $bucket . '/' . $path);
+
+        if (!$response->successful()) {
+            // Log the error but don’t crash
+            \Log::warning('Supabase delete failed: ' . $response->body());
+        }
+    }
 }

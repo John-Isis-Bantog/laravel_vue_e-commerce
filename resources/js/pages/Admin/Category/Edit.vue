@@ -47,8 +47,8 @@ function handleFileChange(event: Event) {
 }
 function submitForm(id: number) {
 
-    form.post(categoryRoute.update(id).url)
-    console.log(form.is_active, form.is_featured)
+    form.put(categoryRoute.update(id).url)
+    console.log(form.is_active, form.is_featured, form.title, form.image)
 }
 
 </script>
@@ -60,7 +60,7 @@ function submitForm(id: number) {
     <Head title="Category Edit Page" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <h1 class="text-center">Category edit Page</h1>
-        <div class="" v-if="form.is_featured">{{ form.is_featured }}</div>
+
         <Form class="w-1/2 mx-auto space-y-3" @submit.prevent="submitForm(props.category.id)">
             <Label for="">Title</Label>
             <Input type="text" name="title" v-model="form.title" placeholder="Enter Title"></Input>

@@ -67,10 +67,36 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|max:255|unique:categories,title,' . $category->id,
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'is_featured' => 'required|in:0,1',
+            'is_active' => 'required|in:0,1',
+        ]);
+
+        $validatedData['is_featured'] = $request->boolean('is_featured');
+        $validatedData['is_active'] = $request->boolean('is_active');
+        $oldImage = $category->image; // Keep track of old URL
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = SupabaseStorage::upload(
+                $request->file('image'),
+                'categories'
+            );
+        }
+
+        $category->update($validatedData);
+
+        // Delete old image only if a new image was uploaded
+        if ($request->hasFile('image') && $oldImage) {
+            SupabaseStorage::deleteByUrl($oldImage);
+        }
+        return redirect()
+            ->route('category.index')
+            ->with('success', 'Category updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.
