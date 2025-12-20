@@ -34,8 +34,9 @@ function handleFileChange(event: Event) {
     form.image = target.files ? target.files[0] : null;
 }
 function submitForm() {
-    console.log(form.title, form.is_featured, form.is_active)
+
     form.post(category.store().url)
+    console.log(form.is_active, form.is_featured)
 }
 
 
@@ -58,10 +59,12 @@ function submitForm() {
             <div class="flex">
 
                 <Label for="">Featured</Label>
-                <Checkbox name="is_featured" v-model="form.is_featured" :default-value="false" />
+                <Checkbox name="is_featured" :checked="form.is_featured"
+                    @update:checked="(value: boolean) => form.is_featured = value" />
                 <div class="" v-if="form.errors.is_featured">{{ form.errors.is_featured }}</div>
                 <Label for="">Active</Label>
-                <Checkbox name="is_active" v-model="form.is_active" :default-value="false" />
+                <Checkbox name="is_active" :checked="form.is_active"
+                    @update:checked="(value: boolean) => form.is_active = value" />
                 <div class="" v-if="form.errors.is_active">{{ form.errors.is_active }}</div>
             </div>
             <Button type="submit" class="">Submit</Button>

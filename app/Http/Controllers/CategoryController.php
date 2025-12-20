@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Services\SupabaseStorage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -30,16 +31,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'title' => 'unique:categories,title|max:255|required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'is_featured' => 'nullable|boolean:strict',
-            'is_active' => 'nullable|boolean:strict',
+            'is_featured' => 'nullable|boolean',
+            'is_active' => 'nullable|boolean',
         ]);
 
         $validatedData['is_featured'] = $request->boolean('is_featured');
         $validatedData['is_active'] = $request->boolean('is_active');
-
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = SupabaseStorage::upload($request->file('image'), 'categories');
+        }
         Category::create($validatedData);
         return redirect()->route('category.index')->with('success', 'Category Has Been Added Successfully!');
     }

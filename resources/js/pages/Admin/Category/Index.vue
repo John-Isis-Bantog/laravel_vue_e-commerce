@@ -23,7 +23,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface Category {
     id: number,
     title: string,
-    image: File | null,
+    image: string | null,
     is_active: boolean,
     is_featured: boolean
 }
@@ -62,7 +62,12 @@ const props = defineProps<{
                 <TableRow v-for="category in props.category" :key="category.id">
                     <TableCell>{{ category.id }}</TableCell>
                     <TableCell>{{ category.title }}</TableCell>
-                    <TableCell>{{ category.image ?? 'N/A' }}</TableCell>
+                    <TableCell>
+                        <img v-if="category.image" :src="category.image" alt="Category image"
+                            class="h-16 w-16 object-cover rounded" />
+                        <span v-else>N/A</span>
+                    </TableCell>
+
                     <TableCell>{{ category.is_featured }}</TableCell>
                     <TableCell>{{ category.is_active }}</TableCell>
                     <TableCell>
