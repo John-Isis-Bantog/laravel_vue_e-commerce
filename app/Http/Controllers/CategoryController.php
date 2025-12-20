@@ -35,12 +35,14 @@ class CategoryController extends Controller
         $validatedData = $request->validate([
             'title' => 'unique:categories,title|max:255|required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'is_featured' => 'nullable|boolean',
-            'is_active' => 'nullable|boolean',
+            'is_featured' => 'nullable|required|in:0,1',
+            'is_active' => 'nullable|required|in:0,1',
         ]);
 
         $validatedData['is_featured'] = $request->boolean('is_featured');
         $validatedData['is_active'] = $request->boolean('is_active');
+
+
         if ($request->hasFile('image')) {
             $validatedData['image'] = SupabaseStorage::upload($request->file('image'), 'categories');
         }

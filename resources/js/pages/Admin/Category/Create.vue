@@ -6,9 +6,16 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import adminRoute from '@/routes/admin';
 import category from '@/routes/category';
 import { BreadcrumbItem } from '@/types';
-import { Form, Head, router, useForm } from '@inertiajs/vue3';
-import { Checkbox } from '@/components/ui/checkbox'
+import { Form, Head, useForm } from '@inertiajs/vue3';
 
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select/'
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Admin Create Page',
@@ -19,15 +26,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface Category {
     title: string,
     image: File | null,
-    is_featured: boolean,
-    is_active: boolean
+    is_featured: string,
+    is_active: string
 }
 
 const form = useForm<Category>({
     title: '',
     image: null,
-    is_featured: false,
-    is_active: false,
+    is_featured: '1',
+    is_active: '1',
 });
 function handleFileChange(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -56,15 +63,40 @@ function submitForm() {
             <Label for="">Image</Label>
             <Input type="file" name="image" v-on:change="handleFileChange" placeholder="Select a file"></Input>
             <div class="" v-if="form.errors.image">{{ form.errors.image }}</div>
-            <div class="flex">
-
+            <div class="flex gap-5 ">
                 <Label for="">Featured</Label>
-                <Checkbox name="is_featured" :checked="form.is_featured"
-                    @update:checked="(value: boolean) => form.is_featured = value" />
+                <Select v-model="form.is_active">
+                    <SelectTrigger class="w-[180px]">
+                        <SelectValue placeholder="Featured?" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectItem value="1">
+                                Yes
+                            </SelectItem>
+                            <SelectItem value="0">
+                                No
+                            </SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
                 <div class="" v-if="form.errors.is_featured">{{ form.errors.is_featured }}</div>
                 <Label for="">Active</Label>
-                <Checkbox name="is_active" :checked="form.is_active"
-                    @update:checked="(value: boolean) => form.is_active = value" />
+                <Select v-model="form.is_featured">
+                    <SelectTrigger class="w-[180px]">
+                        <SelectValue placeholder="Active?" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectItem value="1">
+                                Yes
+                            </SelectItem>
+                            <SelectItem value="0">
+                                No
+                            </SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
                 <div class="" v-if="form.errors.is_active">{{ form.errors.is_active }}</div>
             </div>
             <Button type="submit" class="">Submit</Button>
