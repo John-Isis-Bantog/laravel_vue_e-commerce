@@ -10,7 +10,7 @@ import TableRow from '@/components/ui/table/TableRow.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import categoryRoute from '@/routes/category';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -32,6 +32,10 @@ const props = defineProps<{
     category: Category[]
 }>()
 
+function deleteCategory(id: number) {
+
+    router.delete(categoryRoute.destroy(id).url)
+}
 </script>
 
 
@@ -72,7 +76,7 @@ const props = defineProps<{
                     <TableCell>{{ category.is_active }}</TableCell>
                     <TableCell>
                         <Link :href="categoryRoute.edit(category.id)"> <Button variant="primary">Edit</Button></Link>
-                        <Button variant="destructive" @click="">Delete</Button>
+                        <Button variant="destructive" @click="deleteCategory(category.id)">Delete</Button>
                     </TableCell>
 
                 </TableRow>

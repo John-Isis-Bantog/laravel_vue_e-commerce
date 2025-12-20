@@ -62,6 +62,7 @@ class SupabaseStorage
         if (!$response->successful()) {
             // Log the error but don’t crash
             \Log::warning('Supabase delete failed: ' . $response->body());
+            throw new \Exception('Failed to delete image from Supabase. Please try again.');
         }
     }
 }

@@ -103,6 +103,12 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        if ($category->image != null) {
+            $image = $category->image;
+            SupabaseStorage::deleteByUrl($image);
+        }
+        $category->delete();
+        return redirect()->route('category.index')->with('success', 'Category Deleted Successfully!');
     }
 }
