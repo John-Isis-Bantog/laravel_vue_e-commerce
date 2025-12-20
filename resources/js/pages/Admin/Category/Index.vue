@@ -71,7 +71,7 @@ const props = defineProps<{
                     <TableCell>{{ category.is_featured }}</TableCell>
                     <TableCell>{{ category.is_active }}</TableCell>
                     <TableCell>
-                        <Link> <Button variant="primary">Edit</Button></Link>
+                        <Link :href="categoryRoute.edit(category.id)"> <Button variant="primary">Edit</Button></Link>
                         <Button variant="destructive" @click="">Delete</Button>
                     </TableCell>
 
