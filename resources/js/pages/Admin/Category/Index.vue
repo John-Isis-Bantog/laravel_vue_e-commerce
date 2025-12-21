@@ -72,8 +72,8 @@ function deleteCategory(id: number) {
                         <span v-else>N/A</span>
                     </TableCell>
 
-                    <TableCell>{{ category.is_featured }}</TableCell>
-                    <TableCell>{{ category.is_active }}</TableCell>
+                    <TableCell>{{ category.is_featured ? 'yes' : 'no' }}</TableCell>
+                    <TableCell>{{ category.is_active ? 'yes' : 'no' }}</TableCell>
                     <TableCell>
                         <Link :href="categoryRoute.edit(category.id)"> <Button variant="primary">Edit</Button></Link>
                         <Button variant="destructive" @click="deleteCategory(category.id)">Delete</Button>

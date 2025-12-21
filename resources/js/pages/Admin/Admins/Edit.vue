@@ -5,7 +5,7 @@ import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import adminRoute from '@/routes/admin';
 import { type BreadcrumbItem } from '@/types';
-import { Form, Head, useForm } from '@inertiajs/vue3';
+import { Form, Head, Link, useForm } from '@inertiajs/vue3';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -38,6 +38,7 @@ function updateAdmin($id: number) {
 
     <Head title="Admin Edit" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Link :href="adminRoute.index()"><Button>Back</Button></Link>
         <h1 class="text-center">Admin Edit Page</h1>
         <Form class="w-1/2 mx-auto space-y-2" @submit.prevent="updateAdmin(admin.id)">
             <Label for="name">name</Label>

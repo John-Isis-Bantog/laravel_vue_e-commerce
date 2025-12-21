@@ -2,15 +2,15 @@
 import Button from '@/components/ui/button/Button.vue';
 import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import admin from '@/routes/admin';
+import adminRoute from '@/routes/admin';
 import { type BreadcrumbItem } from '@/types';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import * as yup from 'yup';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Admin Create Page',
-        href: admin.create().url,
+        href: adminRoute.create().url,
     },
 ];
 const schema = yup.object({
@@ -28,7 +28,7 @@ function submitForm(values: any) {
     form.name = values.name;
     form.email = values.email;
     form.password = values.password;
-    form.post(admin.store().url);
+    form.post(adminRoute.store().url);
 
 
 }
@@ -41,6 +41,7 @@ function submitForm(values: any) {
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <h1 class="text-center">Admin Create Page</h1>
+        <Link :href="adminRoute.index().url"><Button>Back</Button></Link>
         <Form :validation-schema="schema" class="w-1/2 mx-auto space-y-2" @submit="submitForm">
             <Label for="name">Name</Label>
             <Field type="text" name="name" :validate-on-input="true" placeholder="Enter Admin Name" autocomplete="name">
