@@ -1,14 +1,22 @@
 <script lang="ts" setup>
+import Button from '@/components/ui/button/Button.vue';
+import Table from '@/components/ui/table/Table.vue';
+import TableBody from '@/components/ui/table/TableBody.vue';
+import TableCell from '@/components/ui/table/TableCell.vue';
+import TableHead from '@/components/ui/table/TableHead.vue';
+import TableHeader from '@/components/ui/table/TableHeader.vue';
+import TableRow from '@/components/ui/table/TableRow.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import productRoute from '@/routes/product';
 import { BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
+
 
 
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Admin Category Index Page',
+        title: 'Admin Product Index Page',
         href: productRoute.index().url,
     },
 ];
@@ -16,7 +24,41 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 <template>
 
-    <Head title="Category Create" />
+    <Head title="Product Index" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <div class="flex justify-end">
+            <div class="">
+                <Link :href="productRoute.create().url"><Button>Add Product</Button></Link>
+            </div>
+
+        </div>
+
+        <Table>
+            <TableHeader>
+                <TableRow>
+                    <TableHead>ID</TableHead>
+                    <TableHead>Title</TableHead>
+                    <TableHead>Image</TableHead>
+                    <TableHead>Featured</TableHead>
+                    <TableHead>Active</TableHead>
+                    <TableHead>Action</TableHead>
+
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                <TableRow>
+                    <TableCell>example</TableCell>
+                    <TableCell>example</TableCell>
+                    <TableCell>example</TableCell>
+                    <TableCell>example</TableCell>
+                    <TableCell>example</TableCell>
+                    <TableCell>
+                        <Button variant="primary">Edit</Button>
+                        <Button variant="destructive">Delete</Button>
+                    </TableCell>
+
+                </TableRow>
+            </TableBody>
+        </Table>
     </AppLayout>
 </template>
