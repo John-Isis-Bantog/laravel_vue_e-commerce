@@ -47,7 +47,7 @@ function deleteCategory(id: number) {
         <div class="flex justify-between">
             <div class="">title</div>
             <div class="">
-                <Link :href="categoryRoute.create()"><Button>Add Product</Button></Link>
+                <Link :href="categoryRoute.create()"><Button>Add Category</Button></Link>
             </div>
         </div>
         <Table>

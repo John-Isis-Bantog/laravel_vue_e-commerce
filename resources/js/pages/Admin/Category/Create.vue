@@ -4,9 +4,9 @@ import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import adminRoute from '@/routes/admin';
-import category from '@/routes/category';
+import categoryRoute from '@/routes/category';
 import { BreadcrumbItem } from '@/types';
-import { Form, Head, useForm } from '@inertiajs/vue3';
+import { Form, Head, Link, useForm } from '@inertiajs/vue3';
 
 import {
     Select,
@@ -42,7 +42,7 @@ function handleFileChange(event: Event) {
 }
 function submitForm() {
 
-    form.post(category.store().url)
+    form.post(categoryRoute.store().url)
     console.log(form.is_active, form.is_featured)
 }
 
@@ -54,6 +54,7 @@ function submitForm() {
 
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Link :href="categoryRoute.index()"><Button>Back</Button></Link>
         <h1 class="text-center">Admin Create Page</h1>
 
         <Form class="w-1/2 mx-auto space-y-3" @submit.prevent="submitForm">

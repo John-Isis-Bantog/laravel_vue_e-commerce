@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/table/'
 import Button from '@/components/ui/button/Button.vue';
 import adminRoute from '@/routes/admin';
+import Input from '@/components/ui/input/Input.vue';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
@@ -91,7 +92,12 @@ function removeAdmin(id: number) {
         </div>
         <div class="">
             <div class="flex justify-between max-w-3/4 mx-auto">
-                <h1>Admin List</h1>
+                <div class="flex">
+                    <Input type="search" placeholder="Search by Name or Email"></Input>
+                    <Link :href="adminRoute.index().url"><Button variant="primary">Clear</Button></Link>
+                    <Button>Submit</Button>
+                </div>
+
                 <Link :href="adminRoute.create()"><Button>Add admin</Button></Link>
             </div>
             <div class="w-3/4 mx-auto">
