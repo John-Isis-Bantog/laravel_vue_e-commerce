@@ -1,6 +1,8 @@
 <script lang="ts" setup>
+import AppLayout from '@/layouts/AppLayout.vue';
 import productRoute from '@/routes/product';
 import { BreadcrumbItem } from '@/types';
+import { Head } from '@inertiajs/vue3';
 
 
 

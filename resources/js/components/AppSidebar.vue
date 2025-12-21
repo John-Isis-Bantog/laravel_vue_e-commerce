@@ -18,6 +18,7 @@ import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 import admin from '@/routes/admin';
 import category from '@/routes/category';
+import product from '@/routes/product';
 
 const mainNavItems: NavItem[] = [
     {
@@ -33,6 +34,11 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Category Index',
         href: category.index(),
+        icon: LayoutGrid,
+    },
+    {
+        title: 'Product Index',
+        href: product.index(),
         icon: LayoutGrid,
     },
     // {

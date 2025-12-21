@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\customerController;
+use App\Http\Controllers\ProductController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,6 +24,6 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::resource('admin', AdminController::class);
     Route::resource('category', CategoryController::class);
-    Route::resource('product', CategoryController::class);
+    Route::resource('product', ProductController::class);
 });
 require __DIR__ . '/settings.php';
