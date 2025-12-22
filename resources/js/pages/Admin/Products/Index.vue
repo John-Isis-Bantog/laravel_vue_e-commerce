@@ -9,7 +9,7 @@ import TableRow from '@/components/ui/table/TableRow.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import productRoute from '@/routes/product';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 
 
 
@@ -31,6 +31,9 @@ const breadcrumbs: BreadcrumbItem[] = [
 const props = defineProps<{
     products: Product[];
 }>()
+function deleteProduct($id: number) {
+    router.delete(productRoute.destroy($id));
+}
 </script>
 
 <template>
@@ -59,11 +62,11 @@ const props = defineProps<{
                 <TableRow v-for="product in products">
                     <TableCell>{{ product.id }}</TableCell>
                     <TableCell>{{ product.name }}</TableCell>
-                    <TableCell><img :src="product.image" v-if="product.image" alt=""></TableCell>
+                    <TableCell><img :src="product.image" v-if="product.image" alt=""><span v-else>N/A</span></TableCell>
                     <TableCell>{{ product.active }}</TableCell>
                     <TableCell>
                         <Button variant="primary">Edit</Button>
-                        <Button variant="destructive">Delete</Button>
+                        <Button variant="destructive" @click="deleteProduct(product.id)">Delete</Button>
                     </TableCell>
 
                 </TableRow>

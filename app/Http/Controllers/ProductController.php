@@ -59,11 +59,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        $product = Product::findOrFail($id);
-        dd($product);
-    }
+    public function edit(string $id) {}
 
     /**
      * Update the specified resource in storage.
@@ -78,6 +74,8 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return redirect()->route('product.index')->with('success', 'Product Deleted Successfully!');
     }
 }
