@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get();
+        $products = Product::all();
         return Inertia::render('Admin/Products/Index', ['products' => $products]);
     }
 
@@ -59,11 +59,13 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) {}
+    public function edit(string $id)
+    {
+        $product = Product::findOrFail($id);
+        return Inertia::render('Admin/Products/Edit', ['product' => $product]);
+    }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         //
@@ -75,6 +77,7 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
+        // refactor later: delete the supabase image
         $product->delete();
         return redirect()->route('product.index')->with('success', 'Product Deleted Successfully!');
     }

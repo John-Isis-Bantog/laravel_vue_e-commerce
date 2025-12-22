@@ -17,7 +17,7 @@ interface Product {
     id: number,
     name: string,
     image: File | null,
-    active: boolean
+    is_active: boolean
 }
 
 
@@ -63,9 +63,9 @@ function deleteProduct($id: number) {
                     <TableCell>{{ product.id }}</TableCell>
                     <TableCell>{{ product.name }}</TableCell>
                     <TableCell><img :src="product.image" v-if="product.image" alt=""><span v-else>N/A</span></TableCell>
-                    <TableCell>{{ product.active }}</TableCell>
+                    <TableCell>{{ product.is_active ? 'Yes' : 'No' }}</TableCell>
                     <TableCell>
-                        <Button variant="primary">Edit</Button>
+                        <Link :href="productRoute.edit(product.id)"><Button variant="primary">Edit</Button></Link>
                         <Button variant="destructive" @click="deleteProduct(product.id)">Delete</Button>
                     </TableCell>
 
