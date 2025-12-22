@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\SupabaseStorage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -34,12 +35,16 @@ class ProductController extends Controller
             'description' => 'required|max:255',
             'price' => 'required|min:0',
             'is_active' => 'required|in:0,1',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $validateData['is_active'] = $request->boolean('is_active');
-        // dd($validateData);
+        if ($validateData['image'] !== null) {
+            $validateData['image'] = SupabaseStorage::upload($validateData['image'], 'product');
+        }
+
         Product::create($validateData);
-        // return redirect()->route('product.index')->with('success', 'product has been inserted successfully!');
+        return redirect()->route('product.index')->with('success', 'product has been inserted successfully!');
     }
 
     /**

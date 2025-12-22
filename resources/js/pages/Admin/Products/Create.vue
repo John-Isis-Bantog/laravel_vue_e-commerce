@@ -28,18 +28,24 @@ interface Product {
     description: string,
     price: number,
     is_active: string
+    image: File | null,
 }
 
 const formData = useForm({
     name: '',
     description: '',
     price: '',
-    is_active: '0'
+    is_active: '0',
+    image: null,
 
 });
 function submitProduct() {
     formData.post(productRoute.store().url);
-    console.log(formData.is_active);
+
+}
+function handleFileChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    formData.image = target.files ? target.files[0] : null;
 }
 
 </script>
@@ -50,17 +56,19 @@ function submitProduct() {
     <AppLayout :breadcrumbs="breadcrumbs">
         <Link :href="productRoute.index()"><Button>Back</Button></Link>
         <div class="w-1/2 mx-auto">
-            <Form @submit.prevent="submitProduct()">
+            <Form @submit.prevent="submitProduct()" class="space-y-2">
                 <Label for="name">Name</Label>
                 <Input type="text" name="name" v-model="formData.name" placeholder="Name"></Input>
                 <span class="text-red-500" v-if="formData.errors.name">{{ formData.errors.name }}</span>
-
                 <Label for="description">Description</Label>
                 <Textarea name="description" v-model="formData.description"></Textarea>
+                <Label for="image">Image</Label>
+                <Input type="file" name="image" v-on:change="handleFileChange"></Input>
+                <span v-if="formData.errors.image" class="text-red-500">{{ formData.errors.image }}</span>
                 <span class="text-red-500" v-if="formData.errors.description">{{ formData.errors.description }}</span>
                 <Label for="price">Price</Label>
                 <Input type="number" min="1" v-model="formData.price"></Input>
-                <Input type="file"></Input>
+
                 <span class="text-red-500" v-if="formData.errors.price">{{ formData.errors.price }}</span>
 
                 <Label for="is_active">Active</Label>
