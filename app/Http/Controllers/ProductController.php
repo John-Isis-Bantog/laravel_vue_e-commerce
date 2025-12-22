@@ -27,9 +27,19 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
-        //
+        $validateData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'price' => 'required|min:0',
+            'is_active' => 'required|in:0,1',
+        ]);
+
+        $validateData['is_active'] = $request->boolean('is_active');
+        // dd($validateData);
+        Product::create($validateData);
+        // return redirect()->route('product.index')->with('success', 'product has been inserted successfully!');
     }
 
     /**

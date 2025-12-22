@@ -12,7 +12,7 @@ import Textarea from '@/components/ui/textarea/Textarea.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import productRoute from '@/routes/product';
 import { BreadcrumbItem } from '@/types';
-import { Form, Head, Link } from '@inertiajs/vue3';
+import { Form, Head, Link, useForm } from '@inertiajs/vue3';
 
 
 
@@ -22,6 +22,26 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: productRoute.index().url,
     },
 ];
+
+interface Product {
+    name: string,
+    description: string,
+    price: number,
+    is_active: string
+}
+
+const formData = useForm({
+    name: '',
+    description: '',
+    price: '',
+    is_active: '0'
+
+});
+function submitProduct() {
+    formData.post(productRoute.store().url);
+    console.log(formData.is_active);
+}
+
 </script>
 
 <template>
@@ -30,19 +50,23 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <Link :href="productRoute.index()"><Button>Back</Button></Link>
         <div class="w-1/2 mx-auto">
-            <Form>
+            <Form @submit.prevent="submitProduct()">
                 <Label for="name">Name</Label>
-                <Input type="text" name="name" placeholder="Name"></Input>
+                <Input type="text" name="name" v-model="formData.name" placeholder="Name"></Input>
+                <span class="text-red-500" v-if="formData.errors.name">{{ formData.errors.name }}</span>
 
                 <Label for="description">Description</Label>
-                <Textarea name="description"></Textarea>
-
+                <Textarea name="description" v-model="formData.description"></Textarea>
+                <span class="text-red-500" v-if="formData.errors.description">{{ formData.errors.description }}</span>
                 <Label for="price">Price</Label>
-                <Input type="number" min="1"></Input>
+                <Input type="number" min="1" v-model="formData.price"></Input>
+                <Input type="file"></Input>
+                <span class="text-red-500" v-if="formData.errors.price">{{ formData.errors.price }}</span>
 
-                <Select>
+                <Label for="is_active">Active</Label>
+                <Select v-model="formData.is_active">
                     <SelectTrigger class="w-[180px]">
-                        <SelectValue placeholder="Active?" />
+                        <SelectValue placeholder="is_Active?" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
@@ -55,6 +79,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                         </SelectGroup>
                     </SelectContent>
                 </Select>
+                <span v-if="formData.errors.is_active">{{ formData.errors.price }}</span>
                 <Button type="submit">Add Product</Button>
             </Form>
         </div>
