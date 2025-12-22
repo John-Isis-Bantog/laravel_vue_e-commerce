@@ -13,6 +13,13 @@ import { Head, Link } from '@inertiajs/vue3';
 
 
 
+interface Product {
+    id: number,
+    name: string,
+    image: File | null,
+    active: boolean
+}
+
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,6 +27,10 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: productRoute.index().url,
     },
 ];
+
+const props = defineProps<{
+    products: Product[];
+}>()
 </script>
 
 <template>
@@ -39,19 +50,17 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <TableHead>ID</TableHead>
                     <TableHead>Title</TableHead>
                     <TableHead>Image</TableHead>
-                    <TableHead>Featured</TableHead>
                     <TableHead>Active</TableHead>
                     <TableHead>Action</TableHead>
 
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow>
-                    <TableCell>example</TableCell>
-                    <TableCell>example</TableCell>
-                    <TableCell>example</TableCell>
-                    <TableCell>example</TableCell>
-                    <TableCell>example</TableCell>
+                <TableRow v-for="product in products">
+                    <TableCell>{{ product.id }}</TableCell>
+                    <TableCell>{{ product.name }}</TableCell>
+                    <TableCell><img :src="product.image" v-if="product.image" alt=""></TableCell>
+                    <TableCell>{{ product.active }}</TableCell>
                     <TableCell>
                         <Button variant="primary">Edit</Button>
                         <Button variant="destructive">Delete</Button>
