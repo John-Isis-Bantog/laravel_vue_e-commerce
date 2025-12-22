@@ -77,7 +77,11 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
-        // refactor later: delete the supabase image
+        if ($product->image != null) {
+            $image = $product->image;
+            SupabaseStorage::deleteByUrl($image);
+        }
+
         $product->delete();
         return redirect()->route('product.index')->with('success', 'Product Deleted Successfully!');
     }
