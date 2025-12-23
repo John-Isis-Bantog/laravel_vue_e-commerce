@@ -22,8 +22,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user', customerController::class);
 });
 Route::middleware(['auth', IsAdmin::class])->group(function () {
-    Route::resource('admin', AdminController::class);
-    Route::resource('category', CategoryController::class);
-    Route::resource('product', ProductController::class);
+    Route::resource('admin', AdminController::class)->except('show');
+    Route::resource('category', CategoryController::class)->except('show');
+    Route::resource('product', ProductController::class)->except('show');
 });
 require __DIR__ . '/settings.php';

@@ -49,12 +49,6 @@ class CategoryController extends Controller
         Category::create($validatedData);
         return redirect()->route('category.index')->with('success', 'Category Has Been Added Successfully!');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id) {}
-
     /**
      * Show the form for editing the specified resource.
      */
