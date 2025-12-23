@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Services\SupabaseStorage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -66,9 +67,18 @@ class ProductController extends Controller
     }
 
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $validateData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'price' => 'required|numeric|min:0',
+            'is_active' => 'required|in:0,1',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+        Log::info('Update payload', $request->all());
+        dd($validateData);
+        return redirect()->route('product.index')->with('success', 'Product Updated Successfully!');
     }
 
     /**
