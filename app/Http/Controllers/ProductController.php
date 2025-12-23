@@ -69,15 +69,25 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        $validateData = $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|max:255',
             'description' => 'required|max:255',
             'price' => 'required|numeric|min:0',
             'is_active' => 'required|in:0,1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-        Log::info('Update payload', $request->all());
-        dd($validateData);
+        $validatedData['is_active'] = $request->boolean('is_active');
+        $oldImage = $product->image; // Keep track of old URL
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = SupabaseStorage::upload(
+                $request->file('image'),
+                'product'
+            );
+        }
+        $product->update($validatedData);
+        if ($request->hasFile('image') && $oldImage) {
+            SupabaseStorage::deleteByUrl($oldImage);
+        }
         return redirect()->route('product.index')->with('success', 'Product Updated Successfully!');
     }
 
