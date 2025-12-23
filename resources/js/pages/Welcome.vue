@@ -39,47 +39,83 @@ withDefaults(
                 </template>
             </nav>
         </header>
-        <div
-            class="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
-            <main
-                class="flex w-full max-w-[335px] flex-col-reverse overflow-hidden rounded-lg lg:max-w-4xl lg:flex-row">
-                <div class="">
-                    <h1>Reimagine Waste. Build a Greener Future.</h1>
-                    <p>Discover eco-friendly projects, share sustainable solutions, and empower your community to reduce
-                        waste
-                        together.</p>
-                    <Button>Get Started</Button>
-                    <div class="">
-                        <h1>How It Works</h1>
-                        <div class="">
-                            <div class="">
-                                🛠️ Create Projects
-                                Upload DIYs, recycling crafts, or tips to repurpose everyday items.
-                            </div>
-                            <div class="">
-                                🌍 Inspire Others
-                                Share and explore creative eco-solutions across the community.
-                            </div>
-                            <div class="">💬 Engage with the Community
-                                Connect with other recyclers, exchange ideas, and grow a sustainable network.</div>
+        <div class="mx-auto opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0 text-white">
+            <main class="flex max-w-[335px] lg:max-w-4xl flex-col gap-16">
+                <!-- Hero -->
+                <section class="text-center space-y-4">
+                    <h1 class="text-3xl font-bold">
+                        Everything You Need, Delivered Simply
+                    </h1>
+
+                    <p class="text-muted-foreground">
+                        Discover quality products at great prices. Shop easily, securely,
+                        and get what you need delivered to your door.
+                    </p>
+
+                    <div class="flex justify-center gap-4">
+                        <Button variant="primary">Shop Now</Button>
+                        <Button variant="secondary">Browse Categories</Button>
+                    </div>
+                </section>
+
+                <!-- How it works -->
+                <section class="space-y-8">
+                    <h2 class="text-center text-2xl font-semibold">
+                        How It Works
+                    </h2>
+
+                    <div class="flex  gap-6">
+                        <div>
+                            🛒 <strong>Browse Products</strong>
+                            <p class="text-sm text-muted-foreground">
+                                Explore our catalog and find products that fit your needs.
+                            </p>
+                        </div>
+
+                        <div>
+                            📦 <strong>Add to Cart</strong>
+                            <p class="text-sm text-muted-foreground">
+                                Select your items and manage your cart with ease.
+                            </p>
+                        </div>
+
+                        <div>
+                            💳 <strong>Checkout Securely</strong>
+                            <p class="text-sm text-muted-foreground">
+                                Complete your purchase with a fast and secure checkout.
+                            </p>
                         </div>
                     </div>
+                </section>
 
-                    <div class="">
-                        <h1>Built for Everyone</h1>
-                        <p>Whether you're a student, teacher, or hobbyist — Recycle Rush is a place to express your
-                            creativity
-                            and help the planet.</p>
+                <!-- Value proposition -->
+                <section class="text-center space-y-4">
+                    <h2 class="text-2xl font-semibold">
+                        Why Shop With Us?
+                    </h2>
+
+                    <p class="text-muted-foreground">
+                        We focus on quality, simplicity, and a smooth shopping experience —
+                        from browsing to delivery.
+                    </p>
+                </section>
+
+                <!-- Call to action -->
+                <footer class="text-center space-y-4">
+                    <h2 class="text-2xl font-semibold">
+                        Ready to Start Shopping?
+                    </h2>
+
+                    <p class="text-muted-foreground">
+                        Create an account or start browsing products today.
+                    </p>
+
+                    <div class="flex justify-center">
+                        <Button variant="primary">Create an Account</Button>
                     </div>
-                </div>
-                <footer>
-                    <h1>Ready to Make a Change?</h1>
-                    <p>Join Recycle Rush and take the first step toward a cleaner, greener tomorrow.</p>
-                    <Button>Sign Up for Free</Button>
                 </footer>
-
-
             </main>
+
         </div>
         <div class="hidden h-14.5 lg:block"></div>
     </div>
