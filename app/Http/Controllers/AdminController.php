@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,6 +18,10 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $categories = Category::count();
+        $allProducts = Product::count();
+        $activeProducts = Product::where('is_active', '1')->count();
+
 
         $admins = User::where('role', 'admin')
             ->where('id', '!=', auth()->id()) // exclude the current admin
@@ -28,7 +34,7 @@ class AdminController extends Controller
             ->get();
 
 
-        return Inertia::render('Admin/Admins/Index', ['admins' => $admins]);
+        return Inertia::render('Admin/Admins/Index', ['admins' => $admins, 'categories' => $categories, 'allProducts' => $allProducts, 'activeProducts' => $activeProducts]);
     }
 
 

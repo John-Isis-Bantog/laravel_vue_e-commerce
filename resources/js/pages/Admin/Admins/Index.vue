@@ -50,10 +50,15 @@ interface Admin {
     id: number;
     name: string;
     email: string;
-
+    categories: string,
+    allProducts: string,
+    activeProducts: string
 }
-defineProps<{
+const props = defineProps<{
     admins: Admin[];
+    categories: number[];
+    allProducts: number[];
+    activeProducts: number[];
 }>();
 
 function removeAdmin(id: number) {
@@ -81,9 +86,13 @@ watch(search, (newValue) => {
         <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-5 mx-auto my-2  ">
             <div class="bg-blue-500 p-4 flex justify-center hover:bg-blue-600 rounded-lg lg:w-md lg:min-h-50">
                 <h1>Categories</h1>
-                <span>4 Categories</span>
+                <span>{{ props.categories }} Categories</span>
             </div>
-            <div class="bg-red-500 p-4 flex justify-center hover:bg-red-600 rounded-lg lg:w-md lg:min-h-50">Items</div>
+            <div class="bg-red-500 p-4 flex justify-center hover:bg-red-600 rounded-lg lg:w-md lg:min-h-50">
+                <h1>Products</h1>
+                <p>Active Porducts {{ props.activeProducts }}</p>
+                <p>All Products{{ props.allProducts }}</p>
+            </div>
             <div class="bg-green-500 p-4 flex justify-center hover:bg-green-600 rounded-lg lg:w-md lg:min-h-50 ">
                 <div class="">
                     <h1>Total Orders</h1>
