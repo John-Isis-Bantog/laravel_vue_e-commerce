@@ -103,7 +103,6 @@ watch(search, (newValue) => {
                 <div class="flex">
                     <Input type="search" v-model="search" placeholder="Search by Name or Email"></Input>
                     <Link :href="adminRoute.index().url"><Button variant="primary">Clear</Button></Link>
-                    <Button>Submit</Button>
                 </div>
 
                 <Link :href="adminRoute.create()"><Button>Add admin</Button></Link>

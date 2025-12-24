@@ -12,9 +12,16 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $search = $request->input('search');
+
+        $categories = Category::when($search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%");
+            });
+        })
+            ->get();
         return Inertia::render('Admin/Category/Index', ['category' => $categories]);
     }
 

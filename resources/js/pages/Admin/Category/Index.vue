@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 
 import Button from '@/components/ui/button/Button.vue';
+import Input from '@/components/ui/input/Input.vue';
 import Table from '@/components/ui/table/Table.vue';
 import TableBody from '@/components/ui/table/TableBody.vue';
 import TableCell from '@/components/ui/table/TableCell.vue';
@@ -11,6 +12,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import categoryRoute from '@/routes/category';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -36,6 +38,10 @@ function deleteCategory(id: number) {
 
     router.delete(categoryRoute.destroy(id).url)
 }
+const search = ref('');
+watch(search, (newValue) => {
+    router.get(categoryRoute.index().url, { search: newValue }, { preserveState: true, replace: true })
+})
 </script>
 
 
@@ -49,6 +55,10 @@ function deleteCategory(id: number) {
             <div class="">
                 <Link :href="categoryRoute.create()"><Button>Add Category</Button></Link>
             </div>
+        </div>
+        <div class="flex w-1/2 mx-auto">
+            <Input type="text" v-model="search"></Input>
+            <Link :href="categoryRoute.index()"><Button>Clear</Button></Link>
         </div>
         <Table>
             <TableHeader>
