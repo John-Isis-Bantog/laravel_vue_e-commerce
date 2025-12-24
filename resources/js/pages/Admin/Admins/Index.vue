@@ -4,7 +4,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { Chart, PieController, ArcElement } from 'chart.js';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import {
     Table,
     TableBody,
@@ -51,7 +51,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface Admin {
     id: number;
     name: string;
-    email: string
+    email: string;
+
 }
 defineProps<{
     admins: Admin[];
@@ -59,15 +60,21 @@ defineProps<{
 
 function removeAdmin(id: number) {
     if (!confirm('Are you sure you want to delete this user?')) return;
-
     router.delete(adminRoute.destroy(id))
 }
+
+const search = ref('');
+
+watch(search, (newValue) => {
+    router.get(adminRoute.index().url, { search: newValue }, { preserveState: true, replace: true })
+})
 </script>
 
 <template>
 
     <Head title="Dashboard" />
     <AppLayout :breadcrumbs="breadcrumbs">
+
         <h1 class="text-center">Admin Dashboard</h1>
         <!-- <div class="w-1/2 h-1/2 flex justify-center  mx-auto">
             <canvas id="pieChart" ref="ctxPie"></canvas>
@@ -94,7 +101,7 @@ function removeAdmin(id: number) {
         <div class="">
             <div class="flex justify-between max-w-3/4 mx-auto">
                 <div class="flex">
-                    <Input type="search" placeholder="Search by Name or Email"></Input>
+                    <Input type="search" v-model="search" placeholder="Search by Name or Email"></Input>
                     <Link :href="adminRoute.index().url"><Button variant="primary">Clear</Button></Link>
                     <Button>Submit</Button>
                 </div>

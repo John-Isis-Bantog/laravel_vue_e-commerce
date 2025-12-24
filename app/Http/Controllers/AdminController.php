@@ -13,11 +13,22 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $admins = User::where('role', 'admin')->get();
+        $search = $request->input('search');
+
+        $admins = User::where('role', 'admin')
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('email', 'LIKE', "%{$search}%");
+                });
+            })
+            ->get();
+
         return Inertia::render('Admin/Admins/Index', ['admins' => $admins]);
     }
+
 
     /**
      * Show the form for creating a new resource.
