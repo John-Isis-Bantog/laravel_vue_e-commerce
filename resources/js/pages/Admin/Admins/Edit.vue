@@ -28,8 +28,6 @@ const form = useForm({
     email: props.admin.email
 })
 function updateAdmin($id: number) {
-    form.name
-    form.email
     form.put(adminRoute.update($id).url)
 }
 </script>
