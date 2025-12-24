@@ -15,7 +15,8 @@ class HomeRedirectController extends Controller
 
         return match ($user->role) {
             'admin' => redirect()->route('admin.index'),
-            default => redirect()->route('dashboard'),
+            'customer' => redirect()->route('user.index'),
+            default => abort(403, 'Unauthorized role'),
         };
     }
 }

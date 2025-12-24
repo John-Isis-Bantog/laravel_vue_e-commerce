@@ -11,7 +11,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
@@ -19,11 +19,12 @@ import AppLogo from './AppLogo.vue';
 import admin from '@/routes/admin';
 import category from '@/routes/category';
 import product from '@/routes/product';
+import user from '@/routes/user';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
-        href: dashboard(),
+        title: 'user.index',
+        href: user.index(),
         icon: LayoutGrid,
     },
     {
@@ -79,7 +80,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="dashboard()">
+                        <Link :href="user.index()">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>

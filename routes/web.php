@@ -16,12 +16,9 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware(['auth'])->group(function () {
     Route::resource('user', customerController::class);
-    Route::get('/home', HomeRedirectController::class)->name('homeRedirect')->middleware('auth');
+    Route::get('/home', HomeRedirectController::class)->name('homeRedirect');
 });
 Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::resource('admin', AdminController::class)->except('show');
