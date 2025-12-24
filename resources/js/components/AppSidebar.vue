@@ -20,11 +20,12 @@ import admin from '@/routes/admin';
 import category from '@/routes/category';
 import product from '@/routes/product';
 import user from '@/routes/user';
+import { dashboard } from '@/routes';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'user.index',
-        href: user.index(),
+        title: 'Dashboard',
+        href: dashboard().url,
         icon: LayoutGrid,
     },
     {
@@ -80,7 +81,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="user.index()">
+                        <Link :href="dashboard()">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>

@@ -17,10 +17,11 @@ import Button from '@/components/ui/button/Button.vue';
 import adminRoute from '@/routes/admin';
 import Input from '@/components/ui/input/Input.vue';
 import user from '@/routes/user';
+import { dashboard } from '@/routes';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'User',
-        href: user.index().url,
+        href: dashboard().url,
     },
 ];
 
