@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\customerController;
+use App\Http\Controllers\HomeRedirectController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::get('dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware(['auth'])->group(function () {
     Route::resource('user', customerController::class);
+    Route::get('/home', HomeRedirectController::class)->name('homeRedirect')->middleware('auth');
 });
 Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::resource('admin', AdminController::class)->except('show');
