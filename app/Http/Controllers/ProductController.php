@@ -13,9 +13,17 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $search = $request->input('search');
+
+        $products = Product::when($search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%");
+            });
+        })
+            ->get();
         return Inertia::render('Admin/Products/Index', ['products' => $products]);
     }
 

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import Button from '@/components/ui/button/Button.vue';
+import Input from '@/components/ui/input/Input.vue';
 import Table from '@/components/ui/table/Table.vue';
 import TableBody from '@/components/ui/table/TableBody.vue';
 import TableCell from '@/components/ui/table/TableCell.vue';
@@ -10,6 +11,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import productRoute from '@/routes/product';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
 
 
 
@@ -36,6 +38,12 @@ const props = defineProps<{
 function deleteProduct($id: number) {
     router.delete(productRoute.destroy($id));
 }
+
+const search = ref('');
+
+watch(search, (Newvalue) => {
+    router.get(productRoute.index(), { search: Newvalue }, { preserveState: true, replace: true })
+})
 </script>
 
 <template>
@@ -48,16 +56,20 @@ function deleteProduct($id: number) {
             </div>
 
         </div>
-
+        <div class="flex w-1/2 mx-auto">
+            <Input type="text" v-model="search"></Input>
+            <Link :href="productRoute.index()"><Button>Clear</Button></Link>
+        </div>
         <Table>
             <TableHeader>
                 <TableRow>
                     <TableHead>ID</TableHead>
                     <TableHead>Title</TableHead>
+                    <TableHead>Description</TableHead>
                     <TableHead>Image</TableHead>
                     <TableHead>Active</TableHead>
                     <TableHead>Price</TableHead>
-                    <TableHead>Description</TableHead>
+
                     <TableHead>Action</TableHead>
 
                 </TableRow>
@@ -66,10 +78,11 @@ function deleteProduct($id: number) {
                 <TableRow v-for="product in products">
                     <TableCell>{{ product.id }}</TableCell>
                     <TableCell>{{ product.name }}</TableCell>
+                    <TableCell>{{ product.description }}</TableCell>
                     <TableCell><img :src="product.image" v-if="product.image" alt=""><span v-else>N/A</span></TableCell>
                     <TableCell>{{ product.is_active ? 'Yes' : 'No' }}</TableCell>
                     <TableCell>{{ product.price }}</TableCell>
-                    <TableCell>{{ product.description }}</TableCell>
+
                     <TableCell>
                         <Link :href="productRoute.edit(product.id)"><Button variant="primary">Edit</Button></Link>
                         <Button variant="destructive" @click="deleteProduct(product.id)">Delete</Button>
