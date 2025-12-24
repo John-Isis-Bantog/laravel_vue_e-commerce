@@ -31,10 +31,10 @@ interface Product {
     image: File | null,
 }
 
-const formData = useForm({
+const formData = useForm<Product>({
     name: '',
     description: '',
-    price: '',
+    price: 0,
     is_active: '0',
     image: null,
 

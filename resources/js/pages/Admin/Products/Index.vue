@@ -75,7 +75,7 @@ watch(search, (Newvalue) => {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow v-for="product in products">
+                <TableRow v-for="product in props.products" :key="product.id">
                     <TableCell>{{ product.id }}</TableCell>
                     <TableCell>{{ product.name }}</TableCell>
                     <TableCell>{{ product.description }}</TableCell>
