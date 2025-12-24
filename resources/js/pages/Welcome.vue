@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Button from '@/components/ui/button/Button.vue';
 import HeroSection from '@/Landing/HeroSection.vue';
 import HowItWorks from '@/Landing/HowItWorks.vue';
 import LandingFooter from '@/Landing/LandingFooter.vue';

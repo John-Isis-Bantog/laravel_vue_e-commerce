@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
-import { Chart, PieController, ArcElement } from 'chart.js';
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, watch } from 'vue';
 import {
     Table,
     TableBody,
@@ -16,7 +14,6 @@ import {
 import Button from '@/components/ui/button/Button.vue';
 import adminRoute from '@/routes/admin';
 import Input from '@/components/ui/input/Input.vue';
-import user from '@/routes/user';
 import { dashboard } from '@/routes';
 const breadcrumbs: BreadcrumbItem[] = [
     {

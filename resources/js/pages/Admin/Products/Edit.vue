@@ -12,7 +12,7 @@ import Textarea from '@/components/ui/textarea/Textarea.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import productRoute from '@/routes/product';
 import { BreadcrumbItem } from '@/types';
-import { Form, Head, router, useForm } from '@inertiajs/vue3';
+import { Form, Head, useForm } from '@inertiajs/vue3';
 
 
 

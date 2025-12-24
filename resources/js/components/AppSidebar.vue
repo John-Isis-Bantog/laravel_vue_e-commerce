@@ -19,7 +19,6 @@ import AppLogo from './AppLogo.vue';
 import admin from '@/routes/admin';
 import category from '@/routes/category';
 import product from '@/routes/product';
-import user from '@/routes/user';
 import { dashboard } from '@/routes';
 
 const mainNavItems: NavItem[] = [
