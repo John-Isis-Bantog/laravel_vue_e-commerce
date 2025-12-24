@@ -18,6 +18,7 @@ class AdminController extends Controller
         $search = $request->input('search');
 
         $admins = User::where('role', 'admin')
+            ->where('id', '!=', auth()->id()) // exclude the current admin
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'LIKE', "%{$search}%")
@@ -25,6 +26,7 @@ class AdminController extends Controller
                 });
             })
             ->get();
+
 
         return Inertia::render('Admin/Admins/Index', ['admins' => $admins]);
     }
@@ -88,7 +90,11 @@ class AdminController extends Controller
     public function destroy(string $id)
     {
         $admin = User::where('role', 'admin')->findOrFail($id);
+        if (auth()->id() == $admin->id) {
+            abort(403, 'You cannot delete your own account!');
+        }
+
         $admin->delete();
-        return redirect()->route('admin.index')->with('success', 'admin has been deleted successfully!');
+        return redirect()->route('admin.index')->with('success', 'Admin Has Been Deleted Successfully!');
     }
 }
