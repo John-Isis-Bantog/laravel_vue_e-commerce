@@ -15,12 +15,19 @@ import Button from '@/components/ui/button/Button.vue';
 import adminRoute from '@/routes/admin';
 import Input from '@/components/ui/input/Input.vue';
 import { dashboard } from '@/routes';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card'
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'User',
         href: dashboard().url,
     },
 ];
+
 
 // const ctxPie = ref<HTMLCanvasElement | null>(null);
 // Chart.register(PieController, ArcElement)
@@ -77,33 +84,51 @@ watch(search, (newValue) => {
 
     <Head title="Dashboard" />
     <AppLayout :breadcrumbs="breadcrumbs">
-
         <h1 class="text-center">Admin Dashboard</h1>
         <!-- <div class="w-1/2 h-1/2 flex justify-center  mx-auto">
             <canvas id="pieChart" ref="ctxPie"></canvas>
         </div> -->
 
-        <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-5 mx-auto my-2  ">
-            <div class="bg-blue-500 p-4 flex justify-center hover:bg-blue-600 rounded-lg lg:w-md lg:min-h-50">
-                <h1>Categories</h1>
-                <span>{{ props.categories }} Categories</span>
-            </div>
-            <div class="bg-red-500 p-4 flex justify-center hover:bg-red-600 rounded-lg lg:w-md lg:min-h-50">
-                <h1>Products</h1>
-                <p>Active Porducts {{ props.activeProducts }}</p>
-                <p>All Products{{ props.allProducts }}</p>
-            </div>
-            <div class="bg-green-500 p-4 flex justify-center hover:bg-green-600 rounded-lg lg:w-md lg:min-h-50 ">
-                <div class="">
-                    <h1>Total Orders</h1>
-                </div>
-                <div class=""><span>4 Orders</span></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-2">
+            <Card class="w-full max-w-sm">
+                <CardHeader>
+                    <CardTitle class="text-center">Categories</CardTitle>
+                </CardHeader>
+                <CardContent class="text-center">
+                    <span>{{ props.categories }} Categories</span>
+                </CardContent>
+            </Card>
 
-            </div>
-            <div class="bg-cyan-500 p-4 flex justify-center hover:bg-cyan-600 rounded-lg lg:w-md lg:min-h-50">
-                <h1>Revenue</h1>
-                <span>$120</span>
-            </div>
+            <Card class="w-full max-w-sm">
+                <CardHeader>
+                    <CardTitle class="text-center">Products</CardTitle>
+
+                </CardHeader>
+                <CardContent class="text-center">
+                    <span>Active Products {{ props.activeProducts }} </span>
+                    <span>All Products{{ props.activeProducts }} </span>
+                </CardContent>
+            </Card>
+
+            <Card class="w-full max-w-sm">
+                <CardHeader>
+                    <CardTitle class="text-center">Total Orders</CardTitle>
+
+                </CardHeader>
+                <CardContent class="text-center">
+                    <span>4 Orders</span>
+                </CardContent>
+            </Card>
+
+            <Card class="w-full max-w-sm">
+                <CardHeader>
+                    <CardTitle class="text-center">Revenue</CardTitle>
+
+                </CardHeader>
+                <CardContent class="text-center">
+                    <span>$120</span>
+                </CardContent>
+            </Card>
         </div>
         <div class="">
             <div class="flex justify-between max-w-3/4 mx-auto">
