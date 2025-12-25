@@ -2,7 +2,19 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
+import { Button } from '@/components/ui/button'
+import {
+    Card,
+    CardAction,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -11,6 +23,16 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: dashboard().url,
     },
 ];
+
+interface Product {
+    id: number,
+    name: string,
+    description: string,
+    image: File | null,
+    price: number
+}
+
+
 </script>
 
 <template>
@@ -18,79 +40,46 @@ const breadcrumbs: BreadcrumbItem[] = [
     <Head title="Dashboard" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <h1 class="text-center">Dashboard</h1>
-        <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-            <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
-
-            <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                <div class="group relative">
-                    <img src="https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg"
-                        alt="Front of men&#039;s Basic Tee in black."
-                        class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80" />
-                    <div class="mt-4 flex justify-between">
-                        <div>
-                            <h3 class="text-sm text-gray-700">
-                                <a href="#">
-                                    <span aria-hidden="true" class="absolute inset-0"></span>
-                                    Basic Tee
-                                </a>
-                            </h3>
-                            <p class="mt-1 text-sm text-gray-500">Black</p>
-                        </div>
-                        <p class="text-sm font-medium text-gray-900">$35</p>
-                    </div>
-                </div>
-                <div class="group relative">
-                    <img src="https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-02.jpg"
-                        alt="Front of men&#039;s Basic Tee in white."
-                        class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80" />
-                    <div class="mt-4 flex justify-between">
-                        <div>
-                            <h3 class="text-sm text-gray-700">
-                                <a href="#">
-                                    <span aria-hidden="true" class="absolute inset-0"></span>
-                                    Basic Tee
-                                </a>
-                            </h3>
-                            <p class="mt-1 text-sm text-gray-500">Aspen White</p>
-                        </div>
-                        <p class="text-sm font-medium text-gray-900">$35</p>
-                    </div>
-                </div>
-                <div class="group relative">
-                    <img src="https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-03.jpg"
-                        alt="Front of men&#039;s Basic Tee in dark gray."
-                        class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80" />
-                    <div class="mt-4 flex justify-between">
-                        <div>
-                            <h3 class="text-sm text-gray-700">
-                                <a href="#">
-                                    <span aria-hidden="true" class="absolute inset-0"></span>
-                                    Basic Tee
-                                </a>
-                            </h3>
-                            <p class="mt-1 text-sm text-gray-500">Charcoal</p>
-                        </div>
-                        <p class="text-sm font-medium text-gray-900">$35</p>
-                    </div>
-                </div>
-                <div class="group relative">
-                    <img src="https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg"
-                        alt="Front of men&#039;s Artwork Tee in peach with white and brown dots forming an isometric cube."
-                        class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80" />
-                    <div class="mt-4 flex justify-between">
-                        <div>
-                            <h3 class="text-sm text-gray-700">
-                                <a href="#">
-                                    <span aria-hidden="true" class="absolute inset-0"></span>
-                                    Artwork Tee
-                                </a>
-                            </h3>
-                            <p class="mt-1 text-sm text-gray-500">Iso Dots</p>
-                        </div>
-                        <p class="text-sm font-medium text-gray-900">$35</p>
-                    </div>
-                </div>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <Link>
+                <Card class="w-full max-w-sm">
+                    <CardHeader>
+                        <CardTitle>Title</CardTitle>
+                        <CardDescription>
+                            Description
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        price
+                    </CardContent>
+                </Card>
+            </Link>
+            <Link>
+                <Card class="w-full max-w-sm">
+                    <CardHeader>
+                        <CardTitle>Title</CardTitle>
+                        <CardDescription>
+                            Description
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        price
+                    </CardContent>
+                </Card>
+            </Link>
+            <Link>
+                <Card class="w-full max-w-sm">
+                    <CardHeader>
+                        <CardTitle>Title</CardTitle>
+                        <CardDescription>
+                            Description
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        price
+                    </CardContent>
+                </Card>
+            </Link>
         </div>
     </AppLayout>
 </template>
