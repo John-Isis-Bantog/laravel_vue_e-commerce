@@ -40,12 +40,13 @@ const props = defineProps<{
             <Link :href="user.show(product.id)" v-for="product in props.products" :key="product.id">
                 <Card class="w-full max-w-sm">
                     <CardHeader>
-                        <CardTitle>{{ product.name }}</CardTitle>
+                        <CardTitle class="text-center">{{ product.name }}</CardTitle>
+                        <img v-if="product.image" :src="product.image" alt=""><span v-else>No Picture Available</span>
                         <CardDescription>
                             {{ product.description }}
                         </CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent class="text-center">
                         {{ product.price }}
                     </CardContent>
                 </Card>
