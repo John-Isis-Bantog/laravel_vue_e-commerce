@@ -17,7 +17,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('user', customerController::class);
+    Route::resource('user', customerController::class)->only('index', 'show');
     Route::get('/home', HomeRedirectController::class)->name('homeRedirect');
     Route::get('/dashboard', [customerController::class, 'index'])->name('dashboard');
 });
