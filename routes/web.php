@@ -4,7 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\customerController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeRedirectController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middleware\IsAdmin;
@@ -20,13 +20,12 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('user')->group(function () {
-        Route::resource('user', customerController::class)->only('index', 'show');
+        Route::resource('user', CustomerController::class)->only('index', 'show');
         Route::resource('cart', CartController::class);
         Route::resource('checkout', CheckoutController::class);
     });
-
     Route::get('/home', HomeRedirectController::class)->name('homeRedirect');
-    Route::get('/dashboard', [customerController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [CustomerController::class, 'index'])->name('dashboard');
 });
 Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::resource('admin', AdminController::class)->except('show');

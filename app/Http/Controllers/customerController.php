@@ -6,7 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class customerController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
