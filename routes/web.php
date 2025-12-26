@@ -19,9 +19,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('user', customerController::class);
     Route::get('/home', HomeRedirectController::class)->name('homeRedirect');
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [customerController::class, 'index'])->name('dashboard');
 });
 Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::resource('admin', AdminController::class)->except('show');

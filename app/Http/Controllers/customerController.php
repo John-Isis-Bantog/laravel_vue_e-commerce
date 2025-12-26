@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -12,7 +13,8 @@ class customerController extends Controller
      */
     public function index()
     {
-        return Inertia::render('User/Dashboard');
+        $products = Product::get();
+        return Inertia::render('Dashboard', ['products' => $products]);
     }
 
     /**
