@@ -18,7 +18,7 @@ import { ref, watch } from 'vue';
 interface Product {
     id: number,
     name: string,
-    image: File | null,
+    image: string | null,
     is_active: boolean,
     description: string,
     price: number
@@ -69,9 +69,7 @@ watch(search, (Newvalue) => {
                     <TableHead>Image</TableHead>
                     <TableHead>Active</TableHead>
                     <TableHead>Price</TableHead>
-
                     <TableHead>Action</TableHead>
-
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -79,7 +77,9 @@ watch(search, (Newvalue) => {
                     <TableCell>{{ product.id }}</TableCell>
                     <TableCell>{{ product.name }}</TableCell>
                     <TableCell>{{ product.description }}</TableCell>
-                    <TableCell><img :src="product.image" v-if="product.image" alt=""><span v-else>N/A</span></TableCell>
+                    <TableCell><img :src="product.image" v-if="product.image" alt=""><span v-else><img
+                                src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
+                                alt=""></span></TableCell>
                     <TableCell>{{ product.is_active ? 'Yes' : 'No' }}</TableCell>
                     <TableCell>{{ product.price }}</TableCell>
 
