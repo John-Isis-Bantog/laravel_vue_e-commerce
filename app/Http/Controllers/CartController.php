@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -11,7 +12,20 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+
+        $validated = $request->validate([
+            'id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1|max:5'
+        ]);
+        $product = Product::findOrFail($validated['id']);
+
+        auth()->user()->cartItems()->create([
+            'product_id' => $product->id,
+            'quantity' => $validated['quantity']
+        ]);
+
+
+        return back()->with('success', 'Added to Cart');
     }
 
     /**

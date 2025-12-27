@@ -6,11 +6,13 @@ import CardDescription from '@/components/ui/card/CardDescription.vue';
 import CardFooter from '@/components/ui/card/CardFooter.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
+import Input from '@/components/ui/input/Input.vue';
+import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import cart from '@/routes/cart';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Form, Head, Link, useForm } from '@inertiajs/vue3';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -24,21 +26,24 @@ interface Product {
     name: string,
     description: string,
     price: number,
-    image: string
+    image: string,
+    quantity: number
+}
+interface cartForm {
+    id: number,
+    quantity: number
 }
 const props = defineProps<{
     product: Product;
 }>()
-const form = useForm<Product>({
+const form = useForm<cartForm>({
     id: props.product.id,
-    name: props.product.name,
-    description: props.product.description,
-    image: props.product.image,
-    price: props.product.price,
+    quantity: 1
 });
 
+
 function addToCart() {
-    // console.log(form.name, form.description, form.price)
+    // console.log(form.quantity)
     form.post(cart.store().url)
 }
 </script>
@@ -49,16 +54,18 @@ function addToCart() {
         <div class="flex justify-center w-full">
             <Card class="min-w-2xl">
                 <CardHeader>
-                    <img v-if="form.image" :src="form.image" alt=""><span v-else><img
+                    <img v-if="props.product.image" :src="props.product.image" alt=""><span v-else><img
                             src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                             alt=""></span>
-                    <CardTitle>{{ form.name }}</CardTitle>
+                    <CardTitle>{{ props.product.name }}</CardTitle>
                     <CardDescription>
-                        {{ form.description }}
+                        {{ props.product.description }}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    ₱{{ form.price }}
+                    ₱{{ props.product.price }}
+                    <Label for="quantity">quantity</Label>
+                    <Input type="number" min="1" v-model="form.quantity" max="5"></Input>
                 </CardContent>
                 <CardFooter class="flex justify-center space-x-2">
                     <Button type="submit" @click="addToCart">Add to Cart</Button>
