@@ -33,6 +33,7 @@ import { getInitials } from '@/composables/useInitials';
 import { toUrl, urlIsActive } from '@/lib/utils';
 import { dashboard } from '@/routes';
 import admin from '@/routes/admin';
+import cart from '@/routes/cart';
 import category from '@/routes/category';
 import product from '@/routes/product';
 import type { BreadcrumbItem, NavItem } from '@/types';
@@ -82,6 +83,11 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Product Index',
         href: product.index(),
+        icon: LayoutGrid,
+    },
+    {
+        title: 'Cart',
+        href: cart.index(),
         icon: LayoutGrid,
     },
 ];
