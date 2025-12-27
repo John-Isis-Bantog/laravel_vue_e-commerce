@@ -41,7 +41,9 @@ const props = defineProps<{
                 <Card class="w-full max-w-sm">
                     <CardHeader>
                         <CardTitle class="text-center">{{ product.name }}</CardTitle>
-                        <img v-if="product.image" :src="product.image" alt=""><span v-else>No Picture Available</span>
+                        <img v-if="product.image" :src="product.image" alt=""><span v-else><img
+                                src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
+                                alt=""></span>
                         <CardDescription>
                             {{ product.description }}
                         </CardDescription>
