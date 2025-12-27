@@ -21,7 +21,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::resource('user', CustomerController::class)->only('index', 'show');
-        Route::resource('cart', CartController::class);
+        Route::resource('cart', CartController::class)->only('store', 'destroy');
         Route::resource('checkout', CheckoutController::class);
     });
     Route::get('/home', HomeRedirectController::class)->name('homeRedirect');
