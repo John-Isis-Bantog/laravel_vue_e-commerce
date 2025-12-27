@@ -7,6 +7,7 @@ import CardFooter from '@/components/ui/card/CardFooter.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import cart from '@/routes/cart';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/vue3';
@@ -35,6 +36,11 @@ const form = useForm<Product>({
     image: props.product.image,
     price: props.product.price,
 });
+
+function addToCart() {
+    // console.log(form.name, form.description, form.price)
+    form.post(cart.store().url)
+}
 </script>
 <template>
 
@@ -55,10 +61,8 @@ const form = useForm<Product>({
                     ₱{{ form.price }}
                 </CardContent>
                 <CardFooter class="flex justify-center space-x-2">
-
-                    <Button type="submit">Add to Cart</Button>
+                    <Button type="submit" @click="addToCart">Add to Cart</Button>
                     <Link> <Button type="submit">Buy</Button></Link>
-
                 </CardFooter>
             </Card>
         </div>
