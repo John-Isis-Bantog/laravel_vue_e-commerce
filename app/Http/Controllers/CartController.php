@@ -17,12 +17,20 @@ class CartController extends Controller
             'id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1|max:5'
         ]);
+        $user = auth()->user();
         $product = Product::findOrFail($validated['id']);
+        $cartItem = $user->cartItems()->where('product_id', $product->id)->first();
 
-        auth()->user()->cartItems()->create([
-            'product_id' => $product->id,
-            'quantity' => $validated['quantity']
-        ]);
+        if ($cartItem) {
+            $cartItem->update([
+                'quantity' => $cartItem->quantity + $validated['quantity']
+            ]);
+        } else {
+            $user->cartItems()->create([
+                'product_id' => $product->id,
+                'quantity' => $validated['quantity']
+            ]);
+        }
 
 
         return back()->with('success', 'Added to Cart');
