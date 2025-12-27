@@ -40,16 +40,17 @@ const props = defineProps<{
             <Link :href="user.show(product.id)" v-for="product in props.products" :key="product.id">
                 <Card class="w-full max-w-sm">
                     <CardHeader>
-                        <CardTitle class="text-center">{{ product.name }}</CardTitle>
+
                         <img v-if="product.image" :src="product.image" alt=""><span v-else><img
                                 src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                                 alt=""></span>
+                        <CardTitle>{{ product.name }}</CardTitle>
                         <CardDescription>
                             {{ product.description }}
                         </CardDescription>
                     </CardHeader>
                     <CardContent class="text-center">
-                        {{ product.price }}
+                        ₱{{ product.price }}
                     </CardContent>
                 </Card>
             </Link>

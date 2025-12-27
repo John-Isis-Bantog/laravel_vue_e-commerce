@@ -43,13 +43,15 @@ const form = useForm<Product>({
         <div class="flex justify-center w-full">
             <Card class="min-w-2xl">
                 <CardHeader>
-                    <img v-if="form.image" :src="form.image" alt=""><span v-else>No Picture Available</span>
-                    <CardTitle class="text-center">{{ form.name }}</CardTitle>
+                    <img v-if="form.image" :src="form.image" alt=""><span v-else><img
+                            src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
+                            alt=""></span>
+                    <CardTitle>{{ form.name }}</CardTitle>
                     <CardDescription>
                         {{ form.description }}
                     </CardDescription>
                 </CardHeader>
-                <CardContent class="text-center">
+                <CardContent>
                     ₱{{ form.price }}
                 </CardContent>
                 <CardFooter class="flex justify-center space-x-2">
