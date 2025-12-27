@@ -9,6 +9,7 @@ import CardTitle from '@/components/ui/card/CardTitle.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import { dashboard } from '@/routes';
 import cart from '@/routes/cart';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
@@ -52,6 +53,7 @@ function addToCart() {
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex justify-center w-full">
+            <Link :href="dashboard()"><Button>Back</Button></Link>
             <Card class="min-w-2xl">
                 <CardHeader>
                     <img v-if="props.product.image" :src="props.product.image" alt=""><span v-else><img
