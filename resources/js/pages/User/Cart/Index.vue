@@ -12,6 +12,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
+import { Minus, Plus } from 'lucide-vue-next';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -23,6 +24,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface CartItem {
     id: number,
     product_id: number,
+    quantity: number,
     product: {
         name: string,
         description: string,
@@ -61,12 +63,23 @@ const props = defineProps<{
                         {{ cartItem.product.description }}
                     </CardDescription>
                 </CardHeader>
-                <CardContent class="text-center ">
-                    ₱{{ cartItem.product.price }}
+                <CardContent class="text-center flex justify-between">
+                    <div class="">₱{{ cartItem.product.price }}</div>
+                    <div class="flex gap-2 justify-around">
+                        <div class="">
+                            <Minus />
+                        </div>
+                        <div class="flex w-15">
+                            <Input type="number" v-model="cartItem.quantity"></Input>
+                        </div>
+
+                        <div class="">
+                            <Plus />
+                        </div>
+                    </div>
 
                 </CardContent>
                 <CardFooter class="flex justify-center">
-                    <Button>Edit</Button>
                     <Button>Delete</Button>
                 </CardFooter>
                 <!-- </Link> -->
