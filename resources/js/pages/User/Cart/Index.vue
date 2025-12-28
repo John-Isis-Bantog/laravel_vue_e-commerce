@@ -17,6 +17,22 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: user.index().url,
     },
 ];
+
+interface CartItem {
+    id: number,
+    product_id: number,
+    product: {
+        name: string,
+        description: string,
+        price: number,
+        image: string
+    }
+
+}
+
+const props = defineProps<{
+    cartItems: CartItem[]
+}>()
 </script>
 
 <template>
@@ -26,19 +42,19 @@ const breadcrumbs: BreadcrumbItem[] = [
         <h1 class="text-center">Dashboard</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
 
-            <Card class="w-full max-w-sm">
+            <Card v-for="cartItem in props.cartItems" class="w-full max-w-sm" :key="cartItem.id">
                 <CardHeader>
 
-                    <img src="" alt=""><span><img
+                    <img v-if="cartItem.product.image" :src="cartItem.product.image" alt=""><span v-else><img
                             src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                             alt=""></span>
-                    <CardTitle>{{ }}</CardTitle>
+                    <CardTitle>{{ cartItem.product.name }}</CardTitle>
                     <CardDescription>
-                        {{ }}
+                        {{ cartItem.product.description }}
                     </CardDescription>
                 </CardHeader>
                 <CardContent class="text-center">
-                    ₱{{ }}
+                    ₱{{ cartItem.product.price }}
                 </CardContent>
                 <CardFooter>
                     <Button>Edit</Button>

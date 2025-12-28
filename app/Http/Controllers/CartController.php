@@ -14,9 +14,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        $cartItem = CartItem::with('product')->get();
-        dd($cartItem);
+        $user = auth()->user()->id;
+        $cartItem = CartItem::where('user_id', $user)->with('product')->get();
         return Inertia::render('User/Cart/Index', ['cartItems' => $cartItem]);
     }
     public function store(Request $request)
