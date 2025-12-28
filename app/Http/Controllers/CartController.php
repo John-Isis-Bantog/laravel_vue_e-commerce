@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,7 +14,10 @@ class CartController extends Controller
      */
     public function index()
     {
-        return Inertia::render('User/Cart/Index');
+        $user = auth()->user();
+        $cartItem = CartItem::with('product')->get();
+        dd($cartItem);
+        return Inertia::render('User/Cart/Index', ['cartItems' => $cartItem]);
     }
     public function store(Request $request)
     {
