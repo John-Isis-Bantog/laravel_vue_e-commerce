@@ -91,8 +91,9 @@ const props = defineProps<{
                 <Label for="toggle">All</Label>
             </div>
 
-            <div class="">
-                <h1>Checkout Total: $123</h1>
+            <div class="flex gap-2 items-center">
+                <h1>Subtotal: $123</h1>
+                <Button>Check Out(12)</Button>
             </div>
         </div>
     </AppLayout>
