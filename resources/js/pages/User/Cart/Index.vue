@@ -8,13 +8,15 @@ import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
 import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import Input from '@/components/ui/input/Input.vue';
+import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { changeQuantity } from '@/routes';
 import cart from '@/routes/cart';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { Minus, Plus } from 'lucide-vue-next';
+import { Minus, Plus, Proportions } from 'lucide-vue-next';
+import { reactive, watch } from 'vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -46,12 +48,20 @@ const props = defineProps<{
 // function updateQuantity(id: number) {
 //     form.put(changeQuantity(props.cartItems.product_id))
 // }
+const localCartItems = reactive(
+    props.cartItems.map(item => ({ ...item }))
+)
 function minusQuantity(id: number) {
-    console.log(id)
+    const item = localCartItems.find(i => i.id === id)
+    item.quantity--
 }
 function addQuantity(id: number) {
-    console.log(id)
+    const item = localCartItems.find(i => i.id === id)
+    item.quantity++
 }
+
+
+
 </script>
 
 <template>
@@ -66,7 +76,7 @@ function addQuantity(id: number) {
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
 
-            <Card v-for="cartItem in props.cartItems" class="w-full max-w-sm" :key="cartItem.id">
+            <Card v-for="cartItem in localCartItems" class="w-full max-w-sm" :key="cartItem.id">
                 <!-- <Link :href="user.show(cartItem.id)"> -->
                 <CardHeader>
                     <Checkbox></Checkbox>
