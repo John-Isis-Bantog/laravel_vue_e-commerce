@@ -15,6 +15,7 @@ import cart from '@/routes/cart';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { computed } from '@vue/reactivity';
 import { Minus, Plus, Proportions } from 'lucide-vue-next';
 import { reactive, watch } from 'vue';
 
@@ -29,6 +30,7 @@ interface CartItem {
     id: number,
     product_id: number,
     quantity: number,
+    is_selected: boolean,
     product: {
         name: string,
         description: string,
@@ -41,13 +43,6 @@ interface CartItem {
 const props = defineProps<{
     cartItems: CartItem[]
 }>()
-// const form = useForm({
-//     quantity: props.cartItems.quantity
-// })
-
-// function updateQuantity(id: number) {
-//     form.put(changeQuantity(props.cartItems.product_id))
-// }
 const localCartItems = reactive(
     props.cartItems.map(item => ({ ...item }))
 )
@@ -64,8 +59,16 @@ function addQuantity(id: number) {
     item.quantity++
 }
 
+const totalItem = computed(() => {
+    return localCartItems.filter(item => item.is_selected).length
+});
 
-
+function selectedItem(id: number) {
+    const item = localCartItems.find(item => item.id === id)
+    if (item) {
+        item.is_selected = !item.is_selected
+    }
+}
 </script>
 
 <template>
@@ -83,7 +86,7 @@ function addQuantity(id: number) {
             <Card v-for="cartItem in localCartItems" class="w-full max-w-sm" :key="cartItem.id">
                 <!-- <Link :href="user.show(cartItem.id)"> -->
                 <CardHeader>
-                    <Checkbox></Checkbox>
+                    <Checkbox @click="selectedItem(cartItem.id)"></Checkbox>
                     <img v-if="cartItem.product.image" :src="cartItem.product.image" alt=""><span v-else><img
                             src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                             alt=""></span>
@@ -122,7 +125,7 @@ function addQuantity(id: number) {
 
             <div class="flex gap-2 items-center">
                 <h1>Subtotal: $123</h1>
-                <Button>Check Out(12)</Button>
+                <Button>Check Out({{ totalItem }})</Button>
             </div>
         </div>
     </AppLayout>
