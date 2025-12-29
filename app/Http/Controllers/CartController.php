@@ -44,6 +44,11 @@ class CartController extends Controller
         return back()->with('success', 'Added to Cart');
     }
 
+    public function changeQuantity(Request $request)
+    {
+        dd($request);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

@@ -9,9 +9,11 @@ import CardTitle from '@/components/ui/card/CardTitle.vue';
 import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import Input from '@/components/ui/input/Input.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import { changeQuantity } from '@/routes';
+import cart from '@/routes/cart';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { Minus, Plus } from 'lucide-vue-next';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -37,6 +39,19 @@ interface CartItem {
 const props = defineProps<{
     cartItems: CartItem[]
 }>()
+// const form = useForm({
+//     quantity: props.cartItems.quantity
+// })
+
+// function updateQuantity(id: number) {
+//     form.put(changeQuantity(props.cartItems.product_id))
+// }
+function minusQuantity(id: number) {
+    console.log(id)
+}
+function addQuantity(id: number) {
+    console.log(id)
+}
 </script>
 
 <template>
@@ -67,14 +82,14 @@ const props = defineProps<{
                     <div class="">₱{{ cartItem.product.price }}</div>
                     <div class="flex gap-2 justify-around">
                         <div class="">
-                            <Minus />
+                            <Minus @click="minusQuantity(cartItem.id)" />
                         </div>
                         <div class="flex w-15">
                             <Input type="number" v-model="cartItem.quantity"></Input>
                         </div>
 
                         <div class="">
-                            <Plus />
+                            <Plus @click="addQuantity(cartItem.id)" />
                         </div>
                     </div>
 
