@@ -53,10 +53,14 @@ const localCartItems = reactive(
 )
 function minusQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
-    item.quantity--
+    if (!item) return
+    if (item.quantity > 1) {
+        item.quantity--
+    }
 }
 function addQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
+    if (!item) return
     item.quantity++
 }
 
