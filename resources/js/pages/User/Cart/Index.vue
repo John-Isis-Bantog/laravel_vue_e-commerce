@@ -62,6 +62,10 @@ function addQuantity(id: number) {
 const totalItem = computed(() => {
     return localCartItems.filter(item => item.is_selected).reduce((sum, item) => sum + item.quantity, 0)
 });
+const totalPrice = computed(() => {
+    return localCartItems.filter(item => item.is_selected).reduce((sum, item) => sum + Number(item.product.price), 0)
+});
+
 
 function selectedItem(id: number) {
     const item = localCartItems.find(item => item.id === id)
@@ -124,7 +128,7 @@ function selectedItem(id: number) {
             </div>
 
             <div class="flex gap-2 items-center">
-                <h1>Subtotal: $123</h1>
+                <h1>Subtotal: ${{ totalPrice }}</h1>
                 <Button>Check Out({{ totalItem }})</Button>
             </div>
         </div>
