@@ -60,7 +60,7 @@ function addQuantity(id: number) {
 }
 
 const totalItem = computed(() => {
-    return localCartItems.filter(item => item.is_selected).length
+    return localCartItems.filter(item => item.is_selected).reduce((sum, item) => sum + item.quantity, 0)
 });
 
 function selectedItem(id: number) {
@@ -86,7 +86,7 @@ function selectedItem(id: number) {
             <Card v-for="cartItem in localCartItems" class="w-full max-w-sm" :key="cartItem.id">
                 <!-- <Link :href="user.show(cartItem.id)"> -->
                 <CardHeader>
-                    <Checkbox @click="selectedItem(cartItem.id)"></Checkbox>
+                    <Checkbox v-model="cartItem.is_selected"></Checkbox>
                     <img v-if="cartItem.product.image" :src="cartItem.product.image" alt=""><span v-else><img
                             src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                             alt=""></span>
