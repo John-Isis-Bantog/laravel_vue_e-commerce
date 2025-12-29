@@ -63,7 +63,7 @@ const totalItem = computed(() => {
     return localCartItems.filter(item => item.is_selected).reduce((sum, item) => sum + item.quantity, 0)
 });
 const totalPrice = computed(() => {
-    return localCartItems.filter(item => item.is_selected).reduce((sum, item) => sum + Number(item.product.price), 0)
+    return localCartItems.filter(item => item.is_selected).reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0)
 });
 
 
