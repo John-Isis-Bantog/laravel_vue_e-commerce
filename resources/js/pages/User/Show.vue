@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import Alert from '@/components/ui/alert/Alert.vue';
+import AlertDescription from '@/components/ui/alert/AlertDescription.vue';
+import AlertTitle from '@/components/ui/alert/AlertTitle.vue';
 import Button from '@/components/ui/button/Button.vue';
 import Card from '@/components/ui/card/Card.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
@@ -52,8 +55,17 @@ function addToCart() {
 
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Link :href="dashboard()"><Button>Back</Button></Link>
+        <Alert class=" mx-auto w-1/2" v-if="$page.props.flash?.success || $page.props.flash?.error">
+            <AlertTitle>Info</AlertTitle>
+            <AlertDescription>
+                {{ $page.props.flash.success }}
+                {{ $page.props.flash.error }}
+            </AlertDescription>
+        </Alert>
         <div class="flex justify-center w-full">
-            <Link :href="dashboard()"><Button>Back</Button></Link>
+
+
             <Card class="min-w-2xl">
                 <CardHeader>
                     <img v-if="props.product.image" :src="props.product.image" alt=""><span v-else><img
