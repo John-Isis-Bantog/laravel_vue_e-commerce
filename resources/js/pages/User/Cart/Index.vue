@@ -31,6 +31,7 @@ interface CartItem {
     product_id: number,
     quantity: number,
     is_selected: boolean,
+    is_deleted: boolean,
     product: {
         name: string,
         description: string,
@@ -77,7 +78,11 @@ function selectedItem(id: number) {
 function deleteItemCart(id: number) {
     router.delete(cart.destroy(id), {
         onSuccess: () => {
-            console.log('cart item deleted successfully!');
+            const index = localCartItems.findIndex(item => item.id === id)
+            if (index !== -1) {
+                localCartItems.splice(index, 1);
+            }
+            console.log('cart item delted successfully' + id);
         },
         onError: (errors) => {
             console.log(errors);
