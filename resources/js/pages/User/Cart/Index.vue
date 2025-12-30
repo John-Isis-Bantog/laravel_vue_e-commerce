@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import Alert from '@/components/ui/alert/Alert.vue';
+import AlertDescription from '@/components/ui/alert/AlertDescription.vue';
+import AlertTitle from '@/components/ui/alert/AlertTitle.vue';
 import Button from '@/components/ui/button/Button.vue';
 import Card from '@/components/ui/card/Card.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
@@ -31,7 +34,6 @@ interface CartItem {
     product_id: number,
     quantity: number,
     is_selected: boolean,
-    is_deleted: boolean,
     product: {
         name: string,
         description: string,
@@ -96,6 +98,13 @@ function deleteItemCart(id: number) {
 
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Alert class=" mx-auto w-1/2" v-if="$page.props.flash?.success || $page.props.flash?.error">
+            <AlertTitle>Info</AlertTitle>
+            <AlertDescription>
+                {{ $page.props.flash.success }}
+                {{ $page.props.flash.error }}
+            </AlertDescription>
+        </Alert>
         <h1 class="text-center">Dashboard</h1>
         <div class="flex w-1/2 mx-auto gap-2">
             <Input type="search"></Input>
