@@ -75,8 +75,15 @@ function selectedItem(id: number) {
 }
 
 function deleteItemCart(id: number) {
-    router.delete(cart.destroy(id));
-    console.log(id)
+    router.delete(cart.destroy(id), {
+        onSuccess: () => {
+            console.log('cart item deleted successfully!');
+        },
+        onError: (errors) => {
+            console.log(errors);
+        },
+    }
+    )
 }
 </script>
 
