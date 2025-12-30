@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 
+import Alert from '@/components/ui/alert/Alert.vue';
+import AlertDescription from '@/components/ui/alert/AlertDescription.vue';
+import AlertTitle from '@/components/ui/alert/AlertTitle.vue';
 import Button from '@/components/ui/button/Button.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Table from '@/components/ui/table/Table.vue';
@@ -49,6 +52,13 @@ watch(search, (newValue) => {
 
     <Head title="Category Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Alert class=" mx-auto w-1/2" v-if="$page.props.flash?.success || $page.props.flash?.error">
+            <AlertTitle>Info</AlertTitle>
+            <AlertDescription>
+                {{ $page.props.flash.success }}
+                {{ $page.props.flash.error }}
+            </AlertDescription>
+        </Alert>
         <h1 class="text-center">Admin Category Page</h1>
         <div class="flex justify-between">
             <div class="">title</div>
