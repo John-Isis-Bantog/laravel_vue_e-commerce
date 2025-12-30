@@ -21,6 +21,9 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
+import Alert from '@/components/ui/alert/Alert.vue';
+import AlertTitle from '@/components/ui/alert/AlertTitle.vue';
+import AlertDescription from '@/components/ui/alert/AlertDescription.vue';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'User',
@@ -84,6 +87,13 @@ watch(search, (newValue) => {
 
     <Head title="Dashboard" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Alert class=" mx-auto w-1/2" v-if="$page.props.flash?.success || $page.props.flash?.error">
+            <AlertTitle>Info</AlertTitle>
+            <AlertDescription>
+                {{ $page.props.flash.success }}
+                {{ $page.props.flash.error }}
+            </AlertDescription>
+        </Alert>
         <h1 class="text-center">Admin Dashboard</h1>
         <!-- <div class="w-1/2 h-1/2 flex justify-center  mx-auto">
             <canvas id="pieChart" ref="ctxPie"></canvas>
