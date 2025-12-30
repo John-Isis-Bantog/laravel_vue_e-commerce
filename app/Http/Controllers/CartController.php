@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CartItem;
 use App\Models\Product;
+use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -54,6 +55,8 @@ class CartController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $cartItem = CartItem::findOrFail($id);
+        $cartItem->delete();
+        return redirect()->route('cart.index')->with('success', 'Cart Item Deleted Successfully!');
     }
 }

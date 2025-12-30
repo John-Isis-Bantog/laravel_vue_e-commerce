@@ -14,7 +14,7 @@ import { changeQuantity } from '@/routes';
 import cart from '@/routes/cart';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { computed } from '@vue/reactivity';
 import { Minus, Plus, Proportions } from 'lucide-vue-next';
 import { reactive, watch } from 'vue';
@@ -73,6 +73,11 @@ function selectedItem(id: number) {
         item.is_selected = !item.is_selected
     }
 }
+
+function deleteItemCart(id: number) {
+    router.delete(cart.destroy(id));
+    console.log(id)
+}
 </script>
 
 <template>
@@ -116,7 +121,7 @@ function selectedItem(id: number) {
 
                 </CardContent>
                 <CardFooter class="flex justify-center">
-                    <Button>Delete</Button>
+                    <Button @click="deleteItemCart(cartItem.id)">Delete</Button>
                 </CardFooter>
                 <!-- </Link> -->
             </Card>
