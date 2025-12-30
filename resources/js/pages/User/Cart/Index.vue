@@ -80,9 +80,9 @@ function selectedItem(id: number) {
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <h1 class="text-center">Dashboard</h1>
-        <div class="flex w-1/2 mx-auto">
+        <div class="flex w-1/2 mx-auto gap-2">
             <Input type="search"></Input>
-            <Button>Clear</Button>
+            <Link :href="cart.index()"> <Button>Clear</Button></Link>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
