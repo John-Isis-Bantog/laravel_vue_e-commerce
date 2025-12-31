@@ -69,14 +69,6 @@ const totalPrice = computed(() => {
     return localCartItems.filter(item => item.is_selected).reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0)
 });
 
-
-function selectedItem(id: number) {
-    const item = localCartItems.find(item => item.id === id)
-    if (item) {
-        item.is_selected = !item.is_selected
-    }
-}
-
 function deleteItemCart(id: number) {
     router.delete(cart.destroy(id), {
         onSuccess: () => {
@@ -126,7 +118,7 @@ function deleteItemCart(id: number) {
                     </CardDescription>
                 </CardHeader>
                 <CardContent class="text-center flex justify-between">
-                    <div class="">₱{{ cartItem.product.price }}</div>
+                    <div class="">${{ cartItem.product.price }}</div>
                     <div class="flex gap-2 justify-around">
                         <div class="">
                             <Minus @click="minusQuantity(cartItem.id)" />
