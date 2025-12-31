@@ -66,7 +66,7 @@ watch(search, (Newvalue) => {
             </div>
 
         </div>
-        <div class="flex w-1/2 mx-auto">
+        <div class="flex w-1/2 mx-auto gap-2">
             <Input type="text" v-model="search"></Input>
             <Link :href="productRoute.index()"><Button>Clear</Button></Link>
         </div>
@@ -93,7 +93,7 @@ watch(search, (Newvalue) => {
                     <TableCell>{{ product.is_active ? 'Yes' : 'No' }}</TableCell>
                     <TableCell>{{ product.price }}</TableCell>
 
-                    <TableCell>
+                    <TableCell class="flex gap-2">
                         <Link :href="productRoute.edit(product.id)"><Button variant="primary">Edit</Button></Link>
                         <Button variant="destructive" @click="deleteProduct(product.id)">Delete</Button>
                     </TableCell>
