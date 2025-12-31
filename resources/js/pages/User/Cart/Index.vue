@@ -61,12 +61,14 @@ function addQuantity(id: number) {
     if (!item) return
     item.quantity++
 }
-
+const itemFilter = computed(() => {
+    return localCartItems.filter(item => item.is_selected)
+});
 const totalItem = computed(() => {
-    return localCartItems.filter(item => item.is_selected).reduce((sum, item) => sum + item.quantity, 0)
+    return itemFilter.value.reduce((sum, item) => sum + item.quantity, 0)
 });
 const totalPrice = computed(() => {
-    return localCartItems.filter(item => item.is_selected).reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0)
+    return itemFilter.value.reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0)
 });
 
 function deleteItemCart(id: number) {
