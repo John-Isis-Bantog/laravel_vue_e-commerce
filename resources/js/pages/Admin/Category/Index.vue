@@ -60,13 +60,12 @@ watch(search, (newValue) => {
             </AlertDescription>
         </Alert>
         <h1 class="text-center">Admin Category Page</h1>
-        <div class="flex justify-between">
-            <div class="">title</div>
+        <div class="flex justify-end">
             <div class="">
                 <Link :href="categoryRoute.create()"><Button>Add Category</Button></Link>
             </div>
         </div>
-        <div class="flex w-1/2 mx-auto">
+        <div class="flex w-1/2 mx-auto gap-2">
             <Input type="text" v-model="search"></Input>
             <Link :href="categoryRoute.index()"><Button>Clear</Button></Link>
         </div>
@@ -94,7 +93,7 @@ watch(search, (newValue) => {
 
                     <TableCell>{{ category.is_featured ? 'yes' : 'no' }}</TableCell>
                     <TableCell>{{ category.is_active ? 'yes' : 'no' }}</TableCell>
-                    <TableCell>
+                    <TableCell class="flex gap-2">
                         <Link :href="categoryRoute.edit(category.id)"> <Button variant="primary">Edit</Button></Link>
                         <Button variant="destructive" @click="deleteCategory(category.id)">Delete</Button>
                     </TableCell>
