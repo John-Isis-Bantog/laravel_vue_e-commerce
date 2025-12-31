@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import Alert from '@/components/ui/alert/Alert.vue';
-import AlertDescription from '@/components/ui/alert/AlertDescription.vue';
-import AlertTitle from '@/components/ui/alert/AlertTitle.vue';
 import Button from '@/components/ui/button/Button.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Table from '@/components/ui/table/Table.vue';
