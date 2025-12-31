@@ -52,13 +52,6 @@ watch(search, (newValue) => {
 
     <Head title="Category Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Alert class=" mx-auto w-1/2" v-if="$page.props.flash?.success || $page.props.flash?.error">
-            <AlertTitle>Info</AlertTitle>
-            <AlertDescription>
-                {{ $page.props.flash.success }}
-                {{ $page.props.flash.error }}
-            </AlertDescription>
-        </Alert>
         <h1 class="text-center">Admin Category Page</h1>
         <div class="flex justify-end">
             <div class="">

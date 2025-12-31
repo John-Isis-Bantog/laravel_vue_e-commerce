@@ -53,13 +53,6 @@ watch(search, (Newvalue) => {
 
     <Head title="Product Index" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Alert class=" mx-auto w-1/2" v-if="$page.props.flash?.success || $page.props.flash?.error">
-            <AlertTitle>Info</AlertTitle>
-            <AlertDescription>
-                {{ $page.props.flash.success }}
-                {{ $page.props.flash.error }}
-            </AlertDescription>
-        </Alert>
         <div class="flex justify-end">
             <div class="">
                 <Link :href="productRoute.create().url"><Button>Add Product</Button></Link>

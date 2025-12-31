@@ -56,13 +56,6 @@ function addToCart() {
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <Link :href="dashboard()"><Button>Back</Button></Link>
-        <Alert class=" mx-auto w-1/2" v-if="$page.props.flash?.success || $page.props.flash?.error">
-            <AlertTitle>Info</AlertTitle>
-            <AlertDescription>
-                {{ $page.props.flash.success }}
-                {{ $page.props.flash.error }}
-            </AlertDescription>
-        </Alert>
         <div class="flex justify-center w-full">
 
 
