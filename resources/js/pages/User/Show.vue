@@ -52,8 +52,10 @@ function addToCart() {
 
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Link :href="dashboard()"><Button>Back</Button></Link>
         <div class="flex justify-center w-full">
-            <Link :href="dashboard()"><Button>Back</Button></Link>
+
+
             <Card class="min-w-2xl">
                 <CardHeader>
                     <img v-if="props.product.image" :src="props.product.image" alt=""><span v-else><img

@@ -8,11 +8,16 @@ import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
 import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import Input from '@/components/ui/input/Input.vue';
+import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import { changeQuantity } from '@/routes';
+import cart from '@/routes/cart';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
-import { Minus, Plus } from 'lucide-vue-next';
+import { Head, Link, router, useForm } from '@inertiajs/vue3';
+import { computed } from '@vue/reactivity';
+import { Minus, Plus, Proportions } from 'lucide-vue-next';
+import { reactive, watch } from 'vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -25,6 +30,7 @@ interface CartItem {
     id: number,
     product_id: number,
     quantity: number,
+    is_selected: boolean,
     product: {
         name: string,
         description: string,
@@ -37,6 +43,46 @@ interface CartItem {
 const props = defineProps<{
     cartItems: CartItem[]
 }>()
+const localCartItems = reactive(
+    props.cartItems.map(item => ({ ...item }))
+)
+function minusQuantity(id: number) {
+    const item = localCartItems.find(i => i.id === id)
+    if (!item) return
+    if (item.quantity > 1) {
+        item.quantity--
+    }
+}
+function addQuantity(id: number) {
+    const item = localCartItems.find(i => i.id === id)
+    if (!item) return
+    item.quantity++
+}
+const itemFilter = computed(() => {
+    return localCartItems.filter(item => item.is_selected)
+});
+const totalItem = computed(() => {
+    return itemFilter.value.reduce((sum, item) => sum + item.quantity, 0)
+});
+const totalPrice = computed(() => {
+    return itemFilter.value.reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0)
+});
+
+function deleteItemCart(id: number) {
+    router.delete(cart.destroy(id), {
+        onSuccess: () => {
+            const index = localCartItems.findIndex(item => item.id === id)
+            if (index !== -1) {
+                localCartItems.splice(index, 1);
+            }
+            console.log('cart item delted successfully' + id);
+        },
+        onError: (errors) => {
+            console.log(errors);
+        },
+    }
+    )
+}
 </script>
 
 <template>
@@ -44,17 +90,17 @@ const props = defineProps<{
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <h1 class="text-center">Dashboard</h1>
-        <div class="flex w-1/2 mx-auto">
+        <div class="flex w-1/2 mx-auto gap-2">
             <Input type="search"></Input>
-            <Button>Clear</Button>
+            <Link :href="cart.index()"> <Button>Clear</Button></Link>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
 
-            <Card v-for="cartItem in props.cartItems" class="w-full max-w-sm" :key="cartItem.id">
+            <Card v-for="cartItem in localCartItems" class="w-full max-w-sm" :key="cartItem.id">
                 <!-- <Link :href="user.show(cartItem.id)"> -->
                 <CardHeader>
-                    <Checkbox></Checkbox>
+                    <Checkbox v-model="cartItem.is_selected"></Checkbox>
                     <img v-if="cartItem.product.image" :src="cartItem.product.image" alt=""><span v-else><img
                             src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                             alt=""></span>
@@ -64,23 +110,23 @@ const props = defineProps<{
                     </CardDescription>
                 </CardHeader>
                 <CardContent class="text-center flex justify-between">
-                    <div class="">₱{{ cartItem.product.price }}</div>
+                    <div class="">${{ cartItem.product.price }}</div>
                     <div class="flex gap-2 justify-around">
                         <div class="">
-                            <Minus />
+                            <Minus @click="minusQuantity(cartItem.id)" />
                         </div>
                         <div class="flex w-15">
                             <Input type="number" v-model="cartItem.quantity"></Input>
                         </div>
 
                         <div class="">
-                            <Plus />
+                            <Plus @click="addQuantity(cartItem.id)" />
                         </div>
                     </div>
 
                 </CardContent>
                 <CardFooter class="flex justify-center">
-                    <Button>Delete</Button>
+                    <Button @click="deleteItemCart(cartItem.id)">Delete</Button>
                 </CardFooter>
                 <!-- </Link> -->
             </Card>
@@ -92,8 +138,8 @@ const props = defineProps<{
             </div>
 
             <div class="flex gap-2 items-center">
-                <h1>Subtotal: $123</h1>
-                <Button>Check Out(12)</Button>
+                <h1>Subtotal: ${{ totalPrice }}</h1>
+                <Button>Check Out({{ totalItem }})</Button>
             </div>
         </div>
     </AppLayout>
