@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\HomeRedirectController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Web\AdminController;
+use App\Http\Controllers\Web\CartController;
+use App\Http\Controllers\Web\CategoryController;
+use App\Http\Controllers\Web\CheckoutController;
+use App\Http\Controllers\Web\CustomerController;
+use App\Http\Controllers\Web\HomeRedirectController;
+use App\Http\Controllers\Web\ProductController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;

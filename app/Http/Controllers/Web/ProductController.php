@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use App\Models\Product;
 use App\Services\SupabaseStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
