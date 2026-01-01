@@ -21,6 +21,9 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
+import Alert from '@/components/ui/alert/Alert.vue';
+import AlertTitle from '@/components/ui/alert/AlertTitle.vue';
+import AlertDescription from '@/components/ui/alert/AlertDescription.vue';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'User',
@@ -89,7 +92,7 @@ watch(search, (newValue) => {
             <canvas id="pieChart" ref="ctxPie"></canvas>
         </div> -->
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-2 mx-3">
             <Card class="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle class="text-center">Categories</CardTitle>
@@ -132,7 +135,7 @@ watch(search, (newValue) => {
         </div>
         <div class="">
             <div class="flex justify-between max-w-3/4 mx-auto">
-                <div class="flex">
+                <div class="flex gap-2">
                     <Input type="search" v-model="search" placeholder="Search by Name or Email"></Input>
                     <Link :href="adminRoute.index().url"><Button variant="primary">Clear</Button></Link>
                 </div>
@@ -155,9 +158,8 @@ watch(search, (newValue) => {
                             <TableCell>{{ admin.id }}</TableCell>
                             <TableCell>{{ admin.name }}</TableCell>
                             <TableCell>{{ admin.email }}</TableCell>
-                            <TableCell>
-                                <Link :href="adminRoute.edit(admin.id)"> <Button variant="primary">Edit</Button>
-                                </Link>
+                            <TableCell class="gap-2 flex">
+                                <Link :href="adminRoute.edit(admin.id)"> <Button variant="primary">Edit</Button></Link>
                                 <Button variant="destructive" @click="removeAdmin(admin.id)">Delete</Button>
                             </TableCell>
 
