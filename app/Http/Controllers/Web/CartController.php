@@ -8,6 +8,7 @@ use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Validated;
 
 class CartController extends Controller
 {
@@ -46,9 +47,14 @@ class CartController extends Controller
         return back()->with('success', 'Added to Cart');
     }
 
-    public function updateQuantity(Request $request)
+    public function updateQuantity(Request $request, CartItem $cartItem)
     {
-        dd($request);
+        $validatedData = $request->validate([
+            'quantity' => 'required|integer|min:1|max:5'
+        ]);
+
+        $cartItem->update($validatedData);
+        return back()->with('success', 'Quantity Changed Successfully!');
     }
 
     /**
