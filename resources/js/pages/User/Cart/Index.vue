@@ -58,7 +58,9 @@ function decrementQuantity(id: number) {
 }
 function incrementQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
-    if (!item) return
+    if (!item || item.quantity === 5) {
+        return
+    }
     item.quantity++
     router.put(updateQuantity(id).url, { quantity: item.quantity })
 }
@@ -94,7 +96,7 @@ function deleteItemCart(id: number) {
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <h1 class="text-center">Dashboard</h1>
-        <div class="flex w-1/2 mx-auto gap-2">
+        <div class="flex w-1/2 mx-auto space-x-2">
             <Input type="search"></Input>
             <Link :href="cart.index()"> <Button>Clear</Button></Link>
         </div>
@@ -115,12 +117,12 @@ function deleteItemCart(id: number) {
                 </CardHeader>
                 <CardContent class="text-center flex justify-between">
                     <div class="">${{ cartItem.product.price }}</div>
-                    <div class="flex gap-2 justify-around">
+                    <div class="flex space-x-2 justify-around">
                         <div class="">
                             <Minus @click="decrementQuantity(cartItem.id)" />
                         </div>
                         <div class="flex w-15">
-                            <Input type="number" v-model="cartItem.quantity"></Input>
+                            <Input type="number" min="0" max="5" v-model="cartItem.quantity"></Input>
                         </div>
 
                         <div class="">
@@ -129,8 +131,9 @@ function deleteItemCart(id: number) {
                     </div>
 
                 </CardContent>
-                <CardFooter class="flex justify-center">
+                <CardFooter class="flex justify-center space-x-2">
                     <Button @click="deleteItemCart(cartItem.id)">Delete</Button>
+                    <Button @click="deleteItemCart(cartItem.id)">Buy</Button>
                 </CardFooter>
                 <!-- </Link> -->
             </Card>
@@ -141,7 +144,7 @@ function deleteItemCart(id: number) {
                 <Label for="toggle">All</Label>
             </div>
 
-            <div class="flex gap-2 items-center">
+            <div class="flex space-x-2 items-center">
                 <h1>Subtotal: ${{ totalPrice }}</h1>
                 <Button>Check Out({{ totalItem }})</Button>
             </div>
