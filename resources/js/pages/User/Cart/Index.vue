@@ -46,14 +46,14 @@ const props = defineProps<{
 const localCartItems = reactive(
     props.cartItems.map(item => ({ ...item }))
 )
-function minusQuantity(id: number) {
+function decrementQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
     if (!item) return
     if (item.quantity > 1) {
         item.quantity--
     }
 }
-function addQuantity(id: number) {
+function incrementQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
     if (!item) return
     item.quantity++
@@ -113,14 +113,14 @@ function deleteItemCart(id: number) {
                     <div class="">${{ cartItem.product.price }}</div>
                     <div class="flex gap-2 justify-around">
                         <div class="">
-                            <Minus @click="minusQuantity(cartItem.id)" />
+                            <Minus @click="decrementQuantity(cartItem.id)" />
                         </div>
                         <div class="flex w-15">
                             <Input type="number" v-model="cartItem.quantity"></Input>
                         </div>
 
                         <div class="">
-                            <Plus @click="addQuantity(cartItem.id)" />
+                            <Plus @click="incrementQuantity(cartItem.id)" />
                         </div>
                     </div>
 
