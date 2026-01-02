@@ -79,7 +79,7 @@ function deleteItemCart(id: number) {
             if (index !== -1) {
                 localCartItems.splice(index, 1);
             }
-            console.log('cart item delted successfully' + id);
+            console.log('Cart Item Deleted Successfully!' + id);
         },
         onError: (errors) => {
             console.log(errors);
