@@ -132,8 +132,8 @@ function deleteItemCart(id: number) {
 
                 </CardContent>
                 <CardFooter class="flex justify-center space-x-2">
-                    <Button @click="deleteItemCart(cartItem.id)">Delete</Button>
-                    <Button @click="deleteItemCart(cartItem.id)">Buy</Button>
+                    <Button variant="destructive" @click="deleteItemCart(cartItem.id)">Delete</Button>
+                    <Button variant="primary" @click="deleteItemCart(cartItem.id)">Buy</Button>
                 </CardFooter>
                 <!-- </Link> -->
             </Card>
@@ -146,7 +146,7 @@ function deleteItemCart(id: number) {
 
             <div class="flex space-x-2 items-center">
                 <h1>Subtotal: ${{ totalPrice }}</h1>
-                <Button>Check Out({{ totalItem }})</Button>
+                <Button variant="primary">Check Out({{ totalItem }})</Button>
             </div>
         </div>
     </AppLayout>
