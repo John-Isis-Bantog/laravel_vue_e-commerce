@@ -1,11 +1,14 @@
 <script setup lang="ts">
+// layout
+import AppLayout from '@/layouts/AppLayout.vue';
+// UI
 import Button from '@/components/ui/button/Button.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
-import adminRoute from '@/routes/admin';
 import { type BreadcrumbItem } from '@/types';
 import { Form, Head, Link, useForm } from '@inertiajs/vue3';
+// route
+import adminRoute from '@/routes/admin';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -39,15 +42,20 @@ function updateAdmin($id: number) {
         <Link :href="adminRoute.index()"><Button>Back</Button></Link>
         <h1 class="text-center">Admin Edit Page</h1>
         <Form class="w-1/2 mx-auto space-y-2" @submit.prevent="updateAdmin(admin.id)">
-            <Label for="name">name</Label>
-            <Input type="text" v-model="form.name" name="name" placeholder="Enter Admin Name"></Input>
-            <div class="text-red-500" v-if="form.errors.name">{{ form.errors.name }}</div>
+            <div class="">
+                <Label for="name">name</Label>
+                <Input type="text" v-model="form.name" name="name" placeholder="Enter Admin Name"></Input>
+                <div class="text-red-500" v-if="form.errors.name">{{ form.errors.name }}</div>
+            </div>
 
-            <Label for="adminEmail">Email</Label>
-            <Input type="email" v-model="form.email" name="adminEmail" placeholder="Enter Admin Email"></Input>
-            <div class="text-red-500" v-if="form.errors.email">{{ form.errors.email }}</div>
+            <div class="">
+                <Label for="adminEmail">Email</Label>
+                <Input type="email" v-model="form.email" name="adminEmail" placeholder="Enter Admin Email"></Input>
+                <div class="text-red-500" v-if="form.errors.email">{{ form.errors.email }}</div>
+            </div>
+
             <div class="flex justify-center">
-                <Button type="submit">Submit</Button>
+                <Button variant="primary" type="submit">Submit</Button>
             </div>
 
         </Form>

@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
-import { Head, Link, router } from '@inertiajs/vue3';
-import { ref, watch } from 'vue';
+// UI
 import {
     Table,
     TableBody,
@@ -11,19 +8,24 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table/'
-import Button from '@/components/ui/button/Button.vue';
-import adminRoute from '@/routes/admin';
-import Input from '@/components/ui/input/Input.vue';
-import { dashboard } from '@/routes';
 import {
     Card,
     CardContent,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
-import Alert from '@/components/ui/alert/Alert.vue';
-import AlertTitle from '@/components/ui/alert/AlertTitle.vue';
-import AlertDescription from '@/components/ui/alert/AlertDescription.vue';
+import Button from '@/components/ui/button/Button.vue';
+// Route
+
+import { dashboard } from '@/routes';
+import adminRoute from '@/routes/admin';
+import Input from '@/components/ui/input/Input.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { type BreadcrumbItem } from '@/types';
+// Vue
+import { Head, Link, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'User',
