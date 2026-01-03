@@ -1,13 +1,9 @@
 <script lang="ts" setup>
+// UI
 import Button from '@/components/ui/button/Button.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import adminRoute from '@/routes/admin';
-import categoryRoute from '@/routes/category';
-import { BreadcrumbItem } from '@/types';
-import { Form, Head, Link, useForm } from '@inertiajs/vue3';
-
 import {
     Select,
     SelectContent,
@@ -16,6 +12,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select/'
+// Routes
+import adminRoute from '@/routes/admin';
+import categoryRoute from '@/routes/category';
+// Vue
+import { BreadcrumbItem } from '@/types';
+import { Form, Head, Link, useForm } from '@inertiajs/vue3';
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Admin Edit Page',
@@ -50,63 +53,67 @@ function submitForm(id: number) {
     form.put(categoryRoute.update(id).url)
     console.log(form.is_active, form.is_featured, form.title, form.image)
 }
-
 </script>
 
 
 <template>
 
-
     <Head title="Category Edit Page" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <Link :href="categoryRoute.index()"><Button>Back</Button></Link>
         <h1 class="text-center">Category edit Page</h1>
-
         <Form class="w-1/2 mx-auto space-y-3" @submit.prevent="submitForm(props.category.id)">
-            <Label for="">Title</Label>
-            <Input type="text" name="title" v-model="form.title" placeholder="Enter Title"></Input>
-            <div class="" v-if="form.errors.title">{{ form.errors.title }}</div>
-            <Label for="">Image</Label>
-            <img v-if="category.image" :src="category.image" alt="">
-            <Input type="file" name="image" v-on:change="handleFileChange" placeholder="Select a file"></Input>
-            <div class="" v-if="form.errors.image">{{ form.errors.image }}</div>
-            <div class="flex gap-5 ">
-                <Label for="">Featured</Label>
-                <Select v-model="form.is_featured">
-                    <SelectTrigger class="w-[180px]">
-                        <SelectValue>
-                            {{ form.is_featured === 1 ? 'Yes' : 'No' }}
-                        </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectItem value="1">Yes</SelectItem>
-                            <SelectItem value="0">No</SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-
-
-                <div class="" v-if="form.errors.is_featured">{{ form.errors.is_featured }}</div>
-                <Label for="">Active</Label>
-                <Select v-model="form.is_active">
-                    <SelectTrigger class="w-[180px]">
-                        <SelectValue>
-                            {{ form.is_active === 1 ? 'Yes' : 'No' }}
-                        </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectItem value="1">Yes</SelectItem>
-                            <SelectItem value="0">No</SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-
-
-                <div class="" v-if="form.errors.is_active">{{ form.errors.is_active }}</div>
+            <div class="">
+                <Label for="">Title</Label>
+                <Input type="text" name="title" v-model="form.title" placeholder="Enter Title"></Input>
+                <div class="" v-if="form.errors.title">{{ form.errors.title }}</div>
             </div>
-            <Button type="submit" class="">Submit</Button>
+            <div class="">
+                <Label for="">Image</Label>
+                <img v-if="category.image" :src="category.image" alt="">
+                <Input type="file" name="image" v-on:change="handleFileChange" placeholder="Select a file"></Input>
+                <div class="" v-if="form.errors.image">{{ form.errors.image }}</div>
+            </div>
+            <div class="flex gap-5 ">
+                <div class="">
+                    <Label for="">Featured</Label>
+                    <Select v-model="form.is_featured">
+                        <SelectTrigger class="w-[180px]">
+                            <SelectValue>
+                                {{ form.is_featured === 1 ? 'Yes' : 'No' }}
+                            </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectItem value="1">Yes</SelectItem>
+                                <SelectItem value="0">No</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <div class="" v-if="form.errors.is_featured">{{ form.errors.is_featured }}</div>
+                </div>
+                <div class="">
+                    <Label for="">Active</Label>
+                    <Select v-model="form.is_active">
+                        <SelectTrigger class="w-[180px]">
+                            <SelectValue>
+                                {{ form.is_active === 1 ? 'Yes' : 'No' }}
+                            </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectItem value="1">Yes</SelectItem>
+                                <SelectItem value="0">No</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <div class="" v-if="form.errors.is_active">{{ form.errors.is_active }}</div>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <Button variant="primary" type="submit" class="">Submit</Button>
+            </div>
+
         </Form>
 
 
