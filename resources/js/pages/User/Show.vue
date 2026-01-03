@@ -73,7 +73,7 @@ function addToCart() {
                 </CardContent>
                 <CardFooter class="flex justify-center space-x-2">
                     <Button type="submit" @click="addToCart">Add to Cart</Button>
-                    <Link> <Button type="submit">Buy</Button></Link>
+                    <Link> <Button variant="primary" type="submit">Buy</Button></Link>
                 </CardFooter>
             </Card>
         </div>
