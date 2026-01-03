@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+// UI
 import Button from '@/components/ui/button/Button.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
@@ -10,11 +11,11 @@ import SelectTrigger from '@/components/ui/select/SelectTrigger.vue';
 import SelectValue from '@/components/ui/select/SelectValue.vue';
 import Textarea from '@/components/ui/textarea/Textarea.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+// Route
 import productRoute from '@/routes/product';
+// Vue
 import { BreadcrumbItem } from '@/types';
 import { Form, Head, Link, useForm } from '@inertiajs/vue3';
-
-
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -47,7 +48,6 @@ function handleFileChange(event: Event) {
     const target = event.target as HTMLInputElement;
     formData.image = target.files ? target.files[0] : null;
 }
-
 </script>
 
 <template>
@@ -57,38 +57,51 @@ function handleFileChange(event: Event) {
         <Link :href="productRoute.index()"><Button>Back</Button></Link>
         <div class="w-1/2 mx-auto">
             <Form @submit.prevent="submitProduct()" class="space-y-2">
-                <Label for="name">Name</Label>
-                <Input type="text" name="name" v-model="formData.name" placeholder="Name"></Input>
-                <span class="text-red-500" v-if="formData.errors.name">{{ formData.errors.name }}</span>
-                <Label for="description">Description</Label>
-                <Textarea name="description" v-model="formData.description"></Textarea>
-                <Label for="image">Image</Label>
-                <Input type="file" name="image" v-on:change="handleFileChange"></Input>
-                <span v-if="formData.errors.image" class="text-red-500">{{ formData.errors.image }}</span>
-                <span class="text-red-500" v-if="formData.errors.description">{{ formData.errors.description }}</span>
-                <Label for="price">Price</Label>
-                <Input type="number" min="1" v-model="formData.price"></Input>
+                <div class="">
+                    <Label for="name">Name</Label>
+                    <Input type="text" name="name" v-model="formData.name" placeholder="Name"></Input>
+                    <span class="text-red-500" v-if="formData.errors.name">{{ formData.errors.name }}</span>
+                </div>
+                <div class="">
+                    <Label for="description">Description</Label>
+                    <Textarea name="description" v-model="formData.description"></Textarea>
+                    <span class="text-red-500" v-if="formData.errors.description">{{
+                        formData.errors.description }}</span>
+                </div>
+                <div class="">
+                    <Label for="image">Image</Label>
+                    <Input type="file" name="image" v-on:change="handleFileChange"></Input>
+                    <span v-if="formData.errors.image" class="text-red-500">{{ formData.errors.image }}</span>
+                </div>
+                <div class="">
+                    <Label for="price">Price</Label>
+                    <Input type="number" min="1" v-model="formData.price"></Input>
+                    <span class="text-red-500" v-if="formData.errors.price">{{ formData.errors.price }}</span>
+                </div>
+                <div class="">
+                    <Label for="is_active">Active</Label>
+                    <Select v-model="formData.is_active">
+                        <SelectTrigger class="w-[180px]">
+                            <SelectValue placeholder="is_Active?" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectItem value="1">
+                                    Yes
+                                </SelectItem>
+                                <SelectItem value="0">
+                                    No
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <span v-if="formData.errors.is_active">{{ formData.errors.price }}</span>
+                </div>
 
-                <span class="text-red-500" v-if="formData.errors.price">{{ formData.errors.price }}</span>
+                <div class="flex justify-center">
+                    <Button variant="primary" type="submit">Add Product</Button>
+                </div>
 
-                <Label for="is_active">Active</Label>
-                <Select v-model="formData.is_active">
-                    <SelectTrigger class="w-[180px]">
-                        <SelectValue placeholder="is_Active?" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectItem value="1">
-                                Yes
-                            </SelectItem>
-                            <SelectItem value="0">
-                                No
-                            </SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-                <span v-if="formData.errors.is_active">{{ formData.errors.price }}</span>
-                <Button type="submit">Add Product</Button>
             </Form>
         </div>
     </AppLayout>

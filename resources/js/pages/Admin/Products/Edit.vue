@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+// UI
 import Button from '@/components/ui/button/Button.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
@@ -10,11 +11,11 @@ import SelectTrigger from '@/components/ui/select/SelectTrigger.vue';
 import SelectValue from '@/components/ui/select/SelectValue.vue';
 import Textarea from '@/components/ui/textarea/Textarea.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+// Routes
 import productRoute from '@/routes/product';
+// Vue
 import { BreadcrumbItem } from '@/types';
-import { Form, Head, useForm } from '@inertiajs/vue3';
-
-
+import { Form, Head, Link, useForm } from '@inertiajs/vue3';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -58,41 +59,55 @@ function handleFileChange(event: Event) {
 
     <Head title="Category Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Link :href="productRoute.index().url"><Button>Back</Button></Link>
         <div class="w-1/2 mx-auto">
-            <Form class="space-y-3" @submit.prevent="updateProduct(form.id)">
-                <Label for="name">Name</Label>
-                <Input type="text" v-model="form.name"></Input>
-                <span v-if="form.errors.name" class="text-red-500">{{ form.errors.name }}</span>
-                <img :src="form.image" v-if="form.image" alt=""><span v-else>No Image Uploaded</span>
-                <Label for="image">Image</Label>
-                <Input type="file" @change="handleFileChange"></Input>
-                <span v-if="form.errors.image" class="text-red-500">{{ form.errors.image }}</span>
-                <Label for="description">Description</Label>
-                <Textarea v-model="form.description"></Textarea>
-                <span v-if="form.errors.description" class="text-red-500">{{ form.errors.description }}</span>
-                <Label for="price">Price</Label>
-                <Input type="number" min="0" v-model="form.price"></Input>
-                <span v-if="form.errors.price" class="text-red-500">{{ form.errors.price }}</span>
-                <Label for="is_active">Active</Label>
-                <Select v-model="form.is_active">
-                    <SelectTrigger class="w-[180px]">
-                        <SelectValue v-model="form.is_active">
-                            {{ form.is_active ? 'Yes' : 'No' }}
-                        </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectItem value="1">
-                                Yes
-                            </SelectItem>
-                            <SelectItem value="0">
-                                No
-                            </SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-                <span v-if="form.errors.is_active" class="text-red-500">{{ form.errors.is_active }}</span>
-                <Button type="submit">Submit</Button>
+            <Form class="space-y-2" @submit.prevent="updateProduct(form.id)">
+                <div class="">
+                    <Label for="name">Name</Label>
+                    <Input type="text" v-model="form.name"></Input>
+                    <span v-if="form.errors.name" class="text-red-500">{{ form.errors.name }}</span>
+                </div>
+                <div class="">
+                    <img :src="form.image" v-if="form.image" alt=""><span v-else>No Image Uploaded</span>
+                    <Label for="image">Image</Label>
+                    <Input type="file" @change="handleFileChange"></Input>
+                    <span v-if="form.errors.image" class="text-red-500">{{ form.errors.image }}</span>
+                </div>
+                <div class="">
+                    <Label for="description">Description</Label>
+                    <Textarea v-model="form.description"></Textarea>
+                    <span v-if="form.errors.description" class="text-red-500">{{ form.errors.description }}</span>
+                </div>
+                <div class="">
+                    <Label for="price">Price</Label>
+                    <Input type="number" min="0" v-model="form.price"></Input>
+                    <span v-if="form.errors.price" class="text-red-500">{{ form.errors.price }}</span>
+                </div>
+                <div class="">
+                    <Label for="is_active">Active</Label>
+                    <Select v-model="form.is_active">
+                        <SelectTrigger class="w-[180px]">
+                            <SelectValue v-model="form.is_active">
+                                {{ form.is_active ? 'Yes' : 'No' }}
+                            </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectItem value="1">
+                                    Yes
+                                </SelectItem>
+                                <SelectItem value="0">
+                                    No
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <span v-if="form.errors.is_active" class="text-red-500">{{ form.errors.is_active }}</span>
+                </div>
+
+                <div class="flex justify-center">
+                    <Button variant="primary" type="submit">Submit</Button>
+                </div>
             </Form>
         </div>
     </AppLayout>

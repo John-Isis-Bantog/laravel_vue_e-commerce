@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+// UI
 import Button from '@/components/ui/button/Button.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Table from '@/components/ui/table/Table.vue';
@@ -8,12 +9,12 @@ import TableHead from '@/components/ui/table/TableHead.vue';
 import TableHeader from '@/components/ui/table/TableHeader.vue';
 import TableRow from '@/components/ui/table/TableRow.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+// Routes
 import productRoute from '@/routes/product';
+// Vue
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
-
-
 
 interface Product {
     id: number,
@@ -23,7 +24,6 @@ interface Product {
     description: string,
     price: number
 }
-
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -87,7 +87,6 @@ watch(search, (Newvalue) => {
                         <Link :href="productRoute.edit(product.id)"><Button variant="primary">Edit</Button></Link>
                         <Button variant="destructive" @click="deleteProduct(product.id)">Delete</Button>
                     </TableCell>
-
                 </TableRow>
             </TableBody>
         </Table>
