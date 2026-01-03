@@ -16,7 +16,7 @@ withDefaults(defineProps<Props>(), {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Alert class=" mx-auto w-1/2 top-5 sticky" v-if="$page.props.flash?.success || $page.props.flash?.error">
+        <Alert class=" mx-auto w-1/2 top-5 sticky z-50" v-if="$page.props.flash?.success || $page.props.flash?.error">
             <AlertTitle>Info</AlertTitle>
             <AlertDescription>
                 {{ $page.props.flash.success }}
