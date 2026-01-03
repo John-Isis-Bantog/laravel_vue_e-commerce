@@ -93,7 +93,6 @@ watch(search, (newValue) => {
         <!-- <div class="w-1/2 h-1/2 flex justify-center  mx-auto">
             <canvas id="pieChart" ref="ctxPie"></canvas>
         </div> -->
-
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-2 mx-3">
             <Card class="w-full max-w-sm">
                 <CardHeader>
@@ -107,18 +106,16 @@ watch(search, (newValue) => {
             <Card class="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle class="text-center">Products</CardTitle>
-
                 </CardHeader>
-                <CardContent class="text-center">
+                <CardContent class="text-center flex flex-col">
                     <span>Active Products {{ props.activeProducts }} </span>
-                    <span>All Products{{ props.activeProducts }} </span>
+                    <span>All Products{{ props.allProducts }} </span>
                 </CardContent>
             </Card>
 
             <Card class="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle class="text-center">Total Orders</CardTitle>
-
                 </CardHeader>
                 <CardContent class="text-center">
                     <span>4 Orders</span>
@@ -128,7 +125,6 @@ watch(search, (newValue) => {
             <Card class="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle class="text-center">Revenue</CardTitle>
-
                 </CardHeader>
                 <CardContent class="text-center">
                     <span>$120</span>
@@ -152,7 +148,6 @@ watch(search, (newValue) => {
                             <TableHead>Name</TableHead>
                             <TableHead>Email</TableHead>
                             <TableHead>Actions</TableHead>
-
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -164,7 +159,6 @@ watch(search, (newValue) => {
                                 <Link :href="adminRoute.edit(admin.id)"> <Button variant="primary">Edit</Button></Link>
                                 <Button variant="destructive" @click="removeAdmin(admin.id)">Delete</Button>
                             </TableCell>
-
                         </TableRow>
                     </TableBody>
                 </Table>
