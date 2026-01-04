@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppLogo from '@/components/AppLogo.vue';
+import { ShoppingCart, House, Shield, CircleEllipsis, Package } from 'lucide-vue-next';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -68,27 +68,27 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard().url,
-        icon: LayoutGrid,
+        icon: House,
     },
     {
         title: 'Admin Dashboard',
         href: admin.index(),
-        icon: LayoutGrid,
+        icon: Shield,
     },
     {
         title: 'Category Index',
         href: category.index(),
-        icon: LayoutGrid,
+        icon: CircleEllipsis,
     },
     {
         title: 'Product Index',
         href: product.index(),
-        icon: LayoutGrid,
+        icon: Package,
     },
     {
         title: 'Cart',
         href: cart.index(),
-        icon: LayoutGrid,
+        icon: ShoppingCart,
     },
 ];
 
