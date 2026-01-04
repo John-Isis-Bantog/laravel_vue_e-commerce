@@ -66,4 +66,8 @@ class CartController extends Controller
         $cartItem->delete();
         return redirect()->route('cart.index')->with('success', 'Cart Item Deleted Successfully!');
     }
+    public function toggleIsSelected(Request $request, CartItem $cartitem)
+    {
+        dd($request);
+    }
 }
