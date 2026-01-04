@@ -10,7 +10,7 @@ import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { updateQuantity } from '@/routes';
+import { toggleIsSelected, updateQuantity } from '@/routes';
 import cart from '@/routes/cart';
 import checkout from '@/routes/checkout';
 import user from '@/routes/user';
@@ -91,8 +91,16 @@ function deleteItemCart(id: number) {
     )
 }
 
-function buyItem(id: number) {
-    router.post(checkout.store().url)
+function toggleSelection(item: CartItem, value: boolean) {
+    item.is_selected = value;
+    router.put(toggleIsSelected(item.id).url, {
+        is_selected: value
+    }, {
+        preserveScroll: true,
+        onError: () => {
+            item.is_selected = !value;
+        }
+    })
 }
 </script>
 
@@ -100,7 +108,7 @@ function buyItem(id: number) {
 
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <h1 class="text-center">Dashboard</h1>
+        <h1 class="text-center">Cart</h1>
         <div class="flex w-1/2 mx-auto space-x-2">
             <Input type="search"></Input>
             <Link :href="cart.index()"> <Button>Clear</Button></Link>
@@ -111,7 +119,9 @@ function buyItem(id: number) {
             <Card v-for="cartItem in localCartItems" class="w-full max-w-sm" :key="cartItem.id">
                 <!-- <Link :href="user.show(cartItem.id)"> -->
                 <CardHeader>
-                    <Checkbox v-model="cartItem.is_selected"></Checkbox>
+                    <Checkbox :model-value="cartItem.is_selected"
+                        @update:model-value="value => toggleSelection(cartItem, value)">
+                    </Checkbox>
                     <img v-if="cartItem.product.image" :src="cartItem.product.image" alt=""><span v-else><img
                             src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                             alt=""></span>
@@ -138,7 +148,7 @@ function buyItem(id: number) {
                 </CardContent>
                 <CardFooter class="flex justify-center space-x-2">
                     <Button variant="destructive" @click="deleteItemCart(cartItem.id)">Delete</Button>
-                    <Link :href="checkout.index.url()"><Button variant="primary">Buy</Button></Link>
+                    <Button variant="primary">Buy</Button>
                 </CardFooter>
                 <!-- </Link> -->
             </Card>
@@ -151,7 +161,7 @@ function buyItem(id: number) {
 
             <div class="flex space-x-2 items-center">
                 <h1>Subtotal: ${{ totalPrice }}</h1>
-                <Button variant="primary">Check Out({{ totalItem }})</Button>
+                <Link :href="checkout.index().url"><Button variant="primary">Check Out({{ totalItem }})</Button></Link>
             </div>
         </div>
     </AppLayout>
