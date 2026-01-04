@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CheckoutController extends Controller
 {
@@ -13,7 +14,7 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('User/Checkout/Index');
     }
 
     /**
@@ -29,7 +30,7 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

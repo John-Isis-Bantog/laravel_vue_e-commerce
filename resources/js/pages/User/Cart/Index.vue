@@ -12,6 +12,7 @@ import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { updateQuantity } from '@/routes';
 import cart from '@/routes/cart';
+import checkout from '@/routes/checkout';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
@@ -89,6 +90,10 @@ function deleteItemCart(id: number) {
     }
     )
 }
+
+function buyItem(id: number) {
+    router.post(checkout.store().url)
+}
 </script>
 
 <template>
@@ -133,7 +138,7 @@ function deleteItemCart(id: number) {
                 </CardContent>
                 <CardFooter class="flex justify-center space-x-2">
                     <Button variant="destructive" @click="deleteItemCart(cartItem.id)">Delete</Button>
-                    <Button variant="primary" @click="deleteItemCart(cartItem.id)">Buy</Button>
+                    <Link :href="checkout.index.url()"><Button variant="primary">Buy</Button></Link>
                 </CardFooter>
                 <!-- </Link> -->
             </Card>
