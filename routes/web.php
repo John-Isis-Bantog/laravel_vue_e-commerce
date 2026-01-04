@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('cart', CartController::class)->only('store', 'destroy', 'index');
         Route::resource('checkout', CheckoutController::class);
         Route::put('/cart/updateQuantity/{cartItem}', [CartController::class, 'updateQuantity'])->name('updateQuantity');
+        Route::put('/cart/select/{cartItem}', [CartController::class, 'toggleIsSelected'])->name('toggleIsSelected');
     });
     Route::get('/home', HomeRedirectController::class)->name('homeRedirect');
     Route::get('/dashboard', [CustomerController::class, 'index'])->name('dashboard');
