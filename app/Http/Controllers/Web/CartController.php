@@ -68,6 +68,11 @@ class CartController extends Controller
     }
     public function toggleIsSelected(Request $request, CartItem $cartitem)
     {
-        dd($request);
+        $validatedData = $request->validate([
+            'is_selected' => 'required|boolean'
+        ]);
+
+        $cartitem->update($validatedData);
+        return back()->with('success', 'The Item is Successfully Selected');
     }
 }
