@@ -25,6 +25,7 @@ import { type BreadcrumbItem } from '@/types';
 // Vue
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import { CircleEllipsis, DollarSign, Package, ShoppingCart } from 'lucide-vue-next';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -96,15 +97,21 @@ watch(search, (newValue) => {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-2 mx-3">
             <Card class="w-full max-w-sm">
                 <CardHeader>
+                    <div class="flex justify-center">
+                        <CircleEllipsis />
+                    </div>
                     <CardTitle class="text-center">Categories</CardTitle>
                 </CardHeader>
                 <CardContent class="text-center">
-                    <span>{{ props.categories }} Categories</span>
+                    <span>{{ props.categories }}</span>
                 </CardContent>
             </Card>
 
             <Card class="w-full max-w-sm">
                 <CardHeader>
+                    <div class="flex justify-center">
+                        <Package />
+                    </div>
                     <CardTitle class="text-center">Products</CardTitle>
                 </CardHeader>
                 <CardContent class="text-center flex flex-col">
@@ -115,6 +122,10 @@ watch(search, (newValue) => {
 
             <Card class="w-full max-w-sm">
                 <CardHeader>
+                    <div class="flex justify-center">
+                        <ShoppingCart />
+                    </div>
+
                     <CardTitle class="text-center">Total Orders</CardTitle>
                 </CardHeader>
                 <CardContent class="text-center">
@@ -124,6 +135,10 @@ watch(search, (newValue) => {
 
             <Card class="w-full max-w-sm">
                 <CardHeader>
+                    <div class="flex justify-center">
+                        <DollarSign />
+                    </div>
+
                     <CardTitle class="text-center">Revenue</CardTitle>
                 </CardHeader>
                 <CardContent class="text-center">
