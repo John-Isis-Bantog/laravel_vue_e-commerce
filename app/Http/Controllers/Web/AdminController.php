@@ -21,7 +21,7 @@ class AdminController extends Controller
         $categories = Category::count();
         $allProducts = Product::count();
         $activeProducts = Product::where('is_active', '1')->count();
-
+        $totalUsers = User::where('role', 'customer')->count();
 
         $admins = User::where('role', 'admin')
             ->where('id', '!=', auth()->id()) // exclude the current admin
@@ -34,7 +34,7 @@ class AdminController extends Controller
             ->get();
 
 
-        return Inertia::render('Admin/Admins/Index', ['admins' => $admins, 'categories' => $categories, 'allProducts' => $allProducts, 'activeProducts' => $activeProducts]);
+        return Inertia::render('Admin/Admins/Index', ['admins' => $admins, 'categories' => $categories, 'allProducts' => $allProducts, 'activeProducts' => $activeProducts, 'totalUsers' => $totalUsers]);
     }
 
 

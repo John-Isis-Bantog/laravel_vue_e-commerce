@@ -25,7 +25,7 @@ import { type BreadcrumbItem } from '@/types';
 // Vue
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
-import { CircleEllipsis, DollarSign, Package, ShoppingCart } from 'lucide-vue-next';
+import { CircleEllipsis, DollarSign, Package, ShoppingCart, User } from 'lucide-vue-next';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -65,13 +65,15 @@ interface Admin {
     email: string;
     categories: string,
     allProducts: string,
-    activeProducts: string
+    activeProducts: string,
+    totalUsers: string
 }
 const props = defineProps<{
     admins: Admin[];
     categories: number[];
     allProducts: number[];
     activeProducts: number[];
+    totalUsers: number[];
 }>();
 
 function removeAdmin(id: number) {
@@ -145,7 +147,22 @@ watch(search, (newValue) => {
                     <span>$120</span>
                 </CardContent>
             </Card>
+
+            <Card class="w-full max-w-sm">
+                <CardHeader>
+                    <div class="flex justify-center">
+                        <User />
+                    </div>
+
+                    <CardTitle class="text-center">Total Users</CardTitle>
+                </CardHeader>
+                <CardContent class="text-center">
+                    <span>{{ props.totalUsers }} Total Users</span>
+                </CardContent>
+            </Card>
         </div>
+
+
         <div class="">
             <div class="flex justify-between max-w-3/4 mx-auto">
                 <div class="flex gap-2">
