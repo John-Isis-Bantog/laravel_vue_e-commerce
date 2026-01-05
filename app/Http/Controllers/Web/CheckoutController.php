@@ -14,8 +14,9 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        $selectedItems = CartItem::where('is_selected', '1')->with('product')->get();
-        return Inertia::render('User/Checkout/Index', ['selectedItems' => $selectedItems]);
+        $selectedItems = CartItem::where('user_id', auth()->id())->where('is_selected', '1')->with('product')->get();
+        $totalPrice = $selectedItems->sum(fn($item) => $item->product->price * $item->quantity);
+        return Inertia::render('User/Checkout/Index', ['selectedItems' => $selectedItems, 'totalPrice' => $totalPrice]);
     }
 
     /**
