@@ -8,7 +8,6 @@ use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
-use Illuminate\Auth\Events\Validated;
 
 class CartController extends Controller
 {
@@ -66,13 +65,12 @@ class CartController extends Controller
         $cartItem->delete();
         return redirect()->route('cart.index')->with('success', 'Cart Item Deleted Successfully!');
     }
-    public function toggleIsSelected(Request $request, CartItem $cartitem)
+    public function toggleIsSelected(Request $request, CartItem $cartItem)
     {
         $validatedData = $request->validate([
             'is_selected' => 'required|boolean'
         ]);
-
-        $cartitem->update($validatedData);
+        $cartItem->update($validatedData);
         return back()->with('success', 'The Item is Successfully Selected');
     }
 }
