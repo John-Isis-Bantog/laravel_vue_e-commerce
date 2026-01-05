@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,7 +14,8 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        return Inertia::render('User/Checkout/Index');
+        $selectedItems = CartItem::where('is_selected', '1')->with('product')->get();
+        return Inertia::render('User/Checkout/Index', ['selectedItems' => $selectedItems]);
     }
 
     /**
