@@ -16,7 +16,7 @@ class CheckoutController extends Controller
     {
         $selectedItems = CartItem::where('user_id', auth()->id())->where('is_selected', '1')->with('product')->get();
         if ($selectedItems->isEmpty()) {
-            return back()->with('error', 'Please Select an Item Before Checkout');
+            return redirect()->route('cart.index')->with('error', 'Please Select an Item Before Checkout!');
         }
         $totalPrice = $selectedItems->sum(fn($item) => $item->product->price * $item->quantity);
         return Inertia::render('User/Checkout/Index', ['selectedItems' => $selectedItems, 'totalPrice' => $totalPrice]);
