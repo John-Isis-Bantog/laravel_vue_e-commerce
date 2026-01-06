@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import Alert from '@/components/ui/alert/Alert.vue';
+import AlertDescription from '@/components/ui/alert/AlertDescription.vue';
+import AlertTitle from '@/components/ui/alert/AlertTitle.vue';
 import Button from '@/components/ui/button/Button.vue';
 import Card from '@/components/ui/card/Card.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
@@ -15,10 +18,10 @@ import cart from '@/routes/cart';
 import checkout from '@/routes/checkout';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link, router, useForm } from '@inertiajs/vue3';
-import { computed } from '@vue/reactivity';
-import { Minus, Plus, Proportions } from 'lucide-vue-next';
-import { reactive, watch } from 'vue';
+import { Head, Link, router } from '@inertiajs/vue3';
+import { computed, ref } from '@vue/reactivity';
+import { Minus, Plus } from 'lucide-vue-next';
+import { reactive } from 'vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -47,6 +50,8 @@ const props = defineProps<{
 const localCartItems = reactive(
     props.cartItems.map(item => ({ ...item }))
 )
+
+const checkoutError = ref('');
 function decrementQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
     if (!item) return
@@ -102,6 +107,14 @@ function toggleSelection(item: CartItem, value: boolean) {
         }
     })
 }
+
+function goToCheckout() {
+    if (totalItem.value > 0) {
+        router.get(checkout.index().url)
+    } else {
+        checkoutError.value = 'Please Select a Product Before Checkout';
+    }
+}
 </script>
 
 <template>
@@ -109,6 +122,13 @@ function toggleSelection(item: CartItem, value: boolean) {
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <h1 class="text-center">Cart</h1>
+        <Alert class=" mx-auto w-1/2 top-5 sticky z-50" v-if="checkoutError">
+            <AlertTitle>Info</AlertTitle>
+            <AlertDescription>
+                <h1>{{ checkoutError }}</h1>
+            </AlertDescription>
+        </Alert>
+
         <div class="flex w-1/2 mx-auto space-x-2">
             <Input type="search"></Input>
             <Link :href="cart.index()"> <Button>Clear</Button></Link>
@@ -161,7 +181,7 @@ function toggleSelection(item: CartItem, value: boolean) {
 
             <div class="flex space-x-2 items-center">
                 <h1>Subtotal: ${{ totalPrice }}</h1>
-                <Link :href="checkout.index().url"><Button variant="primary">Check Out({{ totalItem }})</Button></Link>
+                <Button variant="primary" @click="goToCheckout">Check Out({{ totalItem }})</Button>
             </div>
         </div>
     </AppLayout>
