@@ -9,6 +9,7 @@ import TableHead from '@/components/ui/table/TableHead.vue';
 import TableHeader from '@/components/ui/table/TableHeader.vue';
 import TableRow from '@/components/ui/table/TableRow.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import admin from '@/routes/admin';
 // Routes
 import productRoute from '@/routes/product';
 // Vue
@@ -50,6 +51,7 @@ watch(search, (Newvalue) => {
 
     <Head title="Product Index" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Link :href="admin.index.url()"><Button>Back</Button></Link>
         <div class="flex justify-end">
             <div class="">
                 <Link :href="productRoute.create().url"><Button>Add Product</Button></Link>

@@ -9,6 +9,7 @@ import TableHead from '@/components/ui/table/TableHead.vue';
 import TableHeader from '@/components/ui/table/TableHeader.vue';
 import TableRow from '@/components/ui/table/TableRow.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import admin from '@/routes/admin';
 // Routes
 import categoryRoute from '@/routes/category';
 // Vue
@@ -51,6 +52,9 @@ watch(search, (newValue) => {
 
     <Head title="Category Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Link :href="admin.index.url()">
+            <Button>Back</Button>
+        </Link>
         <h1 class="text-center">Admin Category Page</h1>
         <div class="flex justify-end">
             <div class="">
