@@ -1,14 +1,18 @@
 <script lang="ts" setup>
+import Button from '@/components/ui/button/Button.vue';
 import Card from '@/components/ui/card/Card.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
 import CardDescription from '@/components/ui/card/CardDescription.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
 import Input from '@/components/ui/input/Input.vue';
+import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import cart from '@/routes/cart';
 import user from '@/routes/user';
 import { BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Admin Create Page',
@@ -42,30 +46,33 @@ const props = defineProps<{
 
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <Link :href="cart.index.url()"><Button>Back</Button></Link>
         <div class="flex flex-col">
-            <Card v-for="selectedItem in selectedItems" class="flex " :key="selectedItem.id">
+            <Card v-for="selectedItem in selectedItems" class=" " :key="selectedItem.id">
                 <!-- <Link :href="user.show(cartItem.id)"> -->
-                <CardHeader class="flex">
-                    <img v-if="selectedItem.product.image" :src="selectedItem.product.image" class="w-1/2" alt=""><span
-                        v-else><img
-                            src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
-                            alt=""></span>
-                    <CardTitle>{{ selectedItem.product.name }}</CardTitle>
-                    <CardDescription>
-                        {{ selectedItem.product.description }}
-                    </CardDescription>
-                    <CardContent class=" flex ">
+                <CardHeader class="flex justify-between">
+                    <div class="flex space-x-2">
+                        <img v-if="selectedItem.product.image" :src="selectedItem.product.image" class="max-w-3xs"
+                            alt=""><span v-else><img class="max-w-3xs"
+                                src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
+                                alt=""></span>
+                        <div class="">
+                            <CardTitle>{{ selectedItem.product.name }}</CardTitle>
+                            <CardDescription>
+                                {{ selectedItem.product.description }}
+                            </CardDescription>
+                        </div>
+                    </div>
+                    <CardContent class="  ">
                         <div class="">${{ selectedItem.product.price }}</div>
-                        <div class="flex space-x-2 ">
-                            <div class="flex w-15">
+                        <div class="space-2 ">
+                            <div class="flex ">
+                                <Label>Quantity: </Label>
                                 <Input type="number" min="0" max="5" v-model="selectedItem.quantity"></Input>
                             </div>
                         </div>
                     </CardContent>
-
                 </CardHeader>
-
-
             </Card>
         </div>
         <div class="bottom-0 flex justify-between sticky bg-gray-800 p-3 items-center">
