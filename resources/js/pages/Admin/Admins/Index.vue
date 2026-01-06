@@ -173,6 +173,20 @@ watch(search, (newValue) => {
                     </CardContent>
                 </Card>
             </Link>
+
+            <Link :href="dashboard.url()">
+                <Card class="w-full max-w-sm">
+                    <CardHeader>
+                        <div class="flex justify-center">
+                            <User />
+                        </div>
+                        <CardTitle class="text-center">Browse as the User </CardTitle>
+                    </CardHeader>
+                    <CardContent class="text-center">
+                        <span>{{ props.totalUsers }} Total Users</span>
+                    </CardContent>
+                </Card>
+            </Link>
         </div>
 
 
