@@ -75,9 +75,30 @@ const props = defineProps<{
                 </CardHeader>
             </Card>
         </div>
+        <ul></ul>
+        <div class="w-full">
+            <h1>Select Payment Method</h1>
+            <div class="">
+                <div class="">
+                    <Label>COD</Label>
+                    <Input type="radio"></Input>
+                </div>
+                <div class="">
+                    <Label>Credit Card</Label>
+                    <Input type="radio"></Input>
+                </div>
+            </div>
+        </div>
+
+        <ul></ul>
+        <div class="">
+            <h1>Order Detail</h1>
+            <h1>Subtotal: ${{ props.totalPrice }}</h1>
+        </div>
+
         <div class="bottom-0 flex justify-between sticky bg-gray-800 p-3 items-center">
             <div class="flex space-x-2 items-center">
-                <h1>Subtotal: ${{ props.totalPrice }}</h1>
+                <Button>Buy</Button>
             </div>
         </div>
     </AppLayout>
