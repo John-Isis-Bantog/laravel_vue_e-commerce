@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\Web\AdminUserController;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CategoryController;
@@ -35,6 +35,6 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::resource('admin', AdminController::class)->except('show');
     Route::resource('category', CategoryController::class)->except('show');
     Route::resource('product', ProductController::class)->except('show');
-    Route::resource('Users', AdminUserController::class)->except('show');
+    Route::resource('Users', AdminUserController::class);
 });
 require __DIR__ . '/settings.php';
