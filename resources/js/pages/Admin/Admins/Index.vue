@@ -27,6 +27,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 import { CircleEllipsis, DollarSign, Package, ShoppingCart, User } from 'lucide-vue-next';
+import Users from '@/routes/Users';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -159,7 +160,7 @@ watch(search, (newValue) => {
                 </Card>
             </Link>
 
-            <Link>
+            <Link :href="Users.index.url()">
                 <Card class="w-full max-w-sm">
                     <CardHeader>
                         <div class="flex justify-center">
