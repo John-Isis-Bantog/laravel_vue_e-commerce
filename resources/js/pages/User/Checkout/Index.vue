@@ -9,14 +9,14 @@ import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import cart from '@/routes/cart';
-import user from '@/routes/user';
+import products from '@/routes/products';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Admin Create Page',
-        href: user.index().url,
+        href: products.index().url,
     },
 ];
 

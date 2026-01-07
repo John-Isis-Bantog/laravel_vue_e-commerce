@@ -16,7 +16,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { toggleIsSelected, updateQuantity } from '@/routes';
 import cart from '@/routes/cart';
 import checkout from '@/routes/checkout';
-import user from '@/routes/user';
+import products from '@/routes/products';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { computed, ref } from '@vue/reactivity';
@@ -26,7 +26,7 @@ import { reactive } from 'vue';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Admin Create Page',
-        href: user.index().url,
+        href: products.index().url,
     },
 ];
 

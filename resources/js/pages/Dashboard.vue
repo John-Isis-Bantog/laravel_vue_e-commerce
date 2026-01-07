@@ -10,7 +10,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
-import user from '@/routes/user';
+import user from '@/routes/products';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
