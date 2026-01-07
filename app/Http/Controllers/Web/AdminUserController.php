@@ -14,8 +14,8 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $users = User::where('role', 'customer')->get();
-        return Inertia::render('Admin/User/Index');
+        $user = User::where('role', 'customer')->get();
+        return Inertia::render('Admin/User/Index', ['user' => $user]);
     }
 
     /**
