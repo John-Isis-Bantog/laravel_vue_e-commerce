@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,6 +14,7 @@ class AdminUserController extends Controller
      */
     public function index()
     {
+        $users = User::where('role', 'customer')->get();
         return Inertia::render('Admin/User/Index');
     }
 
