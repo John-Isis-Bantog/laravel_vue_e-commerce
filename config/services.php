@@ -40,7 +40,7 @@ return [
         'bucket' => env('Supabase_bucket')
     ],
     'stripe' => [
-        'STRIPE_KEY' => env('SUPABASE_URL'),
-        'STRIPE_SECRET' => env('SUPABASE_KEY'),
+        'STRIPE_KEY' => env('STRIPE_KEY'),
+        'STRIPE_SECRET' => env('STRIPE_SECRET'),
     ]
 ];
