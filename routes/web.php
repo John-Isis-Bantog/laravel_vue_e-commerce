@@ -23,10 +23,13 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::resource('products', CustomerController::class)->only('index', 'show');
-        Route::resource('cart', CartController::class)->only('store', 'destroy', 'index');
         Route::resource('checkout', CheckoutController::class);
-        Route::put('/cart/updateQuantity/{cartItem}', [CartController::class, 'updateQuantity'])->name('updateQuantity');
-        Route::put('/cart/select/{cartItem}', [CartController::class, 'toggleIsSelected'])->name('toggleIsSelected');
+        // route group without group() and prefix
+        {
+            Route::resource('cart', CartController::class)->only('store', 'destroy', 'index');
+            Route::put('/cart/updateQuantity/{cartItem}', [CartController::class, 'updateQuantity'])->name('updateQuantity');
+            Route::put('/cart/select/{cartItem}', [CartController::class, 'toggleIsSelected'])->name('toggleIsSelected');
+        };
     });
     Route::get('/home', HomeRedirectController::class)->name('homeRedirect');
     Route::get('/dashboard', [CustomerController::class, 'index'])->name('dashboard');
