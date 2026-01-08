@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import Button from '@/components/ui/button/Button.vue';
+import Input from '@/components/ui/input/Input.vue';
 import Table from '@/components/ui/table/Table.vue';
 import TableBody from '@/components/ui/table/TableBody.vue';
 import TableCell from '@/components/ui/table/TableCell.vue';
@@ -8,6 +9,7 @@ import TableHeader from '@/components/ui/table/TableHeader.vue';
 import TableRow from '@/components/ui/table/TableRow.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import products from '@/routes/products';
+import UserRoute from '@/routes/Users';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 
@@ -34,6 +36,10 @@ const props = defineProps<{
 
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <div class="flex w-1/2 mx-auto gap-2">
+            <Input type="search"></Input>
+            <Button :href="UserRoute.index">Clear</Button>
+        </div>
         <Table>
             <TableHeader>
                 <TableRow>
@@ -49,8 +55,8 @@ const props = defineProps<{
                     <TableCell>{{ user.name }}</TableCell>
                     <TableCell>{{ user.email }}</TableCell>
                     <TableCell class="gap-2 flex">
-                        <Link> <Button variant="primary">Edit</Button></Link>
-                        <Link> <Button variant="destructive">Delete</Button></Link>
+                        <Link :href="UserRoute.show.url(user.id)"> <Button variant="primary">Full Detail</Button></Link>
+                        <Button variant="destructive">Delete</Button>
                     </TableCell>
                 </TableRow>
             </TableBody>
