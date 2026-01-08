@@ -11,7 +11,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import cart from '@/routes/cart';
 import products from '@/routes/products';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -39,6 +39,9 @@ const props = defineProps<{
     selectedItems: SelectedItem[]
     totalPrice: number
 }>()
+const goToStripe = () => {
+    router.post(route('checkout.session'))
+}
 </script>
 
 
@@ -81,11 +84,15 @@ const props = defineProps<{
             <div class="">
                 <div class="">
                     <Label>COD</Label>
-                    <Input type="radio"></Input>
+                    <Input type="radio" name="payment_method"></Input>
+                </div>
+                <div class="">
+                    <Label>Meetup</Label>
+                    <Input type="radio" name="payment_method"></Input>
                 </div>
                 <div class="">
                     <Label>Credit Card</Label>
-                    <Input type="radio"></Input>
+                    <Input type="radio" name="payment_method"></Input>
                 </div>
             </div>
         </div>
@@ -98,7 +105,7 @@ const props = defineProps<{
 
         <div class="bottom-0 flex justify-between sticky bg-gray-800 p-3 items-center">
             <div class="flex space-x-2 items-center">
-                <Button>Buy</Button>
+                <Button @click="goToStripe">Pay with Card</Button>
             </div>
         </div>
     </AppLayout>

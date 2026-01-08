@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
 
 class CheckoutController extends Controller
 {
@@ -68,5 +70,35 @@ class CheckoutController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function createSession()
+    {
+        $selectedItems = CartItem::where('user_id', auth()->id())->where('is_selected', '1')->with('product')->get();
+        if ($selectedItems->isEmpty()) {
+            return redirect()->route('cart.index')->with('error', 'Please Select an Item Before Checkout!');
+        }
+
+        Stripe::setApiKey(config('services.stripe.STRIPE_KEY'));
+        $lineItems = $selectedItems->map(function ($item) {
+            return [
+                'price_data' => [
+                    'currency' => 'usd',
+                    'product_data' => [
+                        'name' => $item->product->name,
+                    ],
+                    'unit_amount' => $item->product->price * 100, // cents
+                ],
+                'quantity' => $item->quantity,
+            ];
+        })->toArray();
+
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => route('checkout.index'),
+            'cancel_url' => route('checkout.index'),
+        ]);
+        return redirect($session->url);
     }
 }
