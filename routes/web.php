@@ -22,14 +22,15 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('user')->group(function () {
+        // product listings
         Route::resource('products', CustomerController::class)->only('index', 'show');
+        // cart
+        Route::resource('cart', CartController::class)->only('store', 'destroy', 'index');
+        Route::put('/cart/updateQuantity/{cartItem}', [CartController::class, 'updateQuantity'])->name('updateQuantity');
+        Route::put('/cart/select/{cartItem}', [CartController::class, 'toggleIsSelected'])->name('toggleIsSelected');
+        // Checkout
         Route::resource('checkout', CheckoutController::class);
-        // route group without group() and prefix
-        {
-            Route::resource('cart', CartController::class)->only('store', 'destroy', 'index');
-            Route::put('/cart/updateQuantity/{cartItem}', [CartController::class, 'updateQuantity'])->name('updateQuantity');
-            Route::put('/cart/select/{cartItem}', [CartController::class, 'toggleIsSelected'])->name('toggleIsSelected');
-        };
+        Route::post('/checkout/session', [CheckoutController::class, 'createSession'])->name('checkout.session');
     });
     Route::get('/home', HomeRedirectController::class)->name('homeRedirect');
     Route::get('/dashboard', [CustomerController::class, 'index'])->name('dashboard');
