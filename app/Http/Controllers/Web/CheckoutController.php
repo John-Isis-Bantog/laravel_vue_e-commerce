@@ -78,7 +78,7 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('error', 'Please Select an Item Before Checkout!');
         }
 
-        Stripe::setApiKey(config('services.stripe.STRIPE_KEY'));
+        Stripe::setApiKey(config('services.stripe.STRIPE_SECRET'));
         $lineItems = $selectedItems->map(function ($item) {
             return [
                 'price_data' => [
