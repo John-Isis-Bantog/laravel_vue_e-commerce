@@ -38,5 +38,9 @@ return [
         'url' => env('SUPABASE_URL'),
         'key' => env('SUPABASE_KEY'),
         'bucket' => env('Supabase_bucket')
+    ],
+    'stripe' => [
+        'STRIPE_KEY' => env('SUPABASE_URL'),
+        'STRIPE_SECRET' => env('SUPABASE_KEY'),
     ]
 ];
