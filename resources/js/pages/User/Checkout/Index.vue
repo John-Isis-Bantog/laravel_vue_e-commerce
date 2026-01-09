@@ -40,9 +40,6 @@ const props = defineProps<{
     selectedItems: SelectedItem[]
     totalPrice: number
 }>()
-const goToStripe = () => {
-    router.post(checkout.session());
-}
 </script>
 
 
@@ -106,7 +103,10 @@ const goToStripe = () => {
 
         <div class="bottom-0 flex justify-between sticky bg-gray-800 p-3 items-center">
             <div class="flex space-x-2 items-center">
-                <Button @click="goToStripe">Pay with Card</Button>
+                <form :action="checkout.session().url" method="POST">
+                    <input type="hidden" name="_token" :value="$page.props.csrf_token" />
+                    <Button type="submit">Pay with Card</Button>
+                </form>
             </div>
         </div>
     </AppLayout>
