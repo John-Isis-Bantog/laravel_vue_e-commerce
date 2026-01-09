@@ -106,8 +106,8 @@ class CheckoutController extends Controller
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
             'mode' => 'payment',
-            'success_url' => route('products.index'),
-            'cancel_url' => route('checkout.index'),
+            'success_url' => route('products.index', ['success' => 'true']),
+            'cancel_url' => route('checkout.index', ['error' => true]),
         ]);
         return redirect($session->url);
     }
