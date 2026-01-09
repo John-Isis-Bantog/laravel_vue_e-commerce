@@ -65,7 +65,7 @@ const props = defineProps<{
                         </div>
                     </div>
                     <CardContent class="  ">
-                        <div class="">${{ selectedItem.product.price }}</div>
+                        <div class="">₱{{ selectedItem.product.price }}</div>
                         <div class="space-2 ">
                             <div class="flex ">
                                 <Label>Quantity: </Label>
@@ -98,7 +98,7 @@ const props = defineProps<{
         <ul></ul>
         <div class="">
             <h1>Order Detail</h1>
-            <h1>Subtotal: ${{ props.totalPrice }}</h1>
+            <h1>Subtotal: ₱{{ props.totalPrice }}</h1>
         </div>
 
         <div class="bottom-0 flex justify-between sticky bg-gray-800 p-3 items-center">
