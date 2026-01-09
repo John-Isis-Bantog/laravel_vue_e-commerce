@@ -92,9 +92,10 @@ class CheckoutController extends Controller
 
             return [
                 'price_data' => [
-                    'currency' => 'usd',
+                    'currency' => 'php',
                     'product_data' => $productData,
-                    'unit_amount' => $product->price * 100,
+                    'unit_amount' => (int) ($product->price * 100),
+
                 ],
                 'quantity' => $item->quantity,
             ];
