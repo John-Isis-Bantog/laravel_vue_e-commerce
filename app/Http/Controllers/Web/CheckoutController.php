@@ -80,17 +80,26 @@ class CheckoutController extends Controller
 
         Stripe::setApiKey(config('services.stripe.STRIPE_SECRET'));
         $lineItems = $selectedItems->map(function ($item) {
+            $product = $item->product;
+
+            $productData = [
+                'name' => $product->name,
+            ];
+
+            if (!empty($product->image)) {
+                $productData['images'] = [$product->image];
+            }
+
             return [
                 'price_data' => [
                     'currency' => 'usd',
-                    'product_data' => [
-                        'name' => $item->product->name,
-                    ],
-                    'unit_amount' => $item->product->price * 100, // cents
+                    'product_data' => $productData,
+                    'unit_amount' => $product->price * 100,
                 ],
                 'quantity' => $item->quantity,
             ];
         })->toArray();
+
 
         $session = Session::create([
             'payment_method_types' => ['card'],
