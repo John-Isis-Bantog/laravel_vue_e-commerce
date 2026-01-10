@@ -32,7 +32,7 @@ class CartController extends Controller
         $cartItem = $user->cartItems()->where('product_id', $productId->id)->first();
         $newQty = ($cartItem->quantity ?? 0) + 1;
         if ($newQty > 5) {
-            return back()->with('error', 'Quantity is Greater than 5. Cannot add more Quantity');
+            return back()->with('error', 'Maximum of 5 per product allowed”');
         }
         $user->cartItems()->updateOrCreate(
             ['product_id' => $productId->id],
