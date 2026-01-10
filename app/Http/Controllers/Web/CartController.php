@@ -28,21 +28,16 @@ class CartController extends Controller
             'quantity' => 'required|integer|min:1|max:5'
         ]);
         $user = auth()->user();
-        $product = Product::findOrFail($validated['id']);
-        $cartItem = $user->cartItems()->where('product_id', $product->id)->first();
-
-        if ($cartItem) {
-            $cartItem->update([
-                'quantity' => $cartItem->quantity + $validated['quantity']
-            ]);
-        } else {
-            $user->cartItems()->create([
-                'product_id' => $product->id,
-                'quantity' => $validated['quantity']
-            ]);
+        $productId = Product::findOrFail($validated['id']);
+        $cartItem = $user->cartItems()->where('product_id', $productId->id)->first();
+        $newQty = ($cartItem->quantity ?? 0) + 1;
+        if ($newQty > 5) {
+            return back()->with('error', 'Maximum of 5 per product allowed”');
         }
-
-
+        $user->cartItems()->updateOrCreate(
+            ['product_id' => $productId->id],
+            ['quantity' => $newQty]
+        );
         return back()->with('success', 'Added to Cart');
     }
 

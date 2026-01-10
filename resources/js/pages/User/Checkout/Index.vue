@@ -9,9 +9,10 @@ import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import cart from '@/routes/cart';
+import checkout from '@/routes/checkout';
 import products from '@/routes/products';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -64,7 +65,7 @@ const props = defineProps<{
                         </div>
                     </div>
                     <CardContent class="  ">
-                        <div class="">${{ selectedItem.product.price }}</div>
+                        <div class="">₱{{ selectedItem.product.price }}</div>
                         <div class="space-2 ">
                             <div class="flex ">
                                 <Label>Quantity: </Label>
@@ -81,11 +82,15 @@ const props = defineProps<{
             <div class="">
                 <div class="">
                     <Label>COD</Label>
-                    <Input type="radio"></Input>
+                    <Input type="radio" name="payment_method"></Input>
+                </div>
+                <div class="">
+                    <Label>Meetup</Label>
+                    <Input type="radio" name="payment_method"></Input>
                 </div>
                 <div class="">
                     <Label>Credit Card</Label>
-                    <Input type="radio"></Input>
+                    <Input type="radio" name="payment_method"></Input>
                 </div>
             </div>
         </div>
@@ -93,12 +98,15 @@ const props = defineProps<{
         <ul></ul>
         <div class="">
             <h1>Order Detail</h1>
-            <h1>Subtotal: ${{ props.totalPrice }}</h1>
+            <h1>Subtotal: ₱{{ props.totalPrice }}</h1>
         </div>
 
         <div class="bottom-0 flex justify-between sticky bg-gray-800 p-3 items-center">
             <div class="flex space-x-2 items-center">
-                <Button>Buy</Button>
+                <form :action="checkout.session().url" method="POST">
+                    <input type="hidden" name="_token" :value="$page.props.csrf_token" />
+                    <Button type="submit">Pay with Card</Button>
+                </form>
             </div>
         </div>
     </AppLayout>
