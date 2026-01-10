@@ -77,7 +77,8 @@ class CheckoutController extends Controller
         if ($selectedItems->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Please Select an Item Before Checkout!');
         }
-
+        $user_id = auth()->user()->id;
+        \Log::info('User ID from session: ' . $user_id);
         Stripe::setApiKey(config('services.stripe.STRIPE_SECRET'));
         $lineItems = $selectedItems->map(function ($item) {
             $product = $item->product;
@@ -106,7 +107,7 @@ class CheckoutController extends Controller
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
             'mode' => 'payment',
-            'client_reference_id' => auth()->id(),
+            'client_reference_id' => $user_id,
             'success_url' => route('products.index', ['success' => 'true']),
             'cancel_url' => route('checkout.index', ['error' => true]),
         ]);
