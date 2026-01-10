@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\HomeRedirectController;
 
 use App\Http\Controllers\Web\ProductController;
+use App\Http\Controllers\web\StripeWebhookController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,7 +31,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/cart/select/{cartItem}', [CartController::class, 'toggleIsSelected'])->name('toggleIsSelected');
         // Checkout
         Route::resource('checkout', CheckoutController::class);
+        // stripe
         Route::post('/checkout/session', [CheckoutController::class, 'createSession'])->name('checkout.session');
+        Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook']);
     });
     Route::get('/home', HomeRedirectController::class)->name('homeRedirect');
     Route::get('/dashboard', [CustomerController::class, 'index'])->name('dashboard');

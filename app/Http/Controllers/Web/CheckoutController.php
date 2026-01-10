@@ -106,6 +106,7 @@ class CheckoutController extends Controller
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
             'mode' => 'payment',
+            'client_reference_id' => auth()->id(),
             'success_url' => route('products.index', ['success' => 'true']),
             'cancel_url' => route('checkout.index', ['error' => true]),
         ]);
