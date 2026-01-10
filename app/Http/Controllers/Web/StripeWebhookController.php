@@ -14,8 +14,7 @@ class StripeWebhookController extends Controller
     {
         $payload = $request->getContent();
         $sigHeader = $request->server('HTTP_STRIPE_SIGNATURE');
-        $secret = config('services.stripe.STRIPE_SECRET');
-
+        $secret = config('services.stripe.STRIPE_WEBHOOK_SECRET');
         try {
             $event = Webhook::constructEvent($payload, $sigHeader, $secret);
         } catch (\Exception $e) {
