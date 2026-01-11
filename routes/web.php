@@ -7,9 +7,10 @@ use App\Http\Controllers\Web\CategoryController;
 use App\Http\Controllers\Web\CheckoutController;
 use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\HomeRedirectController;
-
 use App\Http\Controllers\Web\ProductController;
+use App\Http\Controllers\Web\StripeWebhookController;
 use App\Http\Middleware\IsAdmin;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as MiddlewareVerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -30,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/cart/select/{cartItem}', [CartController::class, 'toggleIsSelected'])->name('toggleIsSelected');
         // Checkout
         Route::resource('checkout', CheckoutController::class);
+        // stripe
         Route::post('/checkout/session', [CheckoutController::class, 'createSession'])->name('checkout.session');
     });
     Route::get('/home', HomeRedirectController::class)->name('homeRedirect');
@@ -41,4 +43,6 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::resource('product', ProductController::class)->except('show');
     Route::resource('Users', AdminUserController::class)->only('index', 'show');
 });
+// stripe webhook
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->withoutMiddleware(MiddlewareVerifyCsrfToken::class);
 require __DIR__ . '/settings.php';
