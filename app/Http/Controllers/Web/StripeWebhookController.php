@@ -48,6 +48,7 @@ class StripeWebhookController extends Controller
                     'items' => $orderItems,
                     'grand_total' => $cartItems->sum(fn($i) => $i->product->price * $i->quantity),
                     'payment_intent' => $session->payment_intent,
+                    'status' => 'paid'
                 ]);
 
                 CartItem::where('user_id', $userId)->where('is_selected', 1)->delete();
