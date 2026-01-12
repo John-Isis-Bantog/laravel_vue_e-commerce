@@ -13,18 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->count(10)->create([
-            'role' => 'customer'
-        ]);
-
-        User::factory()->count(10)->create([
-            'role' => 'admin'
-        ]);
-
-        User::factory()->create([
-            'name' => '123',
-            'email' => '123@example.com',
-            'role' => 'admin',
-        ]);
+        if (! app()->environment('production')) {
+            User::factory()->customer()->count(10)->create();
+            User::factory()->admin()->count(10)->create();
+            $this->call([
+                CategorySeeder::class,
+                ProductSeeder::class,
+                AdminUserSeeder::class
+            ]);
+        }
     }
 }
