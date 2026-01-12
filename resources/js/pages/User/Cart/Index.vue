@@ -173,13 +173,13 @@ function goToCheckout() {
                 <!-- </Link> -->
             </Card>
         </div>
-        <div class="bottom-0 flex justify-between sticky bg-gray-800 p-3 items-center">
+        <div class="bottom-0 flex justify-between absolute w-full bg-gray-800 p-3 items-center">
             <div class="flex  items-start gap-3">
                 <Checkbox id="toggle" />
                 <Label for="toggle">All</Label>
             </div>
 
-            <div class="flex space-x-2 items-center">
+            <div class="flex space-x-2 items-center ">
                 <h1>Subtotal: ${{ totalPrice }}</h1>
                 <Button variant="primary" @click="goToCheckout">Check Out({{ totalItem }})</Button>
             </div>
