@@ -45,9 +45,9 @@ const props = defineProps<{
                                 src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                                 alt=""></span>
                         <CardTitle>{{ product.name }}</CardTitle>
-                        <CardDescription>
+                        <!-- <CardDescription>
                             {{ product.description }}
-                        </CardDescription>
+                        </CardDescription> -->
                     </CardHeader>
                     <CardContent class="text-center">
                         ₱{{ product.price }}
