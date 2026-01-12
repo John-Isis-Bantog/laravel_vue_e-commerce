@@ -5,6 +5,7 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Stripe\Webhook;
 
@@ -36,21 +37,20 @@ class StripeWebhookController extends Controller
                     \Log::info("No cart items for user $userId");
                     return response('No cart items', 200);
                 }
-
-                $orderItems = $cartItems->map(fn($item) => [
-                    'name' => $item->product->name,
-                    'quantity' => $item->quantity,
-                    'price' => $item->product->price,
-                ]);
-
-                Order::create([
+                $order =   Order::create([
                     'user_id' => $userId,
-                    'items' => $orderItems,
                     'grand_total' => $cartItems->sum(fn($i) => $i->product->price * $i->quantity),
                     'payment_intent' => $session->payment_intent,
                     'status' => 'paid'
                 ]);
-
+                foreach ($cartItems as $item) {
+                    OrderItem::create([
+                        'order_id' => $order->id,                 // from Order
+                        'product_id' => $item->product_id,        // from CartItem
+                        'quantity' => $item->quantity,
+                        'price' => $item->product->price,
+                    ]);
+                }
                 CartItem::where('user_id', $userId)->where('is_selected', 1)->delete();
             } catch (\Exception $e) {
                 \Log::error('Stripe webhook processing failed: ' . $e->getMessage());
