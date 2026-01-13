@@ -60,6 +60,9 @@ function decrementQuantity(id: number) {
         item.quantity--;
         router.put(updateQuantity(id).url, {
             quantity: item.quantity,
+        }, {
+            preserveScroll: true,
+
         })
     }
 }
@@ -69,7 +72,9 @@ function incrementQuantity(id: number) {
         return
     }
     item.quantity++
-    router.put(updateQuantity(id).url, { quantity: item.quantity })
+    router.put(updateQuantity(id).url, { quantity: item.quantity }, {
+        preserveScroll: true
+    })
 }
 const itemFilter = computed(() => {
     return localCartItems.filter(item => item.is_selected)
