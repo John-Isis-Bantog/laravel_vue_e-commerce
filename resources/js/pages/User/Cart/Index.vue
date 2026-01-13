@@ -160,7 +160,7 @@ function goToCheckout() {
                     </CardDescription> -->
                 </CardHeader>
                 <CardContent class="text-center flex justify-between">
-                    <div class="">${{ cartItem.product.price }}</div>
+                    <div class="">₱{{ cartItem.product.price }}</div>
                     <div class="flex space-x-2 justify-around">
                         <div class="">
                             <Minus @click="decrementQuantity(cartItem.id)" />
@@ -189,9 +189,9 @@ function goToCheckout() {
             <Card v-for="inactiveItem in inactiveItems" class="w-full max-w-sm opacity-50" :key="inactiveItem.id">
                 <!-- <Link :href="user.show(cartItem.id)"> -->
                 <CardHeader>
-                    <!-- <Checkbox :model-value="inactiveItem.is_selected"
+                    <Checkbox :model-value="inactiveItem.is_selected"
                         @update:model-value="value => toggleSelection(inactiveItem, value)">
-                    </Checkbox> -->
+                    </Checkbox>
                     <img v-if="inactiveItem.product.image" :src="inactiveItem.product.image" alt=""><span v-else><img
                             src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                             alt=""></span>
@@ -201,7 +201,7 @@ function goToCheckout() {
                     </CardDescription> -->
                 </CardHeader>
                 <CardContent class="text-center flex justify-between">
-                    <div class="">${{ inactiveItem.product.price }}</div>
+                    <div class="">₱{{ inactiveItem.product.price }}</div>
                     <div class="flex space-x-2 justify-around">
                         <div class="">
                             <Minus @click="decrementQuantity(inactiveItem.id)" />
@@ -232,7 +232,7 @@ function goToCheckout() {
             </div>
 
             <div class="flex space-x-2 items-center ">
-                <h1>Subtotal: ${{ totalPrice }}</h1>
+                <h1>Subtotal: ₱{{ totalPrice }}</h1>
                 <Button variant="primary" @click="goToCheckout">Check Out({{ totalItem }})</Button>
             </div>
         </div>
