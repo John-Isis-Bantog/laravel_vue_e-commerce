@@ -55,7 +55,7 @@ const localCartItems = reactive(
 const checkoutError = ref('');
 function decrementQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
-    if (!item) return
+    if (!item || !item.product.is_active) return
     if (item.quantity > 1) {
         item.quantity--;
         router.put(updateQuantity(id).url, {
@@ -65,7 +65,7 @@ function decrementQuantity(id: number) {
 }
 function incrementQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
-    if (!item || item.quantity === 5) {
+    if (!item || item.quantity === 5 || !item.product.is_active) {
         return
     }
     item.quantity++
@@ -107,6 +107,9 @@ function deleteItemCart(id: number) {
 
 function toggleSelection(item: CartItem, value: boolean) {
     item.is_selected = value;
+    if (item.product.is_active) {
+        return
+    }
     router.put(toggleIsSelected(item.id).url, {
         is_selected: value
     }, {
