@@ -107,7 +107,7 @@ function deleteItemCart(id: number) {
 
 function toggleSelection(item: CartItem, value: boolean) {
     item.is_selected = value;
-    if (item.product.is_active) {
+    if (!item.product.is_active) {
         return
     }
     router.put(toggleIsSelected(item.id).url, {
@@ -192,7 +192,7 @@ function goToCheckout() {
             <Card v-for="inactiveItem in inactiveItems" class="w-full max-w-sm opacity-50" :key="inactiveItem.id">
                 <!-- <Link :href="user.show(cartItem.id)"> -->
                 <CardHeader>
-                    <Checkbox :model-value="inactiveItem.is_selected"
+                    <Checkbox :model-value="inactiveItem.is_selected" :disabled="!inactiveItem.is_selected"
                         @update:model-value="value => toggleSelection(inactiveItem, value)">
                     </Checkbox>
                     <img v-if="inactiveItem.product.image" :src="inactiveItem.product.image" alt=""><span v-else><img
