@@ -14,7 +14,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $products = Product::get();
+        $products = Product::where('is_active', 1)->get();
         return Inertia::render('Dashboard', ['products' => $products]);
     }
 
