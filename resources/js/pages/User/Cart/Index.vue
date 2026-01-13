@@ -146,9 +146,9 @@ function goToCheckout() {
                             src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                             alt=""></span>
                     <CardTitle>{{ cartItem.product.name }}</CardTitle>
-                    <CardDescription>
+                    <!-- <CardDescription>
                         {{ cartItem.product.description }}
-                    </CardDescription>
+                    </CardDescription> -->
                 </CardHeader>
                 <CardContent class="text-center flex justify-between">
                     <div class="">${{ cartItem.product.price }}</div>
