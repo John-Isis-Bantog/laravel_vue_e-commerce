@@ -238,7 +238,7 @@ function goToCheckout() {
         </div>
 
 
-        <div class=" flex justify-between sticky w-full bg-gray-800 p-3 items-center">
+        <div class=" flex justify-between  sticky bottom-0 w-full bg-gray-800 p-3 items-center">
             <div class="flex  items-start gap-3">
                 <Checkbox id="toggle" />
                 <Label for="toggle">All</Label>
