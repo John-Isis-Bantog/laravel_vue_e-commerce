@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ShoppingCart, House, Shield, CircleEllipsis, Package } from 'lucide-vue-next';
+import { ShoppingCart, House, Shield, CircleEllipsis, Package, ShoppingBag } from 'lucide-vue-next';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -94,7 +94,7 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Orders',
         href: orders.index(),
-        icon: ShoppingCart,
+        icon: ShoppingBag,
     },
 ];
 
