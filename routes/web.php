@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('products', CustomerController::class)->only('index', 'show');
         // cart
         Route::resource('cart', CartController::class)->only('store', 'destroy', 'index');
+        Route::resource('orders', CartController::class);
         Route::put('/cart/updateQuantity/{cartItem}', [CartController::class, 'updateQuantity'])->name('updateQuantity');
         Route::put('/cart/select/{cartItem}', [CartController::class, 'toggleIsSelected'])->name('toggleIsSelected');
         // Checkout
