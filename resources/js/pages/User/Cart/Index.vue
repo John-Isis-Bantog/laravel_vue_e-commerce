@@ -55,7 +55,9 @@ const localCartItems = reactive(
 const checkoutError = ref('');
 function decrementQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
-    if (!item || !item.product.is_active) return
+    if (!item || !item.product.is_active) {
+        return checkoutError.value = "You Cant Change the Quantity of an Unavailable Item"
+    }
     if (item.quantity > 1) {
         item.quantity--;
         router.put(updateQuantity(id).url, {
@@ -69,7 +71,7 @@ function decrementQuantity(id: number) {
 function incrementQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
     if (!item || item.quantity === 5 || !item.product.is_active) {
-        return
+        return checkoutError.value = "You Cant Change the Quantity of an Unavailable Item"
     }
     item.quantity++
     router.put(updateQuantity(id).url, { quantity: item.quantity }, {
