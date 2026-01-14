@@ -46,6 +46,9 @@ class CartController extends Controller
         $validatedData = $request->validate([
             'quantity' => 'required|integer|min:1|max:5'
         ]);
+        if (!$cartItem->product->is_active) {
+            return back()->with('error', 'You Cant Change the unavailable Product\'s Quantity');
+        }
 
         $cartItem->update($validatedData);
         return back()->with('success', 'Quantity Changed Successfully!');

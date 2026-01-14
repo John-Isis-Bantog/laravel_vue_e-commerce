@@ -40,6 +40,7 @@ interface CartItem {
         description: string,
         price: number,
         image: string
+        is_active: boolean
     }
 
 }
@@ -54,21 +55,28 @@ const localCartItems = reactive(
 const checkoutError = ref('');
 function decrementQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
-    if (!item) return
+    if (!item || !item.product.is_active) {
+        return checkoutError.value = "You Cant Change the Quantity of an Unavailable Item"
+    }
     if (item.quantity > 1) {
         item.quantity--;
         router.put(updateQuantity(id).url, {
             quantity: item.quantity,
+        }, {
+            preserveScroll: true,
+
         })
     }
 }
 function incrementQuantity(id: number) {
     const item = localCartItems.find(i => i.id === id)
-    if (!item || item.quantity === 5) {
-        return
+    if (!item || item.quantity === 5 || !item.product.is_active) {
+        return checkoutError.value = "You Cant Change the Quantity of an Unavailable Item"
     }
     item.quantity++
-    router.put(updateQuantity(id).url, { quantity: item.quantity })
+    router.put(updateQuantity(id).url, { quantity: item.quantity }, {
+        preserveScroll: true
+    })
 }
 const itemFilter = computed(() => {
     return localCartItems.filter(item => item.is_selected)
@@ -79,7 +87,15 @@ const totalItem = computed(() => {
 const totalPrice = computed(() => {
     return itemFilter.value.reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0)
 });
+const activeItems = computed(() => {
+    return localCartItems.filter(i => i.product.is_active);
+})
 
+const inactiveItems = computed(() => {
+    return localCartItems.filter(i => !i.product.is_active);
+})
+
+const showInactive = ref(false);
 function deleteItemCart(id: number) {
     router.delete(cart.destroy(id), {
         onSuccess: () => {
@@ -98,6 +114,9 @@ function deleteItemCart(id: number) {
 
 function toggleSelection(item: CartItem, value: boolean) {
     item.is_selected = value;
+    if (!item.product.is_active) {
+        return
+    }
     router.put(toggleIsSelected(item.id).url, {
         is_selected: value
     }, {
@@ -136,7 +155,7 @@ function goToCheckout() {
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
 
-            <Card v-for="cartItem in localCartItems" class="w-full max-w-sm" :key="cartItem.id">
+            <Card v-for="cartItem in activeItems" class="w-full max-w-sm" :key="cartItem.id">
                 <!-- <Link :href="user.show(cartItem.id)"> -->
                 <CardHeader>
                     <Checkbox :model-value="cartItem.is_selected"
@@ -151,7 +170,7 @@ function goToCheckout() {
                     </CardDescription> -->
                 </CardHeader>
                 <CardContent class="text-center flex justify-between">
-                    <div class="">${{ cartItem.product.price }}</div>
+                    <div class="">₱{{ cartItem.product.price }}</div>
                     <div class="flex space-x-2 justify-around">
                         <div class="">
                             <Minus @click="decrementQuantity(cartItem.id)" />
@@ -173,14 +192,60 @@ function goToCheckout() {
                 <!-- </Link> -->
             </Card>
         </div>
-        <div class="bottom-0 flex justify-between absolute w-full bg-gray-800 p-3 items-center">
+        <div class="cursor-pointer font-bold my-4 w-full text-center" @click="showInactive = !showInactive">
+            {{ showInactive ? 'Hide unavailable items' : 'Show unavailable items' }}
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 " v-show="showInactive">
+            <Card v-for="inactiveItem in inactiveItems" class="w-full max-w-sm opacity-50" :key="inactiveItem.id">
+                <!-- <Link :href="user.show(cartItem.id)"> -->
+                <div class="relative top-60 bg-red-700 -rotate-z-45 text-center">
+                    <h1 class="bg-red-700 text-5xl">Unavailable</h1>
+                </div>
+                <CardHeader>
+                    <Checkbox :model-value="inactiveItem.is_selected" :disabled="!inactiveItem.is_selected"
+                        @update:model-value="value => toggleSelection(inactiveItem, value)">
+                    </Checkbox>
+                    <img v-if="inactiveItem.product.image" :src="inactiveItem.product.image" alt=""><span v-else><img
+                            src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
+                            alt=""></span>
+                    <CardTitle>{{ inactiveItem.product.name }}</CardTitle>
+                    <!-- <CardDescription>
+                        {{ inactiveItem.product.description }}
+                    </CardDescription> -->
+                </CardHeader>
+                <CardContent class="text-center flex justify-between">
+                    <div class="">₱{{ inactiveItem.product.price }}</div>
+                    <div class="flex space-x-2 justify-around">
+                        <div class="">
+                            <Minus @click="decrementQuantity(inactiveItem.id)" />
+                        </div>
+                        <div class="flex w-15">
+                            <Input type="number" min="0" max="5" v-model="inactiveItem.quantity"></Input>
+                        </div>
+
+                        <div class="">
+                            <Plus @click="incrementQuantity(inactiveItem.id)" />
+                        </div>
+                    </div>
+
+                </CardContent>
+                <CardFooter class="flex justify-center space-x-2">
+                    <Button variant="destructive" @click="deleteItemCart(inactiveItem.id)">Delete</Button>
+                    <Button variant="primary">Buy</Button>
+                </CardFooter>
+                <!-- </Link> -->
+            </Card>
+        </div>
+
+
+        <div class=" flex justify-between  sticky bottom-0 w-full bg-gray-800 p-3 items-center">
             <div class="flex  items-start gap-3">
                 <Checkbox id="toggle" />
                 <Label for="toggle">All</Label>
             </div>
 
             <div class="flex space-x-2 items-center ">
-                <h1>Subtotal: ${{ totalPrice }}</h1>
+                <h1>Subtotal: ₱{{ totalPrice }}</h1>
                 <Button variant="primary" @click="goToCheckout">Check Out({{ totalItem }})</Button>
             </div>
         </div>

@@ -20,6 +20,10 @@ class CheckoutController extends Controller
         if ($selectedItems->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Please Select an Item Before Checkout!');
         }
+        $hasUnavailableItem = $selectedItems->contains(fn($item) => !$item->product->is_active);
+        if ($hasUnavailableItem) {
+            return redirect()->route('cart.index')->with('error', 'Please Remove an Unavailable Item in Your Checkout');
+        }
         $totalPrice = $selectedItems->sum(fn($item) => $item->product->price * $item->quantity);
         return Inertia::render('User/Checkout/Index', ['selectedItems' => $selectedItems, 'totalPrice' => $totalPrice]);
     }
