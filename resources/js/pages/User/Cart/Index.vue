@@ -193,9 +193,12 @@ function goToCheckout() {
         <div class="cursor-pointer font-bold my-4 w-full text-center" @click="showInactive = !showInactive">
             {{ showInactive ? 'Hide unavailable items' : 'Show unavailable items' }}
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" v-show="showInactive">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 " v-show="showInactive">
             <Card v-for="inactiveItem in inactiveItems" class="w-full max-w-sm opacity-50" :key="inactiveItem.id">
                 <!-- <Link :href="user.show(cartItem.id)"> -->
+                <div class="relative top-60 bg-red-700 -rotate-z-45 text-center">
+                    <h1 class="bg-red-700 text-5xl">Unavailable</h1>
+                </div>
                 <CardHeader>
                     <Checkbox :model-value="inactiveItem.is_selected" :disabled="!inactiveItem.is_selected"
                         @update:model-value="value => toggleSelection(inactiveItem, value)">
