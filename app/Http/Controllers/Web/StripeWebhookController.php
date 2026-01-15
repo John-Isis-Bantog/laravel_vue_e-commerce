@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Stripe\Webhook;
 
@@ -37,20 +38,27 @@ class StripeWebhookController extends Controller
                     \Log::info("No cart items for user $userId");
                     return response('No cart items', 200);
                 }
+                $grand_total =  $cartItems->sum(fn($i) => $i->product->price * $i->quantity);
                 $order =   Order::create([
                     'user_id' => $userId,
-                    'grand_total' => $cartItems->sum(fn($i) => $i->product->price * $i->quantity),
-                    'payment_intent' => $session->payment_intent,
+                    'grand_total' => $grand_total,
                     'status' => 'paid'
                 ]);
                 foreach ($cartItems as $item) {
                     OrderItem::create([
-                        'order_id' => $order->id,                 // from Order
-                        'product_id' => $item->product_id,        // from CartItem
+                        'order_id' => $order->id,
+                        'product_id' => $item->product_id,
                         'quantity' => $item->quantity,
                         'price' => $item->product->price,
                     ]);
                 }
+                Payment::create([
+                    'order_id' => $order->id,
+                    'stripe_payment_intent_id' => $session->payment_intent,
+                    'amount_paid' => $grand_total,
+                    'status' => 'succeeded'
+                ]);
+
                 CartItem::where('user_id', $userId)->where('is_selected', 1)->delete();
             } catch (\Exception $e) {
                 \Log::error('Stripe webhook processing failed: ' . $e->getMessage());
