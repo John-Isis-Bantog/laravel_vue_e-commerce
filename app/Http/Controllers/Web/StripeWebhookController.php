@@ -27,8 +27,8 @@ class StripeWebhookController extends Controller
             try {
                 $session = $event->data->object;
                 $userId = $session->client_reference_id;
-                $order_id = $session->order_id;
-                $grand_total = $session->grand_total;
+                $order_id = $session->metadata->order_id;
+                $grand_total = $session->metadata->grand_total;
 
                 Payment::create([
                     'order_id' => $order_id,
@@ -36,6 +36,7 @@ class StripeWebhookController extends Controller
                     'amount_paid' => $grand_total,
                     'status' => 'succeeded'
                 ]);
+                CartItem::where('user_id', $userId)->where('is_selected', 1)->delete();
             } catch (\Exception $e) {
                 \Log::error('Stripe webhook processing failed: ' . $e->getMessage());
                 return response('Webhook processing error', 500);

@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use PHPUnit\Metadata\Metadata;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
@@ -88,14 +89,13 @@ class CheckoutController extends Controller
         Stripe::setApiKey(config('services.stripe.STRIPE_SECRET'));
         $lineItems = $selectedItems->map(function ($item) {
             $product = $item->product;
-
             $productData = [
                 'name' => $product->name,
             ];
 
             if (!empty($product->image)) {
                 $productData['images'] = [$product->image];
-            }
+            };
 
             return [
                 'price_data' => [
@@ -127,16 +127,18 @@ class CheckoutController extends Controller
                 'price' => $item->product->price,
             ]);
         }
-        CartItem::where('user_id', $user_id)->where('is_selected', 1)->delete();
+
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
             'mode' => 'payment',
-            'order_id' => $order->id,
-            'grand_total'=> $grand_total;
             'client_reference_id' => $user_id,
             'success_url' => route('products.index', ['success' => 'true']),
             'cancel_url' => route('checkout.index', ['error' => true]),
+            'metadata' => [
+                'order_id' => $order->id,
+                'grand_total' => $grand_total,
+            ],
         ]);
         return redirect($session->url);
     }
