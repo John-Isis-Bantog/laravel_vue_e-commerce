@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\CartItem;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Stripe\Checkout\Session;
@@ -106,7 +108,26 @@ class CheckoutController extends Controller
             ];
         })->toArray();
 
+        $cartItems = CartItem::where('user_id', $user_id)
+            ->where('is_selected', 1)
+            ->with('product')
+            ->get();
+        $grand_total =  $cartItems->sum(fn($i) => $i->product->price * $i->quantity);
 
+        $order =   Order::create([
+            'user_id' => $user_id,
+            'grand_total' => $grand_total,
+            'status' => 'paid'
+        ]);
+        foreach ($cartItems as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $item->product->price,
+            ]);
+        }
+        CartItem::where('user_id', $user_id)->where('is_selected', 1)->delete();
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
