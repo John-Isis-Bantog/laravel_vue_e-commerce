@@ -111,19 +111,25 @@ class CheckoutController extends Controller
 
         $grand_total =  $selectedItems->sum(fn($i) => $i->product->price * $i->quantity);
 
-        $order =   Order::create([
-            'user_id' => $user_id,
-            'grand_total' => $grand_total,
-            'status' => 'pending'
-        ]);
-        foreach ($selectedItems as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $item->product_id,
-                'quantity' => $item->quantity,
-                'price' => $item->product->price,
+        $order = \DB::transaction(function () use ($user_id, $selectedItems, $grand_total) {
+            $order = Order::create([
+                'user_id' => $user_id,
+                'grand_total' => $grand_total,
+                'status' => 'pending',
             ]);
-        }
+
+            foreach ($selectedItems as $item) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item->product_id,
+                    'quantity' => $item->quantity,
+                    'price' => $item->product->price,
+                ]);
+            }
+
+            return $order;
+        });
+
 
         $session = Session::create([
             'payment_method_types' => ['card'],

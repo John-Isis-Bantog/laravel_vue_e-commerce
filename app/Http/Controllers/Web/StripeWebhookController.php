@@ -20,6 +20,7 @@ class StripeWebhookController extends Controller
         try {
             $event = Webhook::constructEvent($payload, $sigHeader, $secret);
         } catch (\Exception $e) {
+            \Log::info("Stripe webhook received: {$event->id} type: {$event->type}");
             return response('Invalid', 400);
         }
 
