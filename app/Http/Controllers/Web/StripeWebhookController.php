@@ -20,46 +20,36 @@ class StripeWebhookController extends Controller
         try {
             $event = Webhook::constructEvent($payload, $sigHeader, $secret);
         } catch (\Exception $e) {
+            \Log::info("Stripe webhook received: {$event->id} type: {$event->type}");
             return response('Invalid', 400);
         }
 
         if ($event->type === 'checkout.session.completed') {
             try {
                 $session = $event->data->object;
-
                 $userId = $session->client_reference_id;
+                $order_id = $session->metadata->order_id;
+                $grand_total = $session->metadata->grand_total;
 
-                $cartItems = CartItem::where('user_id', $userId)
+                Payment::firstOrCreate(
+                    ['stripe_payment_intent_id' => $session->payment_intent],
+                    [
+                        'order_id' => $order_id,
+                        'amount_paid' => $grand_total,
+                        'status' => 'succeeded'
+                    ]
+                );
+
+
+                $order = Order::find($order_id);
+                if ($order->status !== 'paid') {
+                    $order->update(['status' => 'paid']);
+                }
+                $cartItemIds = OrderItem::where('order_id', $order_id)->pluck('product_id');
+                CartItem::where('user_id', $userId)
+                    ->whereIn('product_id', $cartItemIds)
                     ->where('is_selected', 1)
-                    ->with('product')
-                    ->get();
-
-                if ($cartItems->isEmpty()) {
-                    \Log::info("No cart items for user $userId");
-                    return response('No cart items', 200);
-                }
-                $grand_total =  $cartItems->sum(fn($i) => $i->product->price * $i->quantity);
-                $order =   Order::create([
-                    'user_id' => $userId,
-                    'grand_total' => $grand_total,
-                    'status' => 'paid'
-                ]);
-                foreach ($cartItems as $item) {
-                    OrderItem::create([
-                        'order_id' => $order->id,
-                        'product_id' => $item->product_id,
-                        'quantity' => $item->quantity,
-                        'price' => $item->product->price,
-                    ]);
-                }
-                Payment::create([
-                    'order_id' => $order->id,
-                    'stripe_payment_intent_id' => $session->payment_intent,
-                    'amount_paid' => $grand_total,
-                    'status' => 'succeeded'
-                ]);
-
-                CartItem::where('user_id', $userId)->where('is_selected', 1)->delete();
+                    ->delete();
             } catch (\Exception $e) {
                 \Log::error('Stripe webhook processing failed: ' . $e->getMessage());
                 return response('Webhook processing error', 500);
