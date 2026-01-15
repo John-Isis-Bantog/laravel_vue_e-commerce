@@ -117,7 +117,7 @@ class CheckoutController extends Controller
         $order =   Order::create([
             'user_id' => $user_id,
             'grand_total' => $grand_total,
-            'status' => 'paid'
+            'status' => 'pending'
         ]);
         foreach ($cartItems as $item) {
             OrderItem::create([
@@ -132,6 +132,8 @@ class CheckoutController extends Controller
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
             'mode' => 'payment',
+            'order_id' => $order->id,
+            'grand_total'=> $grand_total;
             'client_reference_id' => $user_id,
             'success_url' => route('products.index', ['success' => 'true']),
             'cancel_url' => route('checkout.index', ['error' => true]),

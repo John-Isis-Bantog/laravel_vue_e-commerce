@@ -26,15 +26,12 @@ class StripeWebhookController extends Controller
         if ($event->type === 'checkout.session.completed') {
             try {
                 $session = $event->data->object;
-
                 $userId = $session->client_reference_id;
-
-
-
-
+                $order_id = $session->order_id;
+                $grand_total = $session->grand_total;
 
                 Payment::create([
-                    'order_id' => $order->id,
+                    'order_id' => $order_id,
                     'stripe_payment_intent_id' => $session->payment_intent,
                     'amount_paid' => $grand_total,
                     'status' => 'succeeded'
