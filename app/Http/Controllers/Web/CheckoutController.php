@@ -85,7 +85,7 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('error', 'Please Select an Item Before Checkout!');
         }
         $user_id = auth()->user()->id;
-        \Log::info('User ID from session: ' . $user_id);
+
         Stripe::setApiKey(config('services.stripe.STRIPE_SECRET'));
         $lineItems = $selectedItems->map(function ($item) {
             $product = $item->product;

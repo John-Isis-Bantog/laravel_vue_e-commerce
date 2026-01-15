@@ -30,13 +30,25 @@ class StripeWebhookController extends Controller
                 $order_id = $session->metadata->order_id;
                 $grand_total = $session->metadata->grand_total;
 
-                Payment::create([
-                    'order_id' => $order_id,
-                    'stripe_payment_intent_id' => $session->payment_intent,
-                    'amount_paid' => $grand_total,
-                    'status' => 'succeeded'
-                ]);
-                CartItem::where('user_id', $userId)->where('is_selected', 1)->delete();
+                Payment::firstOrCreate(
+                    ['stripe_payment_intent_id' => $session->payment_intent],
+                    [
+                        'order_id' => $order_id,
+                        'amount_paid' => $grand_total,
+                        'status' => 'succeeded'
+                    ]
+                );
+
+
+                $order = Order::find($order_id);
+                if ($order->status !== 'paid') {
+                    $order->update(['status' => 'paid']);
+                }
+                $cartItemIds = OrderItem::where('order_id', $order_id)->pluck('product_id');
+                CartItem::where('user_id', $userId)
+                    ->whereIn('product_id', $cartItemIds)
+                    ->where('is_selected', 1)
+                    ->delete();
             } catch (\Exception $e) {
                 \Log::error('Stripe webhook processing failed: ' . $e->getMessage());
                 return response('Webhook processing error', 500);
