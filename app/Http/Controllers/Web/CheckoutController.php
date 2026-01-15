@@ -108,18 +108,15 @@ class CheckoutController extends Controller
             ];
         })->toArray();
 
-        $cartItems = CartItem::where('user_id', $user_id)
-            ->where('is_selected', 1)
-            ->with('product')
-            ->get();
-        $grand_total =  $cartItems->sum(fn($i) => $i->product->price * $i->quantity);
+
+        $grand_total =  $selectedItems->sum(fn($i) => $i->product->price * $i->quantity);
 
         $order =   Order::create([
             'user_id' => $user_id,
             'grand_total' => $grand_total,
             'status' => 'pending'
         ]);
-        foreach ($cartItems as $item) {
+        foreach ($selectedItems as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
                 'product_id' => $item->product_id,
