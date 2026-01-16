@@ -70,6 +70,7 @@ interface Admin {
     allProducts: string,
     activeProducts: string,
     totalUsers: string
+    revenue: number
 }
 const props = defineProps<{
     admins: Admin[];
@@ -77,6 +78,7 @@ const props = defineProps<{
     allProducts: number[];
     activeProducts: number[];
     totalUsers: number[];
+    revenue: number
 }>();
 
 function removeAdmin(id: number) {
@@ -155,7 +157,7 @@ watch(search, (newValue) => {
                         <CardTitle class="text-center">Revenue</CardTitle>
                     </CardHeader>
                     <CardContent class="text-center">
-                        <span>$120</span>
+                        <span>₱{{ props.revenue }}</span>
                     </CardContent>
                 </Card>
             </Link>
