@@ -81,14 +81,6 @@ const props = defineProps<{
             <h1>Select Payment Method</h1>
             <div class="">
                 <div class="">
-                    <Label>COD</Label>
-                    <Input type="radio" name="payment_method"></Input>
-                </div>
-                <div class="">
-                    <Label>Meetup</Label>
-                    <Input type="radio" name="payment_method"></Input>
-                </div>
-                <div class="">
                     <Label>Credit Card</Label>
                     <Input type="radio" name="payment_method"></Input>
                 </div>
