@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Validation\Rules\Password;
 use App\Http\Controllers\Controller;
+use App\Models\Payment;
 
 class AdminController extends Controller
 {
@@ -22,6 +23,7 @@ class AdminController extends Controller
         $allProducts = Product::count();
         $activeProducts = Product::where('is_active', '1')->count();
         $totalUsers = User::where('role', 'customer')->count();
+        $revenue = Payment::where('status', 'succeeded')->sum('amount_paid');
 
         $admins = User::where('role', 'admin')
             ->where('id', '!=', auth()->id()) // exclude the current admin
@@ -34,7 +36,7 @@ class AdminController extends Controller
             ->get();
 
 
-        return Inertia::render('Admin/Admins/Index', ['admins' => $admins, 'categories' => $categories, 'allProducts' => $allProducts, 'activeProducts' => $activeProducts, 'totalUsers' => $totalUsers]);
+        return Inertia::render('Admin/Admins/Index', ['admins' => $admins, 'categories' => $categories, 'allProducts' => $allProducts, 'activeProducts' => $activeProducts, 'totalUsers' => $totalUsers, 'revenue' => $revenue]);
     }
 
 
