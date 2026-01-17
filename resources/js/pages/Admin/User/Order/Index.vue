@@ -20,21 +20,27 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 
-interface Order {
-    grandTotal: number,
-    status: string,
-
-    orderItem: {
-        quantity: number,
-        price: number
-
-        product: {
-            name: string,
-            description: string,
-            image: string,
-        }
-    }
+interface Product {
+    id: number
+    name: string
+    description: string
+    image: string | null
+    price: number
 }
+interface OrderItem {
+    id: number
+    quantity: number
+    price: number
+    product: Product
+}
+interface Order {
+    id: number
+    grandTotal: number
+    status: 'pending' | 'paid' | 'cancelled' | 'refunded'
+    orderItems: OrderItem[]
+    createdAt: string
+}
+
 </script>
 
 <template>
