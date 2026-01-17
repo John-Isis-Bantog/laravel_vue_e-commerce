@@ -14,9 +14,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $order = Order::with('orderItems.product')->where('user_id', auth()->id())->get();
+        $orders = Order::with('orderItems.product')->where('user_id', auth()->id())->get();
 
-        return Inertia::render('Admin/User/Order/Index', ['order' => $order]);
+        return Inertia::render('Admin/User/Order/Index', ['order' => $orders]);
     }
 
     /**
