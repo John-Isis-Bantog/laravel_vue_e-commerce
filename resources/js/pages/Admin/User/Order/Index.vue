@@ -57,13 +57,13 @@ const props = defineProps<{
                     <!-- <Link :href="user.show(cartItem.id)"> -->
                     <CardHeader class="flex justify-between">
                         <div class="flex space-x-2">
-                            <img class="max-w-3xs" alt=""><span><img class="max-w-3xs"
+                            <img v-if="item.product.image" class="max-w-3xs" alt=""><span v-else><img class="max-w-3xs"
                                     src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                                     alt=""></span>
                             <div class="">
-                                <CardTitle>{{ }}</CardTitle>
+                                <CardTitle>{{ item.product.name }}</CardTitle>
                                 <CardDescription>
-                                    {{ }}
+                                    {{ item.product.description }}
                                 </CardDescription>
                             </div>
                         </div>
