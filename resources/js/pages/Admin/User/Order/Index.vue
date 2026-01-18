@@ -35,12 +35,16 @@ interface OrderItem {
 }
 interface Order {
     id: number
-    grandTotal: number
+    grand_total: number
     status: 'pending' | 'paid' | 'cancelled' | 'refunded'
     orderItems: OrderItem[]
     createdAt: string
 }
 
+const props = defineProps<{
+    orders: Order[];
+    orderItems: OrderItem[];
+}>() 
 </script>
 
 <template>
@@ -48,7 +52,8 @@ interface Order {
     <Head title="Dashboard" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col">
-            <Card>
+            <Card v-for="order in props.orders">
+
                 <!-- <Link :href="user.show(cartItem.id)"> -->
                 <CardHeader class="flex justify-between">
                     <div class="flex space-x-2">
@@ -65,13 +70,19 @@ interface Order {
                     <CardContent class="  ">
                         <div class="">₱{{ }}</div>
                         <div class="space-2 ">
-                            <div class="flex ">
-                                <Label>Quantity: </Label>
-                                <Input type="number" min="0" max="5"></Input>
+                            <div class=" ">
+                                <div class="">
+                                    <Label>Quantity:{{ }} </Label>
+                                    <!-- <Input type="number" min="0" max="5"></Input> -->
+                                </div>
+                                <div class="">
+                                    <Label>Status:{{ order.status }} </Label>
+                                </div>
                             </div>
                         </div>
                     </CardContent>
                 </CardHeader>
+
             </Card>
         </div>
     </AppLayout>
