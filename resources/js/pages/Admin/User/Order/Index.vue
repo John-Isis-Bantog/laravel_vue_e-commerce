@@ -27,7 +27,7 @@ interface Product {
     image: string | null
     price: number
 }
-interface OrderItem {
+interface order_item {
     id: number
     quantity: number
     price: number
@@ -35,12 +35,15 @@ interface OrderItem {
 }
 interface Order {
     id: number
-    grandTotal: number
+    grand_total: number
     status: 'pending' | 'paid' | 'cancelled' | 'refunded'
-    orderItems: OrderItem[]
+    order_items: order_item[]
     createdAt: string
 }
 
+const props = defineProps<{
+    orders: Order[];
+}>() 
 </script>
 
 <template>
@@ -48,30 +51,41 @@ interface Order {
     <Head title="Dashboard" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col">
-            <Card>
-                <!-- <Link :href="user.show(cartItem.id)"> -->
-                <CardHeader class="flex justify-between">
-                    <div class="flex space-x-2">
-                        <img class="max-w-3xs" alt=""><span><img class="max-w-3xs"
-                                src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
-                                alt=""></span>
-                        <div class="">
-                            <CardTitle>{{ }}</CardTitle>
-                            <CardDescription>
-                                {{ }}
-                            </CardDescription>
-                        </div>
-                    </div>
-                    <CardContent class="  ">
-                        <div class="">₱{{ }}</div>
-                        <div class="space-2 ">
-                            <div class="flex ">
-                                <Label>Quantity: </Label>
-                                <Input type="number" min="0" max="5"></Input>
+            <Card v-for="order in props.orders" :key="order.id">
+                <div class="" v-for="item in order.order_items" :key="item.id">
+
+                    <!-- <Link :href="user.show(cartItem.id)"> -->
+                    <CardHeader class="flex justify-between">
+                        <div class="flex space-x-2">
+                            <img v-if="item.product.image" class="max-w-3xs" alt=""><span v-else><img class="max-w-3xs"
+                                    src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
+                                    alt=""></span>
+                            <div class="">
+                                <CardTitle>{{ item.product.name }}</CardTitle>
+                                <CardDescription>
+                                    {{ item.product.description }}
+                                </CardDescription>
                             </div>
                         </div>
-                    </CardContent>
-                </CardHeader>
+
+                        <CardContent class=" space-y-2 ">
+                            <div class="">₱{{ item.price }}</div>
+                            <div class="space-2 ">
+                                <div class="">
+                                    <div class="">
+                                        <Label>Quantity:{{ item.quantity }} </Label>
+                                        <!-- <Input type="number" min="0" max="5"></Input> -->
+                                    </div>
+                                    <div class="">
+                                        <Label>Status:{{ order.status }} </Label>
+                                    </div>
+                                </div>
+                            </div>
+                        </CardContent>
+
+
+                    </CardHeader>
+                </div>
             </Card>
         </div>
     </AppLayout>
