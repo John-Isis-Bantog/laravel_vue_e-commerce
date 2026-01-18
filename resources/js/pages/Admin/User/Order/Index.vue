@@ -68,16 +68,16 @@ const props = defineProps<{
                             </div>
                         </div>
 
-                        <CardContent class="  ">
+                        <CardContent class=" space-y-2 ">
                             <div class="">₱{{ item.price }}</div>
                             <div class="space-2 ">
-                                <div class=" ">
+                                <div class="">
                                     <div class="">
                                         <Label>Quantity:{{ item.quantity }} </Label>
                                         <!-- <Input type="number" min="0" max="5"></Input> -->
                                     </div>
                                     <div class="">
-                                        <!-- <Label>Status:{{ order.status }} </Label> -->
+                                        <Label>Status:{{ order.status }} </Label>
                                     </div>
                                 </div>
                             </div>
