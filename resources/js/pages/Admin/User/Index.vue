@@ -56,7 +56,7 @@ const props = defineProps<{
                     <TableCell>{{ user.email }}</TableCell>
                     <TableCell class="gap-2 flex">
                         <Link :href="UserRoute.show.url(user.id)"> <Button variant="primary">Full Detail</Button></Link>
-                        <Button variant="destructive">Delete</Button>
+                        <Button variant="destructive">Suspend</Button>
                     </TableCell>
                 </TableRow>
             </TableBody>
