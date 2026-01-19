@@ -23,13 +23,6 @@ interface User {
 const props = defineProps<{
     user: User
 }>()
-
-const form = useForm({
-    name: props.user.name,
-    email: props.user.email
-})
-
-
 </script>
 
 
@@ -38,20 +31,15 @@ const form = useForm({
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <Link :href="userRoute.index.url()"><Button variant="outline">Back</Button></Link>
-        <Form class="space-y-2 w-1/2 mx-auto">
+        <div class="space-y-4 w-1/2 mx-auto ">
             <div class="">
                 <Label for="name">Name</Label>
-                <Input type="text"></Input>
+                <h1>{{ props.user.name }}</h1>
             </div>
-
             <div class="">
                 <Label for="email">Email</Label>
-                <Input type="email"></Input>
+                <h1>{{ props.user.email }}</h1>
             </div>
-            <div class="flex justify-center">
-                <Button variant="primary">Submit</Button>
-            </div>
-
-        </Form>
+        </div>
     </AppLayout>
 </template>
