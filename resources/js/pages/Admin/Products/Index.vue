@@ -45,6 +45,11 @@ const search = ref('');
 watch(search, (Newvalue) => {
     router.get(productRoute.index(), { search: Newvalue }, { preserveState: true, replace: true })
 })
+
+function limitDescription(text: string, length = 30) {
+    if (!text) return '';
+    return text.length > length ? text.slice(0, length) + '...' : text;
+}
 </script>
 
 <template>
@@ -78,7 +83,7 @@ watch(search, (Newvalue) => {
                 <TableRow v-for="product in props.products" :key="product.id">
                     <TableCell>{{ product.id }}</TableCell>
                     <TableCell>{{ product.name }}</TableCell>
-                    <TableCell>{{ product.description }}</TableCell>
+                    <TableCell>{{ limitDescription(product.description) }}</TableCell>
                     <TableCell><img :src="product.image" v-if="product.image" alt=""><span v-else><img
                                 src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                                 alt=""></span></TableCell>
