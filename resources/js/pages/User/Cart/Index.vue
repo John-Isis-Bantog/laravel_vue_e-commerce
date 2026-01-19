@@ -156,19 +156,21 @@ function goToCheckout() {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
 
             <Card v-for="cartItem in activeItems" class="w-full max-w-sm" :key="cartItem.id">
-                <!-- <Link :href="user.show(cartItem.id)"> -->
-                <CardHeader>
-                    <Checkbox :model-value="cartItem.is_selected"
-                        @update:model-value="value => toggleSelection(cartItem, value)">
-                    </Checkbox>
-                    <img v-if="cartItem.product.image" :src="cartItem.product.image" alt=""><span v-else><img
-                            src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
-                            alt=""></span>
-                    <CardTitle>{{ cartItem.product.name }}</CardTitle>
-                    <!-- <CardDescription>
+                <Checkbox :model-value="cartItem.is_selected"
+                    @update:model-value="value => toggleSelection(cartItem, value)">
+                </Checkbox>
+                <Link :href="products.show(cartItem.product_id)">
+                    <h1>{{ }}</h1>
+                    <CardHeader>
+                        <img v-if="cartItem.product.image" :src="cartItem.product.image" alt=""><span v-else><img
+                                src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
+                                alt=""></span>
+                        <CardTitle>{{ cartItem.product.name }}</CardTitle>
+                        <!-- <CardDescription>
                         {{ cartItem.product.description }}
                     </CardDescription> -->
-                </CardHeader>
+                    </CardHeader>
+                </Link>
                 <CardContent class="text-center flex justify-between">
                     <div class="">₱{{ cartItem.product.price }}</div>
                     <div class="flex space-x-2 justify-around">
@@ -189,7 +191,7 @@ function goToCheckout() {
                     <Button variant="destructive" @click="deleteItemCart(cartItem.id)">Delete</Button>
                     <Button variant="primary">Buy</Button>
                 </CardFooter>
-                <!-- </Link> -->
+
             </Card>
         </div>
         <div class="cursor-pointer font-bold my-4 w-full text-center" @click="showInactive = !showInactive">
@@ -197,43 +199,44 @@ function goToCheckout() {
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 " v-show="showInactive">
             <Card v-for="inactiveItem in inactiveItems" class="w-full max-w-sm opacity-50" :key="inactiveItem.id">
-                <!-- <Link :href="user.show(cartItem.id)"> -->
-                <div class="relative top-60 bg-red-700 -rotate-z-45 text-center">
-                    <h1 class="bg-red-700 text-5xl">Unavailable</h1>
-                </div>
-                <CardHeader>
-                    <Checkbox :model-value="inactiveItem.is_selected" :disabled="!inactiveItem.is_selected"
-                        @update:model-value="value => toggleSelection(inactiveItem, value)">
-                    </Checkbox>
-                    <img v-if="inactiveItem.product.image" :src="inactiveItem.product.image" alt=""><span v-else><img
-                            src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
-                            alt=""></span>
-                    <CardTitle>{{ inactiveItem.product.name }}</CardTitle>
-                    <!-- <CardDescription>
+                <Link :href="products.show(inactiveItem.product_id)">
+                    <div class="relative top-60 bg-red-700 -rotate-z-45 text-center">
+                        <h1 class="bg-red-700 text-5xl">Unavailable</h1>
+                    </div>
+                    <CardHeader>
+                        <Checkbox :model-value="inactiveItem.is_selected" :disabled="!inactiveItem.is_selected"
+                            @update:model-value="value => toggleSelection(inactiveItem, value)">
+                        </Checkbox>
+                        <img v-if="inactiveItem.product.image" :src="inactiveItem.product.image" alt=""><span
+                            v-else><img
+                                src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
+                                alt=""></span>
+                        <CardTitle>{{ inactiveItem.product.name }}</CardTitle>
+                        <!-- <CardDescription>
                         {{ inactiveItem.product.description }}
                     </CardDescription> -->
-                </CardHeader>
-                <CardContent class="text-center flex justify-between">
-                    <div class="">₱{{ inactiveItem.product.price }}</div>
-                    <div class="flex space-x-2 justify-around">
-                        <div class="">
-                            <Minus @click="decrementQuantity(inactiveItem.id)" />
-                        </div>
-                        <div class="flex w-15">
-                            <Input type="number" min="0" max="5" v-model="inactiveItem.quantity"></Input>
+                    </CardHeader>
+                    <CardContent class="text-center flex justify-between">
+                        <div class="">₱{{ inactiveItem.product.price }}</div>
+                        <div class="flex space-x-2 justify-around">
+                            <!-- <div class="">
+                                <Minus @click="decrementQuantity(inactiveItem.id)" />
+                            </div> -->
+                            <!-- <div class="flex w-15">
+                                <Input type="number" min="0" max="5" v-model="inactiveItem.quantity"></Input>
+                            </div> -->
+
+                            <!-- <div class="">
+                                <Plus @click="incrementQuantity(inactiveItem.id)" />
+                            </div> -->
                         </div>
 
-                        <div class="">
-                            <Plus @click="incrementQuantity(inactiveItem.id)" />
-                        </div>
-                    </div>
-
-                </CardContent>
-                <CardFooter class="flex justify-center space-x-2">
-                    <Button variant="destructive" @click="deleteItemCart(inactiveItem.id)">Delete</Button>
-                    <Button variant="primary">Buy</Button>
-                </CardFooter>
-                <!-- </Link> -->
+                    </CardContent>
+                    <CardFooter class="flex justify-center space-x-2">
+                        <Button variant="destructive" @click="deleteItemCart(inactiveItem.id)">Delete</Button>
+                        <Button variant="primary">Buy</Button>
+                    </CardFooter>
+                </Link>
             </Card>
         </div>
 
