@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('recipient_name', 255);
             $table->string('phone', 15);
             $table->string('city', 100);
             $table->string('address_line_1', 255);
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('addresses');
     }
 };
