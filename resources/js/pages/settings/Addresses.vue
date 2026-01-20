@@ -25,7 +25,15 @@ const breadcrumbItems: BreadcrumbItem[] = [
         <SettingsLayout>
             <Form class="space-y-2">
                 <div class="">
+                    <Label for="recepient_name">Recepient Name</Label>
+                    <Input type="text"></Input>
+                </div>
+                <div class="">
                     <Label for="phone">Phone Number</Label>
+                    <Input type="text"></Input>
+                </div>
+                <div class="">
+                    <Label for="province">Province</Label>
                     <Input type="text"></Input>
                 </div>
                 <div class="">
@@ -36,10 +44,7 @@ const breadcrumbItems: BreadcrumbItem[] = [
                     <Label for="address">Address</Label>
                     <Input type="text"></Input>
                 </div>
-                <div class="">
-                    <Label for="province">Province</Label>
-                    <Input type="text"></Input>
-                </div>
+
                 <div class="">
                     <Label for="postalCode">Postal Code</Label>
                     <Input type="text"></Input>
