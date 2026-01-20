@@ -16,6 +16,30 @@ const breadcrumbItems: BreadcrumbItem[] = [
         href: edit().url,
     },
 ];
+
+import { ref, onMounted, watch } from 'vue'
+
+const provinces = ref<any[]>([])
+const cities = ref<any[]>([])
+
+const selectedProvince = ref('')
+const selectedCity = ref('')
+
+onMounted(async () => {
+    const res = await fetch('https://psgc.cloud/api/provinces')
+    provinces.value = await res.json()
+})
+
+watch(selectedProvince, async (provinceCode) => {
+    if (!provinceCode) return
+
+    const res = await fetch(
+        `https://psgc.cloud/api/provinces/${provinceCode}/cities-municipalities`
+    )
+    cities.value = await res.json()
+
+    selectedCity.value = '' // reset city
+})
 </script>
 
 <template>
@@ -34,11 +58,22 @@ const breadcrumbItems: BreadcrumbItem[] = [
                 </div>
                 <div class="">
                     <Label for="province">Province</Label>
-                    <Input type="text"></Input>
+                    <select v-model="selectedProvince">
+                        <option value="">Select province</option>
+                        <option v-for="province in provinces" :key="province.code" :value="province.code">
+                            {{ province.name }}
+                        </option>
+                    </select>
+
                 </div>
                 <div class="">
                     <Label for="city">City</Label>
-                    <Input type="text"></Input>
+                    <select v-model="selectedCity" :disabled="!selectedProvince">
+                        <option value="">Select city</option>
+                        <option v-for="city in cities" :key="city.code" :value="city.code">
+                            {{ city.name }}
+                        </option>
+                    </select>
                 </div>
                 <div class="">
                     <Label for="address">Address</Label>
