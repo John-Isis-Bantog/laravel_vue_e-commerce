@@ -9,7 +9,11 @@ use Inertia\Inertia;
 
 class AddressesController extends Controller
 {
-
+    public function index()
+    {
+        $addresses = Address::where('user_id', auth()->id())->get();
+        return Inertia::render('settings/Addresses', ['addresses' => $addresses]);
+    }
     public function edit()
     {
         $addresses = Address::where('user_id', auth()->id())->get();

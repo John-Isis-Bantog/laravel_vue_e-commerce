@@ -30,7 +30,7 @@ const sidebarNavItems: NavItem[] = [
     },
     {
         title: 'Addresses',
-        href: addresses.edit(),
+        href: addresses.index(),
     },
 ];
 

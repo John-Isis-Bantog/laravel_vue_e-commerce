@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('settings/two-factor', [TwoFactorAuthenticationController::class, 'show'])
         ->name('two-factor.show');
 
-    Route::get('settings/addresses', [AddressesController::class, 'edit'])->name('addresses.edit');
+    Route::get('settings/addresses', [AddressesController::class, 'index'])->name('addresses.index');
     Route::patch('settings/addresses', [AddressesController::class, 'update'])->name('addresses.update');
     Route::post('settings/addresses', [AddressesController::class, 'store'])->name('addresses.store');
 });
