@@ -32,7 +32,7 @@ const cities = ref<any[]>([])
 interface Address {
     id: number,
     recipient_name: string,
-    phone: number | null,
+    phone: string,
     address_line_1: string,
     city: string,
     postal_code: number | null,
@@ -42,7 +42,7 @@ interface Address {
 type AddressForm = Omit<Address, 'id'>
 const form = useForm<AddressForm>({
     recipient_name: '',
-    phone: null,
+    phone: '09',
     address_line_1: '',
     city: '',
     postal_code: null,
@@ -68,11 +68,29 @@ watch(() => form.province, async (provinceCode) => {
 
     form.city = ''
 })
+function getProvinceName(code: string) {
+    return provinces.value.find(p => p.code === code)?.name ?? '';
+}
 
+function getCityName(code: string) {
+    return cities.value.find(p => p.code === code)?.name ?? '';
+}
 
 function submitForm() {
-    console.log(form.recipient_name, form.phone, form.address_line_1, form.city, form.postal_code, form.address_line_1)
+    form.province = getProvinceName(form.province)
+    form.city = getCityName(form.city)
     form.post(addressesRoute.store().url)
+}
+
+function onPhoneInput(e: Event) {
+    let value = (e.target as HTMLInputElement).value
+
+    value = value.replace(/\D/g, '');
+
+    if (!value.startsWith('09')) {
+        value = value.slice(0, 11)
+    }
+    form.phone = value
 }
 </script>
 
@@ -89,25 +107,25 @@ function submitForm() {
                 </div>
                 <div class="">
                     <Label for="phone">Phone Number</Label>
-                    <Input type="number" :model-value="form.phone ?? ''"
-                        @update:model-value="value => form.phone = value === '' ? null : Number(value)" />
+                    <Input type="tel" v-model="form.phone" maxlength="11" inputmode="numeric" placeholder="09XXXXXXXXX"
+                        @input="onPhoneInput" />
                     <span v-if="form.errors.phone" class="text-red-600">{{ form.errors.phone }}</span>
                 </div>
                 <div class="flex space-x-4">
                     <div class="">
                         <Label for="province">Province</Label>
-                        <select v-model="form.province">
+                        <select v-model="form.province" required="true">
                             <option value="">Select province</option>
                             <option v-for="province in provinces" :key="province.code" :value="province.code">
                                 {{ province.name }}
                             </option>
                         </select>
                         <span v-if="form.errors.province" class="text-red-600">{{ form.errors.province
-                            }}</span>
+                        }}</span>
                     </div>
                     <div class="">
                         <Label for="city">City</Label>
-                        <select v-model="form.city" :disabled="!form.province">
+                        <select v-model="form.city" :disabled="!form.province" required="true">
                             <option value="">Select city</option>
                             <option v-for="city in cities" :key="city.code" :value="city.code">
                                 {{ city.name }}
@@ -135,15 +153,21 @@ function submitForm() {
 
             <div class="">
                 <Card v-for="address in props.addresses" :key='address.id'>
-                    <CardHeader>
+                    <CardHeader class="flex">
                         <CardTitle>Name:{{ address.recipient_name }}</CardTitle>
                         <CardDescription>Phone Number:{{ address.phone }}</CardDescription>
                     </CardHeader>
-                    <CardContent>
-                        <p>City:{{ address.city }}</p>
-                        <p>Province:{{ address.province }}</p>
-                        <p>Address:{{ address.address_line_1 }}</p>
-                        <p>Postal Code:{{ address.postal_code }}</p>
+                    <CardContent class="">
+                        <div class="">
+                            <p>City:{{ address.city }}</p>
+                            <p>Province:{{ address.province }}</p>
+
+                        </div>
+                        <div class="">
+                            <p>Address:{{ address.address_line_1 }}</p>
+                            <p>Postal Code:{{ address.postal_code }}</p>
+                        </div>
+
                     </CardContent>
                 </Card>
             </div>
