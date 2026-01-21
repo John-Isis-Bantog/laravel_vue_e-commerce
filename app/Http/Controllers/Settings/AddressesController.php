@@ -26,15 +26,23 @@ class AddressesController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'recipient_name' => 'required|string|max:255',
-            'phone' => 'required|numeric',
-            'city' => 'required|string|max:255',
-            'address_line_1' => 'required|string|max:255',
-            'address_line_2' => 'nullable|string|max:255',
-            'province' => 'required|string|max:255',
-            'postal_code' => 'required|numeric',
-        ]);
+        $validatedData = $request->validate(
+            [
+                'recipient_name' => 'required|string|max:255',
+                'phone' => [
+                    'required',
+                    'regex:/^09\d{9}$/',
+                ],
+                'city' => 'required|string|max:255',
+                'address_line_1' => 'required|string|max:255',
+                'address_line_2' => 'nullable|string|max:255',
+                'province' => 'required|string|max:255',
+                'postal_code' => 'required|numeric',
+            ],
+            [
+                'phone.regex' => 'Phone number must be 11 digits and start with 09.',
+            ]
+        );
         $validatedData['user_id'] = auth()->id();
         $validatedData = Address::create($validatedData);
         return redirect()->route('addresses.edit')->with('success', 'Address Added Successfully!');
