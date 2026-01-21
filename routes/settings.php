@@ -29,4 +29,5 @@ Route::middleware('auth')->group(function () {
 
     Route::get('settings/addresses', [AddressesController::class, 'edit'])->name('addresses.edit');
     Route::patch('settings/addresses', [AddressesController::class, 'update'])->name('addresses.update');
+    Route::post('settings/addresses', [AddressesController::class, 'store'])->name('addresses.store');
 });
