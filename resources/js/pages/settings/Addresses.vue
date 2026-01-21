@@ -25,7 +25,7 @@ const cities = ref<any[]>([])
 
 interface Address {
     recipient_name: string,
-    phoneNumber: number | null,
+    phone: number | null,
     address_line_1: string,
     city: string,
     postal_code: number | null,
@@ -34,7 +34,7 @@ interface Address {
 }
 const form = useForm<Address>({
     recipient_name: '',
-    phoneNumber: null,
+    phone: null,
     address_line_1: '',
     city: '',
     postal_code: null,
@@ -60,7 +60,7 @@ watch(() => form.province, async (provinceCode) => {
 
 
 function submitForm() {
-    console.log(form.recipient_name, form.phoneNumber, form.address_line_1, form.city, form.postal_code, form.address_line_1)
+    console.log(form.recipient_name, form.phone, form.address_line_1, form.city, form.postal_code, form.address_line_1)
     form.post(addresses.store().url)
 }
 </script>
@@ -78,9 +78,9 @@ function submitForm() {
                 </div>
                 <div class="">
                     <Label for="phone">Phone Number</Label>
-                    <Input type="number" :model-value="form.phoneNumber ?? ''"
-                        @update:model-value="value => form.phoneNumber = value === '' ? null : Number(value)" />
-                    <span v-if="form.errors.phoneNumber" class="text-red-600">{{ form.errors.phoneNumber }}</span>
+                    <Input type="number" :model-value="form.phone ?? ''"
+                        @update:model-value="value => form.phone = value === '' ? null : Number(value)" />
+                    <span v-if="form.errors.phone" class="text-red-600">{{ form.errors.phone }}</span>
                 </div>
                 <div class="flex space-x-4">
                     <div class="">
@@ -92,7 +92,7 @@ function submitForm() {
                             </option>
                         </select>
                         <span v-if="form.errors.province" class="text-red-600">{{ form.errors.province
-                            }}</span>
+                        }}</span>
                     </div>
                     <div class="">
                         <Label for="city">City</Label>
