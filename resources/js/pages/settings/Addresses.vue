@@ -187,27 +187,59 @@ function onPhoneInput(e: Event) {
             </Form>
 
 
-            <div class="">
-                <Button>Add </Button>
-                <Card v-for="address in props.addresses" :key='address.id' class="my-4">
-                    <CardHeader class="flex">
-                        <CardTitle>Name:{{ address.recipient_name }}</CardTitle>
-                        <CardDescription>Phone Number:{{ address.phone }}</CardDescription>
-                    </CardHeader>
-                    <CardContent class="">
-                        <div class="">
-                            <p>City:{{ address.city }}</p>
-                            <p>Province:{{ address.province }}</p>
+            <div class="space-y-4">
+                <!-- Add Button -->
+                <div class="flex justify-end">
+                    <Button variant="primary" @click="openAddModal">
+                        Add Address
+                    </Button>
+                </div>
 
-                        </div>
-                        <div class="">
-                            <p>Address:{{ address.address_line_1 }}</p>
-                            <p>Postal Code:{{ address.postal_code }}</p>
-                        </div>
+                <!-- Addresses Grid -->
+                <div class="grid md:grid-cols-2 gap-4">
+                    <Card v-for="address in props.addresses" :key="address.id"
+                        class="shadow-md hover:shadow-lg transition">
 
-                    </CardContent>
-                </Card>
+                        <!-- Header -->
+                        <CardHeader class="flex justify-between items-center">
+                            <div>
+                                <CardTitle class="text-lg font-semibold">
+                                    {{ address.recipient_name }}
+                                </CardTitle>
+                                <CardDescription class="text-sm text-gray-500">
+                                    {{ address.phone }}
+                                </CardDescription>
+                            </div>
+                            <!-- Actions -->
+                            <div class="flex space-x-2">
+                                <Button variant="outline" size="sm">
+                                    Edit
+                                </Button>
+                                <Button variant="destructive" size="sm">
+                                    Delete
+                                </Button>
+                            </div>
+                        </CardHeader>
+
+                        <!-- Content -->
+                        <CardContent class="grid grid-cols-2 gap-2 mt-2">
+                            <div class="space-y-1">
+                                <p class="text-gray-700"><span class="font-semibold">City:</span> {{ address.city }}</p>
+                                <p class="text-gray-700"><span class="font-semibold">Province:</span> {{
+                                    address.province }}</p>
+                            </div>
+                            <div class="space-y-1">
+                                <p class="text-gray-700"><span class="font-semibold">Address:</span> {{
+                                    address.address_line_1 }}</p>
+                                <p class="text-gray-700"><span class="font-semibold">Postal Code:</span> {{
+                                    address.postal_code }}</p>
+                            </div>
+                        </CardContent>
+
+                    </Card>
+                </div>
             </div>
+
         </SettingsLayout>
     </AppLayout>
 
