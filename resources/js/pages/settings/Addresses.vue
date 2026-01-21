@@ -4,21 +4,12 @@ import { edit } from '@/routes/profile';
 import { BreadcrumbItem } from '@/types';
 import { Form, Head, useForm } from '@inertiajs/vue3';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
-
 import Label from '@/components/ui/label/Label.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import Button from '@/components/ui/button/Button.vue';
-
-const breadcrumbItems: BreadcrumbItem[] = [
-    {
-        title: 'Profile settings',
-        href: edit().url,
-    },
-];
-
 import { ref, onMounted, watch } from 'vue'
-import addressesRoute from '@/routes/addresses';
+import addressesRoute, { index } from '@/routes/addresses';
 import Card from '@/components/ui/card/Card.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
@@ -32,6 +23,14 @@ import SelectContent from '@/components/ui/select/SelectContent.vue';
 import SelectGroup from '@/components/ui/select/SelectGroup.vue';
 import SelectLabel from '@/components/ui/select/SelectLabel.vue';
 import SelectItem from '@/components/ui/select/SelectItem.vue';
+const breadcrumbItems: BreadcrumbItem[] = [
+    {
+        title: 'Profile settings',
+        href: index().url,
+    },
+];
+
+
 
 const provinces = ref<any[]>([])
 const cities = ref<any[]>([])
@@ -189,7 +188,8 @@ function onPhoneInput(e: Event) {
 
 
             <div class="">
-                <Card v-for="address in props.addresses" :key='address.id'>
+                <Button>Add </Button>
+                <Card v-for="address in props.addresses" :key='address.id' class="my-4">
                     <CardHeader class="flex">
                         <CardTitle>Name:{{ address.recipient_name }}</CardTitle>
                         <CardDescription>Phone Number:{{ address.phone }}</CardDescription>
