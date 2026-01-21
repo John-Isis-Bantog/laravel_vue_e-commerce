@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class AddressesController extends Controller
 {
@@ -27,13 +27,15 @@ class AddressesController extends Controller
     {
         $validatedData = $request->validate([
             'recipient_name' => 'required|string|max:255',
-            'phoneNumber' => 'required|numeric',
+            'phone' => 'required|numeric',
             'city' => 'required|string|max:255',
             'address_line_1' => 'required|string|max:255',
             'address_line_2' => 'nullable|string|max:255',
             'province' => 'required|string|max:255',
             'postal_code' => 'required|numeric',
         ]);
-        dd($validatedData);
+        $validatedData['user_id'] = auth()->id();
+        $validatedData = Address::create($validatedData);
+        return redirect()->route('addresses.edit')->with('success', 'Address Added Successfully!');
     }
 }
