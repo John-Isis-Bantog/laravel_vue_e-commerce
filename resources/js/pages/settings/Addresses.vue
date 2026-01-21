@@ -9,7 +9,7 @@ import Input from '@/components/ui/input/Input.vue';
 import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import Button from '@/components/ui/button/Button.vue';
 import { ref, onMounted, watch } from 'vue'
-import addressesRoute, { index } from '@/routes/addresses';
+import addressesRoute from '@/routes/addresses';
 import Card from '@/components/ui/card/Card.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
@@ -26,7 +26,7 @@ import SelectItem from '@/components/ui/select/SelectItem.vue';
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'Profile settings',
-        href: index().url,
+        href: addressesRoute.index().url,
     },
 ];
 
@@ -101,6 +101,10 @@ function onPhoneInput(e: Event) {
         value = value.slice(0, 11)
     }
     form.phone = value
+}
+
+function deleteAddress(id: number) {
+    form.post(addressesRoute.destroy().url)
 }
 </script>
 
@@ -188,13 +192,6 @@ function onPhoneInput(e: Event) {
 
 
             <div class="space-y-4">
-                <!-- Add Button -->
-                <div class="flex justify-end">
-                    <Button variant="primary" @click="openAddModal">
-                        Add Address
-                    </Button>
-                </div>
-
                 <!-- Addresses Grid -->
                 <div class="grid md:grid-cols-2 gap-4">
                     <Card v-for="address in props.addresses" :key="address.id"
@@ -215,7 +212,7 @@ function onPhoneInput(e: Event) {
                                 <Button variant="outline" size="sm">
                                     Edit
                                 </Button>
-                                <Button variant="destructive" size="sm">
+                                <Button variant="destructive" size="sm" @click="deleteAddress(address.id)">
                                     Delete
                                 </Button>
                             </div>

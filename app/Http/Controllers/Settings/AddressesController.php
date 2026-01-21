@@ -49,6 +49,6 @@ class AddressesController extends Controller
         );
         $validatedData['user_id'] = auth()->id();
         $validatedData = Address::create($validatedData);
-        return redirect()->route('addresses.edit')->with('success', 'Address Added Successfully!');
+        return redirect()->route('addresses.index')->with('success', 'Address Added Successfully!');
     }
 }
