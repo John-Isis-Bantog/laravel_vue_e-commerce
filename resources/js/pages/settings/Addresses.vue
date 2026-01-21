@@ -25,6 +25,13 @@ import CardTitle from '@/components/ui/card/CardTitle.vue';
 import CardDescription from '@/components/ui/card/CardDescription.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
 import CardFooter from '@/components/ui/card/CardFooter.vue';
+import Select from '@/components/ui/select/Select.vue';
+import SelectTrigger from '@/components/ui/select/SelectTrigger.vue';
+import SelectValue from '@/components/ui/select/SelectValue.vue';
+import SelectContent from '@/components/ui/select/SelectContent.vue';
+import SelectGroup from '@/components/ui/select/SelectGroup.vue';
+import SelectLabel from '@/components/ui/select/SelectLabel.vue';
+import SelectItem from '@/components/ui/select/SelectItem.vue';
 
 const provinces = ref<any[]>([])
 const cities = ref<any[]>([])
@@ -112,27 +119,52 @@ function onPhoneInput(e: Event) {
                     <span v-if="form.errors.phone" class="text-red-600">{{ form.errors.phone }}</span>
                 </div>
                 <div class="flex space-x-4">
-                    <div class="">
+                    <div>
                         <Label for="province">Province</Label>
-                        <select v-model="form.province" required="true">
-                            <option value="">Select province</option>
-                            <option v-for="province in provinces" :key="province.code" :value="province.code">
-                                {{ province.name }}
-                            </option>
-                        </select>
-                        <span v-if="form.errors.province" class="text-red-600">{{ form.errors.province
-                        }}</span>
+
+                        <Select v-model="form.province" required>
+                            <SelectTrigger class="w-[250px]">
+                                <SelectValue placeholder="Select the Province" />
+                            </SelectTrigger>
+
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Provinces</SelectLabel>
+                                    <SelectItem v-for="province in provinces" :key="province.code"
+                                        :value="province.code">
+                                        {{ province.name }}
+                                    </SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+
+                        <span v-if="form.errors.province" class="text-red-600">
+                            {{ form.errors.province }}
+                        </span>
                     </div>
-                    <div class="">
+                    <div>
                         <Label for="city">City</Label>
-                        <select v-model="form.city" :disabled="!form.province" required="true">
-                            <option value="">Select city</option>
-                            <option v-for="city in cities" :key="city.code" :value="city.code">
-                                {{ city.name }}
-                            </option>
-                            <span v-if="form.errors.city" class="text-red-600">{{ form.errors.city }}</span>
-                        </select>
+
+                        <Select v-model="form.city" :disabled="!form.province" required>
+                            <SelectTrigger class="w-[250px]">
+                                <SelectValue placeholder="Select the City" />
+                            </SelectTrigger>
+
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Cities</SelectLabel>
+                                    <SelectItem v-for="city in cities" :key="city.code" :value="city.code">
+                                        {{ city.name }}
+                                    </SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+
+                        <span v-if="form.errors.city" class="text-red-600">
+                            {{ form.errors.city }}
+                        </span>
                     </div>
+
                 </div>
                 <div class="">
                     <Label for="address">Address</Label>
@@ -150,6 +182,7 @@ function onPhoneInput(e: Event) {
                     <Button>Submit</Button>
                 </div>
             </Form>
+
 
             <div class="">
                 <Card v-for="address in props.addresses" :key='address.id'>
