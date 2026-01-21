@@ -18,25 +18,28 @@ const breadcrumbItems: BreadcrumbItem[] = [
 ];
 
 import { ref, onMounted, watch } from 'vue'
+import addresses from '@/routes/addresses';
 
 const provinces = ref<any[]>([])
 const cities = ref<any[]>([])
 
 interface Address {
-    recepientName: string,
+    recipient_name: string,
     phoneNumber: number | null,
-    province: string,
+    address_line_1: string,
     city: string,
     postal_code: number | null,
-    address: string
+    address_line_2: string,
+    province: string
 }
 const form = useForm<Address>({
-    recepientName: '',
+    recipient_name: '',
     phoneNumber: null,
-    province: '',
+    address_line_1: '',
     city: '',
     postal_code: null,
-    address: ''
+    address_line_2: '',
+    province: ''
 })
 
 onMounted(async () => {
@@ -57,8 +60,8 @@ watch(() => form.province, async (provinceCode) => {
 
 
 function submitForm() {
-    console.log(form.recepientName, form.phoneNumber, form.province, form.city, form.postal_code, form.address)
-
+    console.log(form.recipient_name, form.phoneNumber, form.address_line_1, form.city, form.postal_code, form.address_line_1)
+    form.post(addresses.store().url)
 }
 </script>
 
@@ -70,13 +73,14 @@ function submitForm() {
             <Form class="space-y-2" @submit.prevent="submitForm()">
                 <div class="">
                     <Label for="recepient_name">Recepient Name</Label>
-                    <Input type="text" v-model="form.recepientName"></Input>
+                    <Input type="text" v-model="form.recipient_name"></Input>
+                    <span v-if="form.errors.recipient_name" class="text-red-600">{{ form.errors.recipient_name }}</span>
                 </div>
                 <div class="">
                     <Label for="phone">Phone Number</Label>
                     <Input type="number" :model-value="form.phoneNumber ?? ''"
                         @update:model-value="value => form.phoneNumber = value === '' ? null : Number(value)" />
-
+                    <span v-if="form.errors.phoneNumber" class="text-red-600">{{ form.errors.phoneNumber }}</span>
                 </div>
                 <div class="flex space-x-4">
                     <div class="">
@@ -87,6 +91,8 @@ function submitForm() {
                                 {{ province.name }}
                             </option>
                         </select>
+                        <span v-if="form.errors.province" class="text-red-600">{{ form.errors.province
+                            }}</span>
                     </div>
                     <div class="">
                         <Label for="city">City</Label>
@@ -95,19 +101,21 @@ function submitForm() {
                             <option v-for="city in cities" :key="city.code" :value="city.code">
                                 {{ city.name }}
                             </option>
+                            <span v-if="form.errors.city" class="text-red-600">{{ form.errors.city }}</span>
                         </select>
                     </div>
                 </div>
                 <div class="">
                     <Label for="address">Address</Label>
-                    <Input type="text" v-model="form.address"></Input>
+                    <Input type="text" v-model="form.address_line_1"></Input>
+                    <span v-if="form.errors.address_line_1" class="text-red-600">{{ form.errors.address_line_1 }}</span>
                 </div>
 
                 <div class="">
                     <Label for="postalCode">Postal Code</Label>
                     <Input type="number" :model-value="form.postal_code ?? ''"
                         @update:model-value="value => form.postal_code = value === '' ? null : Number(value)" />
-
+                    <span v-if="form.errors.postal_code" class="text-red-600">{{ form.errors.postal_code }}</span>
                 </div>
                 <div class="">
                     <Button>Submit</Button>
