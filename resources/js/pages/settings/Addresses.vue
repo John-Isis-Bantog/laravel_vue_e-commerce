@@ -18,12 +18,19 @@ const breadcrumbItems: BreadcrumbItem[] = [
 ];
 
 import { ref, onMounted, watch } from 'vue'
-import addresses from '@/routes/addresses';
+import addressesRoute from '@/routes/addresses';
+import Card from '@/components/ui/card/Card.vue';
+import CardHeader from '@/components/ui/card/CardHeader.vue';
+import CardTitle from '@/components/ui/card/CardTitle.vue';
+import CardDescription from '@/components/ui/card/CardDescription.vue';
+import CardContent from '@/components/ui/card/CardContent.vue';
+import CardFooter from '@/components/ui/card/CardFooter.vue';
 
 const provinces = ref<any[]>([])
 const cities = ref<any[]>([])
 
 interface Address {
+    id: number,
     recipient_name: string,
     phone: number | null,
     address_line_1: string,
@@ -32,7 +39,8 @@ interface Address {
     address_line_2: string,
     province: string
 }
-const form = useForm<Address>({
+type AddressForm = Omit<Address, 'id'>
+const form = useForm<AddressForm>({
     recipient_name: '',
     phone: null,
     address_line_1: '',
@@ -42,6 +50,9 @@ const form = useForm<Address>({
     province: ''
 })
 
+const props = defineProps<{
+    addresses: Address[]
+}>()
 onMounted(async () => {
     const res = await fetch('https://psgc.cloud/api/provinces')
     provinces.value = await res.json()
@@ -61,7 +72,7 @@ watch(() => form.province, async (provinceCode) => {
 
 function submitForm() {
     console.log(form.recipient_name, form.phone, form.address_line_1, form.city, form.postal_code, form.address_line_1)
-    form.post(addresses.store().url)
+    form.post(addressesRoute.store().url)
 }
 </script>
 
@@ -92,7 +103,7 @@ function submitForm() {
                             </option>
                         </select>
                         <span v-if="form.errors.province" class="text-red-600">{{ form.errors.province
-                        }}</span>
+                            }}</span>
                     </div>
                     <div class="">
                         <Label for="city">City</Label>
@@ -123,7 +134,18 @@ function submitForm() {
             </Form>
 
             <div class="">
-
+                <Card v-for="address in props.addresses" :key='address.id'>
+                    <CardHeader>
+                        <CardTitle>Name:{{ address.recipient_name }}</CardTitle>
+                        <CardDescription>Phone Number:{{ address.phone }}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p>City:{{ address.city }}</p>
+                        <p>Province:{{ address.province }}</p>
+                        <p>Address:{{ address.address_line_1 }}</p>
+                        <p>Postal Code:{{ address.postal_code }}</p>
+                    </CardContent>
+                </Card>
             </div>
         </SettingsLayout>
     </AppLayout>
