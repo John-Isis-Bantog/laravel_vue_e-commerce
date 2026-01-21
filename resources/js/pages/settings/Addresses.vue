@@ -86,7 +86,11 @@ function getCityName(code: string) {
 function submitForm() {
     form.province = getProvinceName(form.province)
     form.city = getCityName(form.city)
-    form.post(addressesRoute.store().url)
+    form.post(addressesRoute.store().url, {
+        onSuccess: () => {
+            form.reset()
+        }
+    })
 }
 
 function onPhoneInput(e: Event) {
