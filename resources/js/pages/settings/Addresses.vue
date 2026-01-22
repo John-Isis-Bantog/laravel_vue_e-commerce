@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { edit } from '@/routes/profile';
 import { BreadcrumbItem } from '@/types';
-import { Form, Head, useForm } from '@inertiajs/vue3';
+import { Form, Head, router, useForm } from '@inertiajs/vue3';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import Label from '@/components/ui/label/Label.vue';
 import Input from '@/components/ui/input/Input.vue';
@@ -104,7 +104,9 @@ function onPhoneInput(e: Event) {
 }
 
 function deleteAddress(id: number) {
-    form.post(addressesRoute.destroy().url)
+    router.delete(addressesRoute.destroy(id).url, {
+        preserveScroll: true
+    })
 }
 </script>
 
