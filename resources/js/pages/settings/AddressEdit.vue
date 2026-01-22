@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import addressesRoute from '@/routes/addresses';
 import { BreadcrumbItem } from '@/types';
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, useForm } from '@inertiajs/vue3';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import Label from '@/components/ui/label/Label.vue';
 import Input from '@/components/ui/input/Input.vue';
@@ -21,7 +21,28 @@ const breadcrumbItems: BreadcrumbItem[] = [
     },
 ];
 
-
+interface Address {
+    id: number,
+    recipient_name: string,
+    phone: string,
+    address_line_1: string,
+    city: string,
+    postal_code: string,
+    address_line_2: string,
+    province: string
+}
+const props = defineProps<{
+    address: Address
+}>()
+const form = useForm({
+    recipient_name: props.address.recipient_name,
+    phone: props.address.phone,
+    address_line_1: props.address.address_line_1,
+    city: props.address.city,
+    postal_code: props.address.postal_code,
+    address_line_2: props.address.address_line_2,
+    province: props.address.province,
+})
 </script>
 
 <template>
