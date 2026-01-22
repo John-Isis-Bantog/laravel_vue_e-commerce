@@ -14,10 +14,10 @@ class AddressesController extends Controller
         $addresses = Address::where('user_id', auth()->id())->get();
         return Inertia::render('settings/Addresses', ['addresses' => $addresses]);
     }
-    public function edit()
+    public function edit(string $id)
     {
-        $addresses = Address::where('user_id', auth()->id())->get();
-        return Inertia::render('settings/Addresses', ['addresses' => $addresses]);
+        $addresses = Address::where('user_id', auth()->id())->where('id', $id)->get();
+        return Inertia::render('settings/AddressEdit', ['addresses' => $addresses]);
     }
 
     /**
