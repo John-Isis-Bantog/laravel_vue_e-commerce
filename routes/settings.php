@@ -30,5 +30,5 @@ Route::middleware('auth')->group(function () {
     Route::get('settings/addresses', [AddressesController::class, 'index'])->name('addresses.index');
     Route::patch('settings/addresses', [AddressesController::class, 'update'])->name('addresses.update');
     Route::post('settings/addresses', [AddressesController::class, 'store'])->name('addresses.store');
-    Route::delete('settings/addresses', [AddressesController::class, 'destroy'])->name('addresses.destroy');
+    Route::delete('settings/addresses/{id}', [AddressesController::class, 'destroy'])->name('addresses.destroy');
 });
