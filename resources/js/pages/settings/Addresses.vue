@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { edit } from '@/routes/profile';
 import { BreadcrumbItem } from '@/types';
-import { Form, Head, router, useForm } from '@inertiajs/vue3';
+import { Form, Head, Link, router, useForm } from '@inertiajs/vue3';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import Label from '@/components/ui/label/Label.vue';
 import Input from '@/components/ui/input/Input.vue';
@@ -31,6 +31,7 @@ import DialogFooter from '@/components/ui/dialog/DialogFooter.vue';
 import DialogClose from '@/components/ui/dialog/DialogClose.vue';
 import DialogTrigger from '@/components/ui/dialog/DialogTrigger.vue';
 import Dialog from '@/components/ui/dialog/Dialog.vue';
+
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'Profile settings',
@@ -280,9 +281,11 @@ function onPostalCodeInput(value: string | number | boolean) {
                         </CardContent>
                         <!-- Actions -->
                         <div class="flex space-x-2 mx-auto">
-                            <Button variant="outline" size="sm">
-                                Edit
-                            </Button>
+                            <Link :href="addressesRoute.edit(address.id).url">
+                                <Button variant="outline" size="sm">
+                                    Edit
+                                </Button>
+                            </Link>
                             <Button variant="destructive" size="sm" @click="deleteAddress(address.id)">
                                 Delete
                             </Button>
