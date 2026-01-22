@@ -23,6 +23,14 @@ import SelectContent from '@/components/ui/select/SelectContent.vue';
 import SelectGroup from '@/components/ui/select/SelectGroup.vue';
 import SelectLabel from '@/components/ui/select/SelectLabel.vue';
 import SelectItem from '@/components/ui/select/SelectItem.vue';
+import DialogContent from '@/components/ui/dialog/DialogContent.vue';
+import DialogHeader from '@/components/ui/dialog/DialogHeader.vue';
+import DialogTitle from '@/components/ui/dialog/DialogTitle.vue';
+import DialogDescription from '@/components/ui/dialog/DialogDescription.vue';
+import DialogFooter from '@/components/ui/dialog/DialogFooter.vue';
+import DialogClose from '@/components/ui/dialog/DialogClose.vue';
+import DialogTrigger from '@/components/ui/dialog/DialogTrigger.vue';
+import Dialog from '@/components/ui/dialog/Dialog.vue';
 const breadcrumbItems: BreadcrumbItem[] = [
     {
         title: 'Profile settings',
@@ -34,7 +42,7 @@ const breadcrumbItems: BreadcrumbItem[] = [
 
 const provinces = ref<any[]>([])
 const cities = ref<any[]>([])
-
+const isAddressModalOpen = ref(false)
 interface Address {
     id: number,
     recipient_name: string,
@@ -88,6 +96,7 @@ function submitForm() {
     form.post(addressesRoute.store().url, {
         onSuccess: () => {
             form.reset()
+            isAddressModalOpen.value = false
         }
     })
 }
@@ -115,83 +124,110 @@ function deleteAddress(id: number) {
 
         <Head title="Profile settings" />
         <SettingsLayout>
-            <Form class="space-y-2" @submit.prevent="submitForm()">
-                <div class="">
-                    <Label for="recepient_name">Recepient Name</Label>
-                    <Input type="text" v-model="form.recipient_name"></Input>
-                    <span v-if="form.errors.recipient_name" class="text-red-600">{{ form.errors.recipient_name }}</span>
-                </div>
-                <div class="">
-                    <Label for="phone">Phone Number</Label>
-                    <Input type="tel" v-model="form.phone" maxlength="11" inputmode="numeric" placeholder="09XXXXXXXXX"
-                        @input="onPhoneInput" />
-                    <span v-if="form.errors.phone" class="text-red-600">{{ form.errors.phone }}</span>
-                </div>
-                <div class="flex space-x-4">
-                    <div>
-                        <Label for="province">Province</Label>
+            <Dialog v-model:open="isAddressModalOpen">
+                <DialogTrigger as-child>
+                    <Button variant="outline">
+                        Add Address
+                    </Button>
+                </DialogTrigger>
+                <DialogContent class="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>Add Address</DialogTitle>
+                        <DialogDescription>
+                            You May Add Multiple Address Here
+                        </DialogDescription>
+                    </DialogHeader>
+                    <Form class="space-y-2" @submit.prevent="submitForm()">
+                        <div class="grid gap-4">
 
-                        <Select v-model="form.province" required>
-                            <SelectTrigger class="w-[250px]">
-                                <SelectValue placeholder="Select the Province" />
-                            </SelectTrigger>
+                            <div class="">
+                                <Label for="recepient_name">Recepient Name</Label>
+                                <Input type="text" v-model="form.recipient_name"></Input>
+                                <span v-if="form.errors.recipient_name" class="text-red-600">{{
+                                    form.errors.recipient_name }}</span>
+                            </div>
+                            <div class="">
+                                <Label for="phone">Phone Number</Label>
+                                <Input type="tel" v-model="form.phone" maxlength="11" inputmode="numeric"
+                                    placeholder="09XXXXXXXXX" @input="onPhoneInput" />
+                                <span v-if="form.errors.phone" class="text-red-600">{{ form.errors.phone }}</span>
+                            </div>
+                            <div class="flex space-x-4">
+                                <div>
+                                    <Label for="province">Province</Label>
 
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>Provinces</SelectLabel>
-                                    <SelectItem v-for="province in provinces" :key="province.code"
-                                        :value="province.code">
-                                        {{ province.name }}
-                                    </SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
+                                    <Select v-model="form.province" required>
+                                        <SelectTrigger class="w-[200px]">
+                                            <SelectValue placeholder="Select the Province" />
+                                        </SelectTrigger>
 
-                        <span v-if="form.errors.province" class="text-red-600">
-                            {{ form.errors.province }}
-                        </span>
-                    </div>
-                    <div>
-                        <Label for="city">City</Label>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>Provinces</SelectLabel>
+                                                <SelectItem v-for="province in provinces" :key="province.code"
+                                                    :value="province.code">
+                                                    {{ province.name }}
+                                                </SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
 
-                        <Select v-model="form.city" :disabled="!form.province" required>
-                            <SelectTrigger class="w-[250px]">
-                                <SelectValue placeholder="Select the City" />
-                            </SelectTrigger>
+                                    <span v-if="form.errors.province" class="text-red-600">
+                                        {{ form.errors.province }}
+                                    </span>
+                                </div>
+                                <div>
+                                    <Label for="city">City</Label>
 
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>Cities</SelectLabel>
-                                    <SelectItem v-for="city in cities" :key="city.code" :value="city.code">
-                                        {{ city.name }}
-                                    </SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
+                                    <Select v-model="form.city" :disabled="!form.province" required>
+                                        <SelectTrigger class="w-[150px]">
+                                            <SelectValue placeholder="Select the City" />
+                                        </SelectTrigger>
 
-                        <span v-if="form.errors.city" class="text-red-600">
-                            {{ form.errors.city }}
-                        </span>
-                    </div>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>Cities</SelectLabel>
+                                                <SelectItem v-for="city in cities" :key="city.code" :value="city.code">
+                                                    {{ city.name }}
+                                                </SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
 
-                </div>
-                <div class="">
-                    <Label for="address">Address</Label>
-                    <Input type="text" v-model="form.address_line_1"></Input>
-                    <span v-if="form.errors.address_line_1" class="text-red-600">{{ form.errors.address_line_1 }}</span>
-                </div>
+                                    <span v-if="form.errors.city" class="text-red-600">
+                                        {{ form.errors.city }}
+                                    </span>
+                                </div>
 
-                <div class="">
-                    <Label for="postalCode">Postal Code</Label>
-                    <Input type="number" :model-value="form.postal_code ?? ''"
-                        @update:model-value="value => form.postal_code = value === '' ? null : Number(value)" />
-                    <span v-if="form.errors.postal_code" class="text-red-600">{{ form.errors.postal_code }}</span>
-                </div>
-                <div class="">
-                    <Button>Submit</Button>
-                </div>
-            </Form>
+                            </div>
+                            <div class="">
+                                <Label for="address">Address</Label>
+                                <Input type="text" v-model="form.address_line_1"></Input>
+                                <span v-if="form.errors.address_line_1" class="text-red-600">{{
+                                    form.errors.address_line_1 }}</span>
+                            </div>
 
+                            <div class="">
+                                <Label for="postalCode">Postal Code</Label>
+                                <Input type="number" :model-value="form.postal_code ?? ''"
+                                    @update:model-value="value => form.postal_code = value === '' ? null : Number(value)" />
+                                <span v-if="form.errors.postal_code" class="text-red-600">{{ form.errors.postal_code
+                                    }}</span>
+                            </div>
+                        </div>
+
+                        <DialogFooter>
+                            <DialogClose as-child>
+                                <Button variant="outline">
+                                    Cancel
+                                </Button>
+                            </DialogClose>
+                            <Button type="submit">Submit</Button>
+                        </DialogFooter>
+                    </Form>
+                </DialogContent>
+
+            </Dialog>
 
             <div class="space-y-4">
                 <!-- Addresses Grid -->
