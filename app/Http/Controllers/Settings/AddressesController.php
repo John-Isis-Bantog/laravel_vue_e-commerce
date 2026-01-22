@@ -25,7 +25,7 @@ class AddressesController extends Controller
      */
     public function update(Request $request)
     {
-        // dd($request);
+        dd($request);
     }
 
     public function store(Request $request)

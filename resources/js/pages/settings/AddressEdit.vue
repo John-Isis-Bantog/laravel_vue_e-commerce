@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import addressesRoute from '@/routes/addresses';
 import { BreadcrumbItem } from '@/types';
-import { Form, Head, useForm } from '@inertiajs/vue3';
+import { Form, Head, router, useForm } from '@inertiajs/vue3';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import Label from '@/components/ui/label/Label.vue';
 import Input from '@/components/ui/input/Input.vue';
@@ -100,6 +100,10 @@ function getProvinceName(code: string) {
 function getCityName(code: string) {
     return cities.value.find(p => p.code === code)?.name ?? '';
 }
+
+function updateAddress(id: number) {
+    form.put(addressesRoute.update(id).url)
+}
 </script>
 
 <template>
@@ -107,7 +111,7 @@ function getCityName(code: string) {
 
         <Head title="Profile settings" />
         <SettingsLayout>
-            <Form class="space-y-2" @submit.prevent>
+            <Form class="space-y-2" @submit.prevent="updateAddress(props.address.id)">
                 <div class="grid gap-4">
                     <div class="">
                         <Label for="recepient_name">Recepient Name</Label>
