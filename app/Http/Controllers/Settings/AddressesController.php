@@ -47,7 +47,7 @@ class AddressesController extends Controller
                 'phone.regex' => 'Phone number must be 11 digits and start with 09.',
             ]
         );
-        $validatedData['user_id'] = auth()->id;
+        $validatedData['user_id'] = auth()->id();
         $validatedData = Address::create($validatedData);
         return redirect()->route('addresses.index')->with('success', 'Address Added Successfully!');
     }
