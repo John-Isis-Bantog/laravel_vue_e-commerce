@@ -49,7 +49,7 @@ interface Address {
     phone: string,
     address_line_1: string,
     city: string,
-    postal_code: number | null,
+    postal_code: string,
     address_line_2: string,
     province: string
 }
@@ -59,7 +59,7 @@ const form = useForm<AddressForm>({
     phone: '09',
     address_line_1: '',
     city: '',
-    postal_code: null,
+    postal_code: '',
     address_line_2: '',
     province: ''
 })
@@ -117,6 +117,26 @@ function deleteAddress(id: number) {
         preserveScroll: true
     })
 }
+function onlyNumbers(e: KeyboardEvent) {
+    const allowed = [
+        'Backspace',
+        'Delete',
+        'ArrowLeft',
+        'ArrowRight',
+        'Tab',
+    ]
+
+    if (allowed.includes(e.key)) return
+
+    if (!/^\d$/.test(e.key)) {
+        e.preventDefault()
+    }
+}
+
+function onPostalCodeInput(value: string | number | boolean) {
+    form.postal_code = String(value).replace(/\D/g, '')
+}
+
 </script>
 
 <template>
@@ -209,8 +229,10 @@ function deleteAddress(id: number) {
 
                             <div class="">
                                 <Label for="postalCode">Postal Code</Label>
-                                <Input type="number" :model-value="form.postal_code ?? ''"
-                                    @update:model-value="value => form.postal_code = value === '' ? null : Number(value)" />
+                                <Input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="10"
+                                    :model-value="form.postal_code" @keydown="onlyNumbers"
+                                    @update:model-value="onPostalCodeInput" />
+
                                 <span v-if="form.errors.postal_code" class="text-red-600">{{ form.errors.postal_code
                                     }}</span>
                             </div>
@@ -245,32 +267,26 @@ function deleteAddress(id: number) {
                                     {{ address.phone }}
                                 </CardDescription>
                             </div>
-                            <!-- Actions -->
-                            <div class="flex space-x-2">
-                                <Button variant="outline" size="sm">
-                                    Edit
-                                </Button>
-                                <Button variant="destructive" size="sm" @click="deleteAddress(address.id)">
-                                    Delete
-                                </Button>
-                            </div>
                         </CardHeader>
-
                         <!-- Content -->
-                        <CardContent class="grid grid-cols-2 gap-2 mt-2">
+                        <CardContent class="gap-2 mt-2">
                             <div class="space-y-1">
-                                <p class="text-gray-700"><span class="font-semibold">City:</span> {{ address.city }}</p>
-                                <p class="text-gray-700"><span class="font-semibold">Province:</span> {{
-                                    address.province }}</p>
-                            </div>
-                            <div class="space-y-1">
-                                <p class="text-gray-700"><span class="font-semibold">Address:</span> {{
-                                    address.address_line_1 }}</p>
+                                <p class="text-gray-700">
+                                    {{ address.address_line_1 }} , {{ address.province }} , {{ address.city }}</p>
+
                                 <p class="text-gray-700"><span class="font-semibold">Postal Code:</span> {{
                                     address.postal_code }}</p>
                             </div>
                         </CardContent>
-
+                        <!-- Actions -->
+                        <div class="flex space-x-2 mx-auto">
+                            <Button variant="outline" size="sm">
+                                Edit
+                            </Button>
+                            <Button variant="destructive" size="sm" @click="deleteAddress(address.id)">
+                                Delete
+                            </Button>
+                        </div>
                     </Card>
                 </div>
             </div>

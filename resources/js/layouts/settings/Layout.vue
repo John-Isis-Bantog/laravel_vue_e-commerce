@@ -17,6 +17,10 @@ const sidebarNavItems: NavItem[] = [
         href: editProfile(),
     },
     {
+        title: 'Address Book',
+        href: addresses.index(),
+    },
+    {
         title: 'Password',
         href: editPassword(),
     },
@@ -27,11 +31,7 @@ const sidebarNavItems: NavItem[] = [
     {
         title: 'Appearance',
         href: editAppearance(),
-    },
-    {
-        title: 'Addresses',
-        href: addresses.index(),
-    },
+    }
 ];
 
 const currentPath = typeof window !== undefined ? window.location.pathname : '';
