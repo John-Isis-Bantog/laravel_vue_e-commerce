@@ -50,24 +50,23 @@ const form = useForm({
 
         <Head title="Profile settings" />
         <SettingsLayout>
-            <Form class="space-y-2" @submit.prevent="">
+            <Form class="space-y-2" @submit.prevent>
                 <div class="grid gap-4">
-
                     <div class="">
                         <Label for="recepient_name">Recepient Name</Label>
-                        <Input type="text"></Input>
+                        <Input type="text" v-model="form.recipient_name"></Input>
                         <span class="text-red-600">
-                            {{ }}</span>
+                            {{ form.errors.recipient_name }}</span>
                     </div>
                     <div class="">
                         <Label for="phone">Phone Number</Label>
-                        <Input type="tel" maxlength="11" inputmode="numeric" placeholder="09XXXXXXXXX" />
-                        <span class="text-red-600">{{ }}</span>
+                        <Input type="tel" maxlength="11" v-model="form.phone" inputmode="numeric"
+                            placeholder="09XXXXXXXXX" />
+                        <span class="text-red-600">{{ form.errors.phone }}</span>
                     </div>
                     <div class="flex space-x-4">
                         <div>
                             <Label for="province">Province</Label>
-
                             <Select required>
                                 <SelectTrigger class="w-[200px]">
                                     <SelectValue placeholder="Select the Province" />
@@ -83,7 +82,7 @@ const form = useForm({
                             </Select>
 
                             <span class="text-red-600">
-
+                                {{ form.errors.province }}
                             </span>
                         </div>
                         <div>
@@ -105,21 +104,19 @@ const form = useForm({
                             </Select>
 
                             <span class="text-red-600">
-                                {{ }}
+                                {{ form.errors.city }}
                             </span>
                         </div>
-
                     </div>
                     <div class="">
                         <Label for="address">Address</Label>
-                        <Input type="text"></Input>
-                        <span class="text-red-600">{{}}</span>
+                        <Input type="text" v-model="form.address_line_1"></Input>
+                        <span class="text-red-600">{{ form.errors.address_line_1 }}</span>
                     </div>
-
                     <div class="">
                         <Label for="postalCode">Postal Code</Label>
-                        <Input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="10" />
-
+                        <Input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="10"
+                            v-model="form.postal_code" />
                         <span class="text-red-600">{{ }}</span>
                     </div>
                 </div>
