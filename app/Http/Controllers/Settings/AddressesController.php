@@ -16,8 +16,8 @@ class AddressesController extends Controller
     }
     public function edit(string $id)
     {
-        $addresses = Address::where('user_id', auth()->id())->where('id', $id)->get();
-        return Inertia::render('settings/AddressEdit', ['addresses' => $addresses]);
+        $address = Address::where('user_id', auth()->id())->where('id', $id)->get();
+        return Inertia::render('settings/AddressEdit', ['address' => $address]);
     }
 
     /**
