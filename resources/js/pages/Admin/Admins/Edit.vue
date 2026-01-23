@@ -40,7 +40,6 @@ function updateAdmin($id: number) {
     <Head title="Admin Edit" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <Link :href="adminRoute.index()"><Button>Back</Button></Link>
-        <h1 class="text-center">Admin Edit Page</h1>
         <Form class="w-1/2 mx-auto space-y-2" @submit.prevent="updateAdmin(admin.id)">
             <div class="">
                 <Label for="name">name</Label>

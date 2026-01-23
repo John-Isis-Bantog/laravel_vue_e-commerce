@@ -35,7 +35,6 @@ const props = defineProps<{
 
     <Head title="Dashboard" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <h1 class="text-center">Dashboard</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             <Link :href="user.show(product.id)" v-for="product in props.products" :key="product.id">
                 <Card class="w-full max-w-sm">

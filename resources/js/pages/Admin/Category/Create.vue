@@ -57,8 +57,6 @@ function submitForm() {
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <Link :href="categoryRoute.index()"><Button>Back</Button></Link>
-        <h1 class="text-center">Admin Create Page</h1>
-
         <Form class="w-1/2 mx-auto space-y-3" @submit.prevent="submitForm">
             <div class="">
                 <Label for="">Title</Label>

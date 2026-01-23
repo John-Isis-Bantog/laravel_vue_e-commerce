@@ -45,7 +45,6 @@ function submitForm(values: any) {
 
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <h1 class="text-center">Admin Create Page</h1>
         <Link :href="adminRoute.index().url"><Button>Back</Button></Link>
         <Form :validation-schema="schema" class="w-1/2 mx-auto space-y-2" @submit="submitForm">
             <div class="">

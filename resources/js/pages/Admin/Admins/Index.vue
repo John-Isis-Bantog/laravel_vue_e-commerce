@@ -99,7 +99,6 @@ watch(search, (newValue) => {
 
     <Head title="Dashboard" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <h1 class="text-center">Admin Dashboard</h1>
         <!-- <div class="w-1/2 h-1/2 flex justify-center  mx-auto">
             <canvas id="pieChart" ref="ctxPie"></canvas>
         </div> -->

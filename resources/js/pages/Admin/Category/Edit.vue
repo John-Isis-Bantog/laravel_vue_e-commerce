@@ -61,7 +61,6 @@ function submitForm(id: number) {
     <Head title="Category Edit Page" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <Link :href="categoryRoute.index()"><Button>Back</Button></Link>
-        <h1 class="text-center">Category edit Page</h1>
         <Form class="w-1/2 mx-auto space-y-3" @submit.prevent="submitForm(props.category.id)">
             <div class="">
                 <Label for="">Title</Label>

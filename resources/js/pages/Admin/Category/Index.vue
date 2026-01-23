@@ -55,7 +55,6 @@ watch(search, (newValue) => {
         <Link :href="admin.index.url()">
             <Button>Back</Button>
         </Link>
-        <h1 class="text-center">Admin Category Page</h1>
         <div class="flex justify-end">
             <div class="">
                 <Link :href="categoryRoute.create()"><Button>Add Category</Button></Link>

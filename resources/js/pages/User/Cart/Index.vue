@@ -139,7 +139,6 @@ function goToCheckout() {
 
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <h1 class="text-center">Cart</h1>
         <Alert class=" mx-auto w-1/2 top-5 sticky z-50" v-if="checkoutError">
             <AlertTitle>Info</AlertTitle>
             <AlertDescription>
