@@ -13,8 +13,13 @@ import { dashboard } from '@/routes';
 import cart from '@/routes/cart';
 import products from '@/routes/products';
 import { BreadcrumbItem } from '@/types';
-import { Form, Head, Link, useForm } from '@inertiajs/vue3';
+import { Form, Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
+const page = usePage()
+
+const isAdmin = computed(() => page.props.auth.user.role === 'admin')
+const isCustomer = computed(() => page.props.auth.user.role === 'customer')
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Admin Create Page',
@@ -72,9 +77,25 @@ function addToCart() {
                     <Input type="number" min="1" v-model="form.quantity" max="5"></Input>
                 </CardContent>
                 <CardFooter class="flex justify-center space-x-2">
-                    <Button type="submit" @click="addToCart">Add to Cart</Button>
-                    <Link> <Button variant="primary" type="submit">Buy</Button></Link>
+                    <template v-if="isCustomer">
+                        <Button type="submit" @click="addToCart">
+                            Add to Cart
+                        </Button>
+
+                        <Link>
+                            <Button variant="primary" type="submit">
+                                Buy
+                            </Button>
+                        </Link>
+                    </template>
+
+                    <template v-else>
+                        <p class="text-sm text-muted-foreground">
+                            Admin accounts cannot purchase products
+                        </p>
+                    </template>
                 </CardFooter>
+
             </Card>
         </div>
     </AppLayout>
