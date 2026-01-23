@@ -4,7 +4,7 @@ import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import products from '@/routes/products';
-import userRoute from '@/routes/Users';
+import userRoute from '@/routes/users';
 import { BreadcrumbItem } from '@/types';
 import { Form, Head, Link, useForm } from '@inertiajs/vue3';
 

@@ -9,7 +9,9 @@ import TableHeader from '@/components/ui/table/TableHeader.vue';
 import TableRow from '@/components/ui/table/TableRow.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import products from '@/routes/products';
-import UserRoute from '@/routes/Users';
+import UserRoute from '@/routes/users';
+
+
 import { BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 

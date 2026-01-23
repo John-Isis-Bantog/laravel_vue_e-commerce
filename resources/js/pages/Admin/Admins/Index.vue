@@ -27,7 +27,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 import { CircleEllipsis, DollarSign, Package, ShoppingCart, User } from 'lucide-vue-next';
-import Users from '@/routes/Users';
+import Users from '@/routes/users';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
