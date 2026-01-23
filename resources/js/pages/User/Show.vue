@@ -13,12 +13,10 @@ import { dashboard } from '@/routes';
 import cart from '@/routes/cart';
 import products from '@/routes/products';
 import { BreadcrumbItem } from '@/types';
-import { Form, Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const page = usePage()
-
-const isAdmin = computed(() => page.props.auth.user.role === 'admin')
 const isCustomer = computed(() => page.props.auth.user.role === 'customer')
 const breadcrumbs: BreadcrumbItem[] = [
     {

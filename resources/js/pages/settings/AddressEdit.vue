@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import addressesRoute from '@/routes/addresses';
 import { BreadcrumbItem } from '@/types';
-import { Form, Head, router, useForm } from '@inertiajs/vue3';
+import { Form, Head, useForm } from '@inertiajs/vue3';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import Label from '@/components/ui/label/Label.vue';
 import Input from '@/components/ui/input/Input.vue';
