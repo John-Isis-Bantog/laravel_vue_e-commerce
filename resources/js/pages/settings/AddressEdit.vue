@@ -102,6 +102,8 @@ function getCityName(code: string) {
 }
 
 function updateAddress(id: number) {
+    form.province = getProvinceName(form.province)
+    form.city = getCityName(form.city)
     form.put(addressesRoute.update(id).url)
 }
 </script>
