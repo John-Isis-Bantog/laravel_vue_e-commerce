@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('settings/addresses', [AddressesController::class, 'index'])->name('addresses.index');
     Route::get('settings/addresses/edit/{id}', [AddressesController::class, 'edit'])->name('addresses.edit');
-    Route::put('settings/addresses/{id}', [AddressesController::class, 'update'])->name('addresses.update');
+    Route::put('settings/addresses/{address}', [AddressesController::class, 'update'])->name('addresses.update');
     Route::post('settings/addresses', [AddressesController::class, 'store'])->name('addresses.store');
     Route::delete('settings/addresses/{id}', [AddressesController::class, 'destroy'])->name('addresses.destroy');
 });

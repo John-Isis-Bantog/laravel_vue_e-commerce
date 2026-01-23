@@ -23,9 +23,21 @@ class AddressesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, Address $address)
     {
-        dd($request);
+        $validatedData = $request->validate([
+            'recipient_name' => 'required|string|max:255',
+            'phone' => ['required', 'regex:/^09\d{9}$/'],
+            'city' => 'required|string|max:255',
+            'address_line_1' => 'required|string|max:255',
+            'address_line_2' => 'nullable|string|max:255',
+            'province' => 'required|string|max:255',
+            'postal_code' => 'required|numeric',
+        ], [
+            'phone.regex' => 'Phone Number Must Be 11 Digits And Must Start With 09'
+        ]);
+        $address->update($validatedData);
+        return back()->with('success', 'Address Updated Successfully!');
     }
 
     public function store(Request $request)
@@ -44,7 +56,7 @@ class AddressesController extends Controller
                 'postal_code' => 'required|numeric',
             ],
             [
-                'phone.regex' => 'Phone number must be 11 digits and start with 09.',
+                'phone.regex' => 'Phone Number Must Be 11 Digits And Must Start With 09.',
             ]
         );
         $validatedData['user_id'] = auth()->id();
