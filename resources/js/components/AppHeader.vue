@@ -53,6 +53,9 @@ const props = withDefaults(defineProps<Props>(), {
 const page = usePage();
 const auth = computed(() => page.props.auth);
 
+const isAdmin = computed(() => page.props.auth.user.role === 'admin')
+const isCustomer = computed(() => page.props.auth.user.role === 'customer')
+
 const isCurrentRoute = computed(
     () => (url: NonNullable<InertiaLinkProps['href']>) =>
         urlIsActive(url, page.url),
@@ -65,38 +68,52 @@ const activeItemStyles = computed(
             : '',
 );
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard().url,
-        icon: House,
-    },
-    {
-        title: 'Admin Dashboard',
-        href: admin.index(),
-        icon: Shield,
-    },
-    {
-        title: 'Category Index',
-        href: category.index(),
-        icon: CircleEllipsis,
-    },
-    {
-        title: 'Product Index',
-        href: product.index(),
-        icon: Package,
-    },
-    {
-        title: 'Cart',
-        href: cart.index(),
-        icon: ShoppingCart,
-    },
-    {
-        title: 'Orders',
-        href: orders.index(),
-        icon: ShoppingBag,
-    },
-];
+const mainNavItems = computed<NavItem[]>(() => {
+    const items: NavItem[] = [
+        {
+            title: 'Dashboard',
+            href: dashboard().url,
+            icon: House,
+        },
+    ]
+
+    if (isAdmin.value) {
+        items.push(
+            {
+                title: 'Admin Dashboard',
+                href: admin.index(),
+                icon: Shield,
+            },
+            {
+                title: 'Category Index',
+                href: category.index(),
+                icon: CircleEllipsis,
+            },
+            {
+                title: 'Product Index',
+                href: product.index(),
+                icon: Package,
+            }
+        )
+    }
+
+    if (isCustomer.value) {
+        items.push(
+            {
+                title: 'Cart',
+                href: cart.index(),
+                icon: ShoppingCart,
+            },
+            {
+                title: 'Orders',
+                href: orders.index(),
+                icon: ShoppingBag,
+            }
+        )
+    }
+
+    return items
+})
 
 // const rightNavItems: NavItem[] = [
 //     {

@@ -1,5 +1,5 @@
 import { AppPageProps } from '@/types/index';
-
+import { PageProps as InertiaPageProps } from '@inertiajs/core'
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
     interface ImportMetaEnv {
@@ -16,7 +16,19 @@ declare module 'vite/client' {
 declare module '@inertiajs/core' {
     interface PageProps extends InertiaPageProps, AppPageProps {}
 }
-
+declare module '@inertiajs/core' {
+    interface PageProps extends InertiaPageProps {
+        auth: {
+            user: {
+                id: number
+                name: string
+                email: string
+                role: 'admin' | 'customer'
+                avatar?: string | null
+            }
+        }
+    }
+}
 declare module 'vue' {
     interface ComponentCustomProperties {
         $inertia: typeof Router;

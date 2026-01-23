@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\HomeRedirectController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\StripeWebhookController;
 use App\Http\Middleware\EnsureUserHasAddress;
+use App\Http\Middleware\EnsureUserIsCustomer;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as MiddlewareVerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -27,16 +28,19 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('user')->group(function () {
         // product listings
         Route::resource('products', CustomerController::class)->only('index', 'show');
-        Route::resource('orders', OrderController::class);
-        // cart
-        Route::resource('cart', CartController::class)->only('store', 'destroy', 'index');
-        Route::put('/cart/updateQuantity/{cartItem}', [CartController::class, 'updateQuantity'])->name('updateQuantity');
-        Route::put('/cart/select/{cartItem}', [CartController::class, 'toggleIsSelected'])->name('toggleIsSelected');
-        Route::middleware([EnsureUserHasAddress::class])->group(function () {
-            // Checkout
-            Route::resource('checkout', CheckoutController::class)->only('index');
-            // stripe
-            Route::post('/checkout/session', [CheckoutController::class, 'createSession'])->name('checkout.session');
+        Route::middleware([EnsureUserIsCustomer::class])->group(function () {
+            Route::resource('orders', OrderController::class)->only('index');
+            // cart
+            Route::resource('cart', CartController::class)->only('store', 'destroy', 'index');
+            Route::put('/cart/updateQuantity/{cartItem}', [CartController::class, 'updateQuantity'])->name('updateQuantity');
+            Route::put('/cart/select/{cartItem}', [CartController::class, 'toggleIsSelected'])->name('toggleIsSelected');
+
+            Route::middleware([EnsureUserHasAddress::class])->group(function () {
+                // Checkout
+                Route::resource('checkout', CheckoutController::class)->only('index');
+                // stripe
+                Route::post('/checkout/session', [CheckoutController::class, 'createSession'])->name('checkout.session');
+            });
         });
     });
     Route::get('/home', HomeRedirectController::class)->name('homeRedirect');
@@ -46,7 +50,7 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::resource('admin', AdminController::class)->except('show');
     Route::resource('category', CategoryController::class)->except('show');
     Route::resource('product', ProductController::class)->except('show');
-    Route::resource('Users', AdminUserController::class)->only('index', 'show');
+    Route::resource('users', AdminUserController::class)->only('index', 'show');
 });
 // stripe webhook
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->withoutMiddleware(MiddlewareVerifyCsrfToken::class);
