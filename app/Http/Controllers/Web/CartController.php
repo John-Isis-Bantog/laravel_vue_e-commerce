@@ -8,6 +8,7 @@ use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 
 class CartController extends Controller
 {
@@ -22,7 +23,6 @@ class CartController extends Controller
     }
     public function store(Request $request)
     {
-
         $validated = $request->validate([
             'id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1|max:5'
