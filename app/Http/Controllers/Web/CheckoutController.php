@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -27,7 +28,9 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('error', 'Please Remove an Unavailable Item in Your Checkout');
         }
         $totalPrice = $selectedItems->sum(fn($item) => $item->product->price * $item->quantity);
-        return Inertia::render('User/Checkout/Index', ['selectedItems' => $selectedItems, 'totalPrice' => $totalPrice]);
+
+        $address = Address::where('user_id', auth()->id())->first();
+        return Inertia::render('User/Checkout/Index', ['selectedItems' => $selectedItems, 'totalPrice' => $totalPrice, 'address' => $address]);
     }
 
     public function createSession()

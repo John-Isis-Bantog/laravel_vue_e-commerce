@@ -20,7 +20,19 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: products.index().url,
     },
 ];
-
+interface Address {
+    id: number
+    recipient_name: string
+    phone: string
+    address_line_1: string
+    address_line_2: string | null
+    city: string
+    province: string
+    postal_code: string
+    is_default: boolean | 0 | 1
+    created_at: string
+    updated_at: string
+}
 interface SelectedItem {
     id: number,
     product_id: number,
@@ -33,12 +45,12 @@ interface SelectedItem {
         price: number,
         image: string
     },
-
 }
 
 const props = defineProps<{
     selectedItems: SelectedItem[]
     totalPrice: number
+    address: Address
 }>()
 </script>
 
@@ -67,9 +79,9 @@ const props = defineProps<{
                     <CardContent class="  ">
                         <div class="">₱{{ selectedItem.product.price }}</div>
                         <div class="space-2 ">
-                            <div class="flex ">
-                                <Label>Quantity: </Label>
-                                <Input type="number" min="0" max="5" v-model="selectedItem.quantity"></Input>
+                            <div class="flex space-x-2">
+                                <Label>Quantity:</Label>
+                                <h1>{{ selectedItem.quantity }}</h1>
                             </div>
                         </div>
                     </CardContent>
@@ -82,7 +94,7 @@ const props = defineProps<{
             <div class="">
                 <div class="">
                     <Label>Credit Card</Label>
-                    <Input type="radio" name="payment_method"></Input>
+                    <Input type="radio" name="payment_method" checked></Input>
                 </div>
             </div>
         </div>
@@ -90,6 +102,11 @@ const props = defineProps<{
         <ul></ul>
         <div class="">
             <h1>Order Detail</h1>
+            <div class="shipping-address">
+                <p>Shipping To: {{ props.address.recipient_name }}</p>
+                <p>{{ props.address.address_line_1 }}, {{ props.address.city }}, {{ props.address.province }}</p>
+                <p>Postal Code: {{ props.address.postal_code }}</p>
+            </div>
             <h1>Subtotal: ₱{{ props.totalPrice }}</h1>
         </div>
 
