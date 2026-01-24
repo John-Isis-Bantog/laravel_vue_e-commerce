@@ -24,6 +24,7 @@ interface Product {
     is_active: boolean,
     description: string,
     price: number
+    category_id: number
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -73,6 +74,7 @@ function limitDescription(text: string, length = 30) {
                     <TableHead>ID</TableHead>
                     <TableHead>Title</TableHead>
                     <TableHead>Description</TableHead>
+                    <TableHead>Category</TableHead>
                     <TableHead>Image</TableHead>
                     <TableHead>Active</TableHead>
                     <TableHead>Price</TableHead>
@@ -84,6 +86,7 @@ function limitDescription(text: string, length = 30) {
                     <TableCell>{{ product.id }}</TableCell>
                     <TableCell>{{ product.name }}</TableCell>
                     <TableCell>{{ limitDescription(product.description) }}</TableCell>
+                    <TableCell>{{ product.category_id }}</TableCell>
                     <TableCell><img :src="product.image" v-if="product.image" alt=""><span v-else><img
                                 src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                                 alt=""></span></TableCell>

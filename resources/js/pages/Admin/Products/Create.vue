@@ -30,15 +30,24 @@ interface Product {
     price: number,
     is_active: string
     image: File | null,
+    category_id: number | null
+}
+interface Category {
+    id: number
+    title: string
+    is_active: string
 }
 
+const props = defineProps<{
+    categories: Category[]
+}>()
 const formData = useForm<Product>({
     name: '',
     description: '',
     price: 0,
     is_active: '0',
     image: null,
-
+    category_id: null
 });
 function submitProduct() {
     formData.post(productRoute.store().url);
@@ -96,6 +105,25 @@ function handleFileChange(event: Event) {
                         </SelectContent>
                     </Select>
                     <span v-if="formData.errors.is_active">{{ formData.errors.price }}</span>
+                </div>
+
+                <div class="">
+                    <Label for="category">Category</Label>
+                    <Select v-model="formData.category_id">
+                        <SelectTrigger class="w-[180px]">
+                            <SelectValue placeholder="Select Category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectItem v-for="category in props.categories" :value=category.id>
+                                    {{ category.title }}
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+
+                    <span v-if="formData.errors.category_id" class="text-red-600 ">{{ formData.errors.category_id
+                        }}</span>
                 </div>
 
                 <div class="flex justify-center">
