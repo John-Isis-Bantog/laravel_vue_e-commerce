@@ -22,7 +22,9 @@ class ProductController extends Controller
         $products = Product::with('category')->when($search, function ($query, $search) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%{$search}%")
-                    ->orWhere('description', 'LIKE', "%{$search}%");
+                    ->orWhere('description', 'LIKE', "%{$search}%")->orWhereHas('category', function ($q2) use ($search) {
+                        $q2->where('title', 'LIKE', "%{$search}%");
+                    });
             });
         })
             ->get();

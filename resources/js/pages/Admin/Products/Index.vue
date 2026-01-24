@@ -89,7 +89,7 @@ function limitDescription(text: string, length = 30) {
                     <TableCell>{{ product.id }}</TableCell>
                     <TableCell>{{ product.name }}</TableCell>
                     <TableCell>{{ limitDescription(product.description) }}</TableCell>
-                    <TableCell>{{ product.category?.title }}</TableCell>
+                    <TableCell>{{ product.category?.title ?? 'N/A' }}</TableCell>
                     <TableCell><img :src="product.image" v-if="product.image" alt=""><span v-else><img
                                 src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
                                 alt=""></span></TableCell>
