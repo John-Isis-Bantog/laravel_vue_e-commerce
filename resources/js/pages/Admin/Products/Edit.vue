@@ -132,7 +132,7 @@ function handleFileChange(event: Event) {
                         </SelectContent>
                     </Select>
 
-                    <span v-if="form.errors.is_active" class="text-red-500">{{ form.errors.is_active }}</span>
+                    <span v-if="form.errors.category" class="text-red-500">{{ form.errors.is_active }}</span>
                 </div>
 
                 <div class="flex justify-center">
