@@ -49,6 +49,7 @@ class ProductController extends Controller
             'price' => 'required|min:0',
             'is_active' => 'required|in:0,1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'category_id' => 'required|numeric|min:0'
         ]);
 
         $validateData['is_active'] = $request->boolean('is_active');
