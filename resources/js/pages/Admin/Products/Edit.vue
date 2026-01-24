@@ -23,7 +23,10 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: productRoute.index().url,
     },
 ];
-
+interface Category {
+    id: number
+    title: string
+}
 interface Product {
     id: number,
     name: string,
@@ -31,10 +34,13 @@ interface Product {
     price: number,
     image: File | null,
     is_active: number,
+    category_id: number
+    category: Category | null
 }
 
 const props = defineProps<{
     product: Product;
+    categories: Category[];
 }>()
 
 const form = useForm({
@@ -43,10 +49,13 @@ const form = useForm({
     description: props.product.description,
     image: props.product.image,
     price: props.product.price,
-    is_active: props.product.is_active
+    is_active: props.product.is_active,
+    category: props.product.category?.title,
+    category_id: props.product.category_id
 });
 
 function updateProduct($id: number) {
+    console.log(form.category_id)
     form.put(productRoute.update($id).url);
 }
 function handleFileChange(event: Event) {
@@ -103,6 +112,27 @@ function handleFileChange(event: Event) {
                         </SelectContent>
                     </Select>
                     <span v-if="form.errors.is_active" class="text-red-500">{{ form.errors.is_active }}</span>
+                </div>
+
+                <div class="">
+                    <Label for="category">Category</Label>
+                    <Select v-model="form.category_id">
+                        <SelectTrigger class="w-[180px]">
+                            <SelectValue>
+                                {{props.categories.find(c => c.id === form.category_id)?.title || 'Select Category'}}
+                            </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectItem v-for="category in props.categories" :key="category.id"
+                                    :value="category.id">
+                                    {{ category.title }}
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+
+                    <span v-if="form.errors.category" class="text-red-500">{{ form.errors.is_active }}</span>
                 </div>
 
                 <div class="flex justify-center">
