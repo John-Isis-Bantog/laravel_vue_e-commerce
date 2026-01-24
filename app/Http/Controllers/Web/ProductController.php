@@ -68,8 +68,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::findOrFail($id);
-        return Inertia::render('Admin/Products/Edit', ['product' => $product]);
+        $product = Product::with('category')->findOrFail($id);
+        $categories = Category::where('is_active', true)->get();
+        return Inertia::render('Admin/Products/Edit', ['product' => $product, 'categories' => $categories]);
     }
 
 
@@ -81,6 +82,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'is_active' => 'required|in:0,1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'category_id' => 'required|numeric|min:0'
         ]);
         $validatedData['is_active'] = $request->boolean('is_active');
         $oldImage = $product->image; // Keep track of old URL
