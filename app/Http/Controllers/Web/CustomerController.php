@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -27,5 +26,11 @@ class CustomerController extends Controller
     {
         $product = Product::findOrFail($id);
         return Inertia::render('User/Show', ['product' => $product]);
+    }
+
+    public function categoryProduct(string $id)
+    {
+        $category = Category::findOrFail($id);
+        return Inertia::render('User/CategoryItem', ['category' => $category]);
     }
 }
