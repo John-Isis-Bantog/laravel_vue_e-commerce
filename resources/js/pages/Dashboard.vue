@@ -10,6 +10,9 @@ import {
     CardTitle,
 } from '@/components/ui/card'
 import user from '@/routes/products';
+import Button from '@/components/ui/button/Button.vue';
+import { computed, ref } from 'vue';
+import { MoveLeft, MoveRight } from 'lucide-vue-next';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
@@ -35,14 +38,28 @@ const props = defineProps<{
     products: Product[]
     categories: Category[]
 }>()
+
+const startIndex = 0
+const seenCategories = ref(startIndex)
+const visibleCategories = computed(() => {
+    return props.categories.slice(seenCategories.value, seenCategories.value + 5)
+
+})
+const canGoNext = computed(() => {
+    return seenCategories.value < props.categories.length - 5
+})
 </script>
 
 <template>
 
     <Head title="Dashboard" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex overflow-hidden gap-5 my-4 flex-nowrap">
-            <Link :href="user.show(category.id)" v-for="category in props.categories" :key="category.id" class="w-1/5">
+        <div class="flex overflow-hidden gap-5 my-4 flex-nowrap relative">
+            <div class="absolute top-1/3"><Button v-if="seenCategories > 0" @click="seenCategories--">
+                    <MoveLeft />
+                </Button>
+            </div>
+            <Link :href="user.show(category.id)" v-for="category in visibleCategories" :key="category.id" class="w-1/5">
                 <Card class="w-full max-w-sm">
                     <CardHeader>
                         <img v-if="category.image" :src=category.image alt="">
@@ -53,10 +70,9 @@ const props = defineProps<{
                     </CardHeader>
                 </Card>
             </Link>
-        </div>
-        <div class="min-h-1/2">
-
-
+            <Button class="absolute top-1/3 right-0" v-if="canGoNext" @click="seenCategories++">
+                <MoveRight />
+            </Button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             <Link :href="user.show(product.id)" v-for="product in props.products" :key="product.id">
