@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 
 class CustomerController extends Controller
 {
@@ -15,7 +16,8 @@ class CustomerController extends Controller
     public function index()
     {
         $products = Product::where('is_active', 1)->get();
-        return Inertia::render('Dashboard', ['products' => $products]);
+        $categories = Category::where('is_featured', 1)->get();
+        return Inertia::render('Dashboard', ['products' => $products, 'categories' => $categories]);
     }
 
     /**
