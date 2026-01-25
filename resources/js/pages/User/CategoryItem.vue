@@ -10,12 +10,27 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: products.index().url,
     },
 ];
+
+interface Product {
+    id: number,
+    name: string,
+    description: string,
+    image: string | null,
+    price: number,
+
+}
+const props = defineProps<{
+    products: Product[]
+}>()
 </script>
 
 <template>
 
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
-        <h1>hello</h1>
+        <div class="" v-for="product in props.products">
+            {{ product.name }}
+            {{ product.price }}
+        </div>
     </AppLayout>
 </template>

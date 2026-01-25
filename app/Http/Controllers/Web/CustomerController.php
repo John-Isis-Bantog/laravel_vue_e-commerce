@@ -30,7 +30,7 @@ class CustomerController extends Controller
 
     public function categoryProduct(string $id)
     {
-        $category = Category::findOrFail($id);
-        return Inertia::render('User/CategoryItem', ['category' => $category]);
+        $products = Product::where('is_active', 1)->where('category_id', $id)->get();
+        return Inertia::render('User/CategoryItem', ['products' => $products]);
     }
 }
