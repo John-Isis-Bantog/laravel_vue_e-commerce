@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { dashboard } from '@/routes';
+import { categoryProduct, dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 import {
@@ -59,7 +59,8 @@ const canGoNext = computed(() => {
                     <MoveLeft />
                 </Button>
             </div>
-            <Link :href="user.show(category.id)" v-for="category in visibleCategories" :key="category.id" class="w-1/5">
+            <Link :href="categoryProduct(category.id).url" v-for="category in visibleCategories" :key="category.id"
+                class="w-1/5">
                 <Card class="w-full max-w-sm">
                     <CardHeader>
                         <img v-if="category.image" :src=category.image alt="">

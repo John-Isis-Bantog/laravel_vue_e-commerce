@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('user')->group(function () {
         // product listings
         Route::resource('products', CustomerController::class)->only('index', 'show');
+        Route::get('products/category/{id}', [CustomerController::class, 'categoryProduct'])->name('categoryProduct');
         Route::middleware([EnsureUserIsCustomer::class])->group(function () {
             Route::resource('orders', OrderController::class)->only('index');
             // cart
