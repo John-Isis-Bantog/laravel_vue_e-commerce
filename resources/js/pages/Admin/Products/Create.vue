@@ -115,15 +115,17 @@ function handleFileChange(event: Event) {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectItem v-for="category in props.categories" :value=category.id>
+                                <SelectItem v-for="category in props.categories" :key="category.id"
+                                    :value="category.id">
                                     {{ category.title }}
                                 </SelectItem>
+
                             </SelectGroup>
                         </SelectContent>
                     </Select>
 
                     <span v-if="formData.errors.category_id" class="text-red-600 ">{{ formData.errors.category_id
-                        }}</span>
+                    }}</span>
                 </div>
 
                 <div class="flex justify-center">

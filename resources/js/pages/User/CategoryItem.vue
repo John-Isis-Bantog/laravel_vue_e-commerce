@@ -4,15 +4,14 @@ import CardContent from '@/components/ui/card/CardContent.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import products from '@/routes/products';
-import userRoute from '@/routes/users';
+import productsRoute from '@/routes/products';
 import { BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Admin Create Page',
-        href: products.index().url,
+        href: productsRoute.index().url,
     },
 ];
 
@@ -35,7 +34,7 @@ const props = defineProps<{
     <Head title="Admin Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            <Link :href="products.show(product.id)" v-for="product in props.products" :key="product.id">
+            <Link :href="productsRoute.show(product.id)" v-for="product in props.products" :key="product.id">
                 <Card class="w-full max-w-sm">
                     <CardHeader>
                         <img v-if="product.image" :src="product.image" alt=""><span v-else><img

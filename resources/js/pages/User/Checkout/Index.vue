@@ -12,7 +12,7 @@ import cart from '@/routes/cart';
 import checkout from '@/routes/checkout';
 import products from '@/routes/products';
 import { BreadcrumbItem } from '@/types';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

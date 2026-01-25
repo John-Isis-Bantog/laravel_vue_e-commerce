@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 import AppLayout from '@/layouts/AppLayout.vue';
-import { edit } from '@/routes/profile';
 import { BreadcrumbItem } from '@/types';
 import { Form, Head, Link, router, useForm } from '@inertiajs/vue3';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import Label from '@/components/ui/label/Label.vue';
 import Input from '@/components/ui/input/Input.vue';
-import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import Button from '@/components/ui/button/Button.vue';
 import { ref, onMounted, watch } from 'vue'
 import addressesRoute from '@/routes/addresses';
@@ -15,7 +13,6 @@ import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
 import CardDescription from '@/components/ui/card/CardDescription.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
-import CardFooter from '@/components/ui/card/CardFooter.vue';
 import Select from '@/components/ui/select/Select.vue';
 import SelectTrigger from '@/components/ui/select/SelectTrigger.vue';
 import SelectValue from '@/components/ui/select/SelectValue.vue';
@@ -235,7 +232,7 @@ function onPostalCodeInput(value: string | number | boolean) {
                                     @update:model-value="onPostalCodeInput" />
 
                                 <span v-if="form.errors.postal_code" class="text-red-600">{{ form.errors.postal_code
-                                    }}</span>
+                                }}</span>
                             </div>
                         </div>
 
