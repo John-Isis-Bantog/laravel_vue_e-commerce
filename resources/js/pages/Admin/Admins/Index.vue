@@ -102,129 +102,148 @@ watch(search, (newValue) => {
         <!-- <div class="w-1/2 h-1/2 flex justify-center  mx-auto">
             <canvas id="pieChart" ref="ctxPie"></canvas>
         </div> -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-2 mx-3">
-            <Link :href="category.index.url()">
-                <Card class="w-full max-w-sm">
-                    <CardHeader>
-                        <div class="flex justify-center">
-                            <CircleEllipsis />
-                        </div>
-                        <CardTitle class="text-center">Categories</CardTitle>
-                    </CardHeader>
-                    <CardContent class="text-center">
-                        <span>{{ props.categories }}</span>
-                    </CardContent>
-                </Card>
+        <div class="my-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-2 m-3">
+                <Link :href="category.index.url()">
+                    <Card class="w-full max-w-sm h-40 flex flex-col justify-center">
+                        <CardHeader class="space-y-2">
+                            <div class="flex justify-center text-muted-foreground">
+                                <CircleEllipsis class="h-8 w-8" />
+                            </div>
+                            <CardTitle class="text-center">
+                                Categories
+                            </CardTitle>
+                        </CardHeader>
 
-            </Link>
-
-            <Link :href="product.index.url()">
-                <Card class="w-full max-w-sm">
-                    <CardHeader>
-                        <div class="flex justify-center">
-                            <Package />
-                        </div>
-                        <CardTitle class="text-center">Products</CardTitle>
-                    </CardHeader>
-                    <CardContent class="text-center flex flex-col">
-                        <span>Active Products {{ props.activeProducts }} </span>
-                        <span>All Products{{ props.allProducts }} </span>
-                    </CardContent>
-                </Card>
-            </Link>
-
-            <Link>
-                <Card class="w-full max-w-sm">
-                    <CardHeader>
-                        <div class="flex justify-center">
-                            <ShoppingCart />
-                        </div>
-
-                        <CardTitle class="text-center">Total Orders</CardTitle>
-                    </CardHeader>
-                    <CardContent class="text-center">
-                        <span>{{ props.totalOrders }} Orders</span>
-                    </CardContent>
-                </Card>
-            </Link>
-
-            <Link>
-                <Card class="w-full max-w-sm">
-                    <CardHeader>
-                        <div class="flex justify-center">
-                            <DollarSign />
-                        </div>
-
-                        <CardTitle class="text-center">Revenue</CardTitle>
-                    </CardHeader>
-                    <CardContent class="text-center">
-                        <span>₱{{ props.revenue }}</span>
-                    </CardContent>
-                </Card>
-            </Link>
-
-            <Link :href="Users.index.url()">
-                <Card class="w-full max-w-sm">
-                    <CardHeader>
-                        <div class="flex justify-center">
-                            <User />
-                        </div>
-
-                        <CardTitle class="text-center">Total Users</CardTitle>
-                    </CardHeader>
-                    <CardContent class="text-center">
-                        <span>{{ props.totalUsers }} Total Users</span>
-                    </CardContent>
-                </Card>
-            </Link>
-
-            <Link :href="dashboard.url()">
-                <Card class="w-full max-w-sm">
-                    <CardHeader>
-                        <div class="flex justify-center">
-                            <User />
-                        </div>
-                        <CardTitle class="text-center">Browse as the User </CardTitle>
-                    </CardHeader>
-                    <CardContent class="text-center">
-                        <span>{{ props.totalUsers }} Total Users</span>
-                    </CardContent>
-                </Card>
-            </Link>
-        </div>
+                        <CardContent class="text-center">
+                            <span class="text-xl font-bold">
+                                {{ props.categories }}
+                            </span>
+                            <p class="text-sm text-muted-foreground">
+                                Total Categories
+                            </p>
+                        </CardContent>
+                    </Card>
 
 
-        <div class="">
-            <div class="flex justify-between max-w-3/4 mx-auto">
-                <div class="flex gap-2">
-                    <Input type="search" v-model="search" placeholder="Search by Name or Email"></Input>
-                    <Link :href="adminRoute.index().url"><Button variant="primary">Clear</Button></Link>
-                </div>
+                </Link>
 
-                <Link :href="adminRoute.create()"><Button>Add admin</Button></Link>
+                <Link :href="product.index.url()">
+                    <Link :href="product.index.url()">
+                        <Card class="w-full max-w-sm h-44 flex flex-col justify-between">
+                            <CardHeader class="space-y-2">
+                                <div class="flex justify-center text-muted-foreground">
+                                    <Package class="h-8 w-8" />
+                                </div>
+                                <CardTitle class="text-center">Products</CardTitle>
+                            </CardHeader>
+
+                            <CardContent class="text-center text-sm space-y-1">
+                                <div>Active: <span class="font-semibold">{{ props.activeProducts }}</span></div>
+                                <div>Total: <span class="font-semibold">{{ props.allProducts }}</span></div>
+                            </CardContent>
+                        </Card>
+                    </Link>
+
+                </Link>
+
+                <Link>
+                    <Card class="w-full max-w-sm h-44 flex flex-col justify-between">
+                        <CardHeader class="space-y-2">
+                            <div class="flex justify-center text-muted-foreground">
+                                <ShoppingCart class="h-8 w-8" />
+                            </div>
+                            <CardTitle class="text-center">Total Orders</CardTitle>
+                        </CardHeader>
+
+                        <CardContent class="text-center text-lg font-semibold">
+                            {{ props.totalOrders }}
+                        </CardContent>
+                    </Card>
+
+                </Link>
+
+                <Link>
+                    <Card class="w-full max-w-sm h-44 flex flex-col justify-between">
+                        <CardHeader class="space-y-2">
+                            <div class="flex justify-center text-muted-foreground">
+                                <DollarSign class="h-8 w-8" />
+                            </div>
+                            <CardTitle class="text-center">Revenue</CardTitle>
+                        </CardHeader>
+
+                        <CardContent class="text-center text-lg font-bold">
+                            ₱{{ props.revenue }}
+                        </CardContent>
+                    </Card>
+
+                </Link>
+
+                <Link :href="Users.index.url()">
+                    <Card class="w-full max-w-sm h-44 flex flex-col justify-between">
+                        <CardHeader class="space-y-2">
+                            <div class="flex justify-center text-muted-foreground">
+                                <User class="h-8 w-8" />
+                            </div>
+                            <CardTitle class="text-center">Users</CardTitle>
+                        </CardHeader>
+
+                        <CardContent class="text-center text-lg font-semibold">
+                            {{ props.totalUsers }}
+                        </CardContent>
+                    </Card>
+
+                </Link>
+
+                <Link :href="dashboard.url()">
+                    <Card class="w-full max-w-sm h-44 flex-col flex justify-between">
+                        <CardHeader>
+                            <div class="flex justify-center">
+                                <User />
+                            </div>
+                            <CardTitle class="text-center">Browse as the User </CardTitle>
+                        </CardHeader>
+                        <CardContent class="text-center">
+                            <span>{{ props.totalUsers }} Total Users</span>
+                        </CardContent>
+                    </Card>
+                </Link>
             </div>
-            <div class="w-3/4 mx-auto">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>ID</TableHead>
-                            <TableHead>Name</TableHead>
-                            <TableHead>Email</TableHead>
-                            <TableHead>Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        <TableRow v-for="admin in admins" :key="admin.id">
-                            <TableCell>{{ admin.id }}</TableCell>
-                            <TableCell>{{ admin.name }}</TableCell>
-                            <TableCell>{{ admin.email }}</TableCell>
-                            <TableCell class="gap-2 flex">
-                                <Link :href="adminRoute.edit(admin.id)"> <Button variant="primary">Edit</Button></Link>
-                                <Button variant="destructive" @click="removeAdmin(admin.id)">Delete</Button>
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+
+
+            <div class="">
+                <div class="flex justify-between max-w-3/4 mx-auto">
+                    <div class="flex gap-2">
+                        <Input type="search" v-model="search" placeholder="Search by Name or Email"></Input>
+                        <Link :href="adminRoute.index().url"><Button variant="primary">Clear</Button></Link>
+                    </div>
+
+                    <Link :href="adminRoute.create()"><Button>Add admin</Button></Link>
+                </div>
+                <div class="w-3/4 mx-auto">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>ID</TableHead>
+                                <TableHead>Name</TableHead>
+                                <TableHead>Email</TableHead>
+                                <TableHead>Actions</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            <TableRow v-for="admin in admins" :key="admin.id">
+                                <TableCell>{{ admin.id }}</TableCell>
+                                <TableCell>{{ admin.name }}</TableCell>
+                                <TableCell>{{ admin.email }}</TableCell>
+                                <TableCell class="gap-2 flex">
+                                    <Link :href="adminRoute.edit(admin.id)"> <Button variant="primary">Edit</Button>
+                                    </Link>
+                                    <Button variant="destructive" @click="removeAdmin(admin.id)">Delete</Button>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
         </div>
     </AppLayout>
