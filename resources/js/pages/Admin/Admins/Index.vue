@@ -103,9 +103,9 @@ watch(search, (newValue) => {
             <canvas id="pieChart" ref="ctxPie"></canvas>
         </div> -->
         <div class="my-2">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-2 m-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  mb-2 m-3 gap-5">
                 <Link :href="category.index.url()">
-                    <Card class="w-full max-w-sm h-40 flex flex-col justify-center">
+                    <Card class="w-full max-w-sm h-44 flex flex-col justify-center">
                         <CardHeader class="space-y-2">
                             <div class="flex justify-center text-muted-foreground">
                                 <CircleEllipsis class="h-8 w-8" />
@@ -119,9 +119,7 @@ watch(search, (newValue) => {
                             <span class="text-xl font-bold">
                                 {{ props.categories }}
                             </span>
-                            <p class="text-sm text-muted-foreground">
-                                Total Categories
-                            </p>
+
                         </CardContent>
                     </Card>
 
