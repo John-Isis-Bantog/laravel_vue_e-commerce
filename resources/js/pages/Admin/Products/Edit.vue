@@ -69,7 +69,7 @@ function handleFileChange(event: Event) {
     <Head title="Category Create" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <Link :href="productRoute.index().url"><Button>Back</Button></Link>
-        <div class="w-1/2 mx-auto">
+        <div class="w-1/2 mx-auto my-2">
             <Form class="space-y-2" @submit.prevent="updateProduct(form.id)">
                 <div class="">
                     <Label for="name">Name</Label>
@@ -77,7 +77,9 @@ function handleFileChange(event: Event) {
                     <span v-if="form.errors.name" class="text-red-500">{{ form.errors.name }}</span>
                 </div>
                 <div class="">
-                    <img :src="form.image" v-if="form.image" alt=""><span v-else>No Image Uploaded</span>
+                    <img :src="form.image" v-if="form.image" alt=""><span v-else><img
+                            src="https://hsaubfbdbzpjgwazahvz.supabase.co/storage/v1/object/public/laravel_vue_e_commerce_bucket/public/image_not_available.jpg"
+                            alt=""></span>
                     <Label for="image">Image</Label>
                     <Input type="file" @change="handleFileChange"></Input>
                     <span v-if="form.errors.image" class="text-red-500">{{ form.errors.image }}</span>
